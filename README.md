@@ -20,7 +20,7 @@ concepts, with a good intuitive understanding.**  It is modeled after
 my popular [fasteR tutorial](https://github.com/matloff/fasteR) for
 learning R.
 
-## <a name="sampling"> </a> Lesson 1:  The Notion of a Sample
+## <a name="sampling">Lesson 1:  The Notion of a Sample</a> 
 
 We've all heard the term *margin of error* in an opinion poll.  It will
 be discussed in detail in a later lesson, but what question is it
@@ -43,6 +43,53 @@ independent random variables.  Also, each X<sub>i</sub> has distribution
 equal to that of the sampled population.  If, say 22.8% of people in
 this population are taller than 70 inches, then P(X<sub>i</sub> > 70) =
 0.228.
+
+## <a name="normal">Lesson 2:  The Role of Normal (Gaussian) and Other Parametric Distribution Families</a> 
+
+In the last lesson, we talked about the distribution of X in the
+population.  Although the population is finite (more on this below) and
+thus X is a discrete random variable, one often models X as continuous,
+with its distribution being in the normal family.
+
+Why do this?
+
+* Histograms of X in many applications do look rather bell-shaped.  This
+  may in turn be due to the Central Limit Theorem (CLT).  The CLT says
+that sums are approximately normal, and in the human height case, one
+can think of the body as consisting of chunks whose heights sum to the
+height of the person.  (The CLT assumes i.i.d. summands, and the chunks
+here would be neither independent nor indentically distributed, but
+there are non-i.i.d. versions of the CLT.)
+
+* The early developers of statistics had no computers, and it turns out
+  that the normal distribution family is quite mathematically tractable,
+thus amenable to closed-form "exact" solutions.
+
+* It is often the case in math that discrete quantities are approximated
+  by continuous ones.
+
+* A normal distribution is determined by two parameters, the mean and
+  variance of the distribution.  Without that assumption, we have many
+  parameters, essentially infinitely many.  Let F<sub>X</sub> be the cdf
+  of X, i.e. F<sub>X</sub>(t) = P(X &le; t).  Well, there are infinitely
+  many possible values for t.
+
+Another popular model is the exponential distribution family.  You
+probably learned in your probability course that it is "memoryless,"
+which makes it a suitable model in some applications.
+
+## <a name="normal">Lesson 3:  Conceptual Populations</a> 
+
+In the opinion poll example, it is clear as to which population is
+sampled.  In many applications, the issue is more conceptual.  If for
+instance we run a clinical trial with 100 diabetic patients, we might
+think of them as having been sampled from the population of all
+diabetics, even though we did not actually select the patients in our
+sample, whether randomly or otherwise.
+
+## <a name="stderr">Lesson 4:  Standard Errors</a> 
+
+
 
 ## LICENSING
 
