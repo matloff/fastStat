@@ -1,5 +1,5 @@
 
-# fasteR: Fast Lane to Learning R! 
+# fastStat: Fast Lane to Learning Statistics! 
 
 ## *"Quick intro to statistics for those who know probability"*
 
