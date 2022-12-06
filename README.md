@@ -152,6 +152,40 @@ S<sup>2</sup> = (1/n) &Sigma;<sub>i</sub><sup>n</sup>
 where &#x100; is the sample mean, (1/n)  &Sigma;<sub>i</sub><sup>n</sup>
 X<sub>i</sub>.
 
+It can be shown that S<sup>2</sup> is biased:
+
+E(S<sup>2</sup>) = [(n-1) / n] &sigma;<sup>2</sup>
+
+The average value of S<sup>2</sup> over all samples is a little too
+low.  The amount of bias is 
+
+E(S<sup>2</sup>) -  &sigma;<sup>2</sup> = -1/n  &sigma;<sup>2</sup> 
+
+This bothered the early developers of statistics, who defined the
+sample variance as
+
+s<sup>2</sup> = (1/(n-1)) &Sigma;<sub>i</sub><sup>n</sup>
+(X<sub>i</sub> - &#x100;)<sup>2</sup>
+
+(In the field of probability and statistics, it is customary to use
+capital letters for random variables.  This is an exception.)
+
+But most estimators are not only biased, but also lack simple
+adjustments like that.  So, one must accept bias in general, and
+consider its implications.
+
+In that light, let's return to the discussion of standard error in the
+last lesson.  We stated that an estimator with small standard error
+would likely be near the population value it is estimating, but note now
+that that argument depended on the estimator being unbiased.
+
+But it is much more optimistic, actually.  Say an estimator has bias
+of size O(1/n), as above.  Typically the size of the standard error is
+O(1/n<sup>0.5</sup>).  In other words, the bias is small relative to the
+standard error, so the argument in the last lesson still holds.
+
+## <a name="CIs">Lesson 6:  Confidence Intervals, Asymptotics</a> 
+
 ## LICENSING
 
 The document is covered by a 
