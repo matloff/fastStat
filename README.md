@@ -89,7 +89,40 @@ sample, whether randomly or otherwise.
 
 ## <a name="stderr">Lesson 4:  Standard Errors</a> 
 
+Earlier we mentioned the "margin of error" in reporting the results of
+opinion polls.  To make that notion concrete, let's first discuss a
+related idea, *standard errors*.
 
+We use our data X<sub>1</sub>,...,X<sub>n</sub> to estimate some
+quantity of interest, say the proportion q of people in the population
+who would answer Yes to our poll if we had a chance to ask them all.
+Our estimate, Q, would be the proportion of people in our sample who say
+yes.  (Extremely important note:  Make sure to always carefully
+distinguish between a population quantity, q in this case, and its
+sample estimate, Q here.)
+
+We want to have some measure of how much Q varies from one sample to
+another.  Of course, Var(Q) is such a measure.
+
+Say for now that the average of Q, averaged over all possible
+samples, is q.  For some samples, Q > q, for others Q <- q, but on
+average we get q.  This relates to the issue of *bias*, which we will
+turn to later, but for now, say we have this situation, i.e. EQ = q.
+
+The key point:  If Var(Q) is small, then Q doesn't vary much from one
+sample to another, and if EQ = q, then for "most" sample, Q should be
+near q.  That exactly what we hope for!  We only have one sample, of
+course, but if we know that Q is usually near q, we feel
+reasonably confident that the Q from our particular sample is near q.
+
+It's exactly like gambling.  We don't know whether our particular roll
+of the dice will yield a winner, but if most rolls of the dice do so,
+then we may be willing to go ahead.
+
+Of course, the square root of any variance is called the *standard
+deviation*.  In the case of an estimator, Q here, we use the term
+*standard error*.  In some cases, it will be only the approximate
+standard deviation, as will be seen below.
 
 ## LICENSING
 
