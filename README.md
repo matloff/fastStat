@@ -114,7 +114,7 @@ sample to another, and if EQ = q, then for "most" sample, Q should be
 near q.  That exactly what we hope for!  We only have one sample, of
 course, but if we know that Q is usually near q, we feel
 reasonably confident that the Q from our particular sample is near q.
-
+W
 It's exactly like gambling.  We don't know whether our particular roll
 of the dice will yield a winner, but if most rolls of the dice do so,
 then we may be willing to go ahead.
@@ -123,6 +123,16 @@ Of course, the square root of any variance is called the *standard
 deviation*.  In the case of an estimator, Q here, we use the term
 *standard error*.  In some cases, it will be only the approximate
 standard deviation, as will be seen below.
+
+## <a name="bias">Lesson 5:  Bias, and Impact on Standard Errors</a> 
+
+In our last lesson, we assumed that EQ = q.  We say that Q is an 
+*unbiased* estimator of q.  In English:  the average value of Q over all
+possible samples is q. 
+
+Unbiasedness
+
+$\bar{X})
 
 ## LICENSING
 
