@@ -130,9 +130,20 @@ In our last lesson, we assumed that EQ = q.  We say that Q is an
 *unbiased* estimator of q.  In English:  the average value of Q over all
 possible samples is q. 
 
-Unbiasedness
+In the above example, in which Q is the sample proportion of Yes's an
+q is the correspondng population proportion, it does turn out that Q is
+unbiased.  In fact, any sample mean is an unbiased estimator for the
+population mean.  (Here X is 1 or 0, so the average of the X<sub>i</sub>
+is the proportion of Yes's.)  Let's skip the derivation for now, to get
+to the larger issues.
 
-$\bar{X}$
+Unbiasedness at first seems to be a very desirable property.  It does
+hold for some classical statistical methods, but does NOT hold for many
+others, one of which is the sample variance, as follows.
+
+This sentence uses `$` delimiters to show math inline:  $\sqrt{3x-1}+(1+x)^2$
+
+
 
 ## LICENSING
 
