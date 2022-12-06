@@ -18,7 +18,22 @@ a broader and more nuanced field than they had realized.
 **This document will enable such people to quickly acquire the needed
 concepts, with a good intuitive understanding.**  It is modeled after
 my popular [fasteR tutorial](https://github.com/matloff/fasteR) for
-learning R.
+quickly becoming proficient in R.  
+
+## <a name="intuition">Lesson 0:  What Is Really Going on?</a> 
+
+Professional statisticians, especially Statistics professors, may find
+the presentation here to be a familiar story, but with an odd plot and
+a different cast of characters.  Indeed, **many of readers of this
+tutorial will be surprised to see that it does not contain many
+equations.**  But sadly, many people know the mechanics of statistics
+very well, without truly understanding an intuitive levels what those
+equations are really doing.
+
+We will indeed do some math derivations here, but not at the outset, and
+not highlighted.  This tutorial aims to explain the ISSUES, in ways not
+commonly addressed in textbooks and courses.
+
 
 ## <a name="sampling">Lesson 1:  The Notion of a Sample</a> 
 
@@ -78,6 +93,13 @@ Another popular model is the exponential distribution family.  You
 probably learned in your probability course that it is "memoryless,"
 which makes it a suitable model in some applications.
 
+Note that, as models, these are necessarily inexact.  No distribution in
+practice is exactly normal, for instance.  No one is 900 feet tall, and
+no one has a negative height.  For that matter, a normal distribution is
+continuous, whereas X is discrete, both due to sampling from a finite
+population and because our measuring instruments have only finite
+precision.
+
 ## <a name="normal">Lesson 3:  Conceptual Populations</a> 
 
 In the opinion poll example, it is clear as to which population is
@@ -114,10 +136,6 @@ sample to another, and if EQ = q, then for "most" sample, Q should be
 near q.  That exactly what we hope for!  We only have one sample, of
 course, but if we know that Q is usually near q, we feel
 reasonably confident that the Q from our particular sample is near q.
-W
-It's exactly like gambling.  We don't know whether our particular roll
-of the dice will yield a winner, but if most rolls of the dice do so,
-then we may be willing to go ahead.
 
 Of course, the square root of any variance is called the *standard
 deviation*.  In the case of an estimator, Q here, we use the term
@@ -134,8 +152,8 @@ In the above example, in which Q is the sample proportion of Yes's an
 q is the correspondng population proportion, it does turn out that Q is
 unbiased.  In fact, any sample mean is an unbiased estimator for the
 population mean.  (Here X is 1 or 0, so the average of the X<sub>i</sub>
-is the proportion of Yes's.)  Let's skip the derivation for now, to get
-to the larger issues.
+is the proportion of Yes's.)  Let's skip the derivation for now (we'll
+have a Derivations lesson later), so we can get to the larger issues.
 
 Unbiasedness at first seems to be a very desirable property.  It does
 hold for some classical statistical methods, but does NOT hold for many
@@ -185,6 +203,28 @@ O(1/n<sup>0.5</sup>).  In other words, the bias is small relative to the
 standard error, so the argument in the last lesson still holds.
 
 ## <a name="CIs">Lesson 6:  Confidence Intervals, Asymptotics</a> 
+
+In our opinion poll example, Q is called a *point estimate* of q.  We
+would also like to have an interval estimate, which gives a range of
+values.  If say in in an election, the results of an opinion poll are
+reported as, Candidate X has support of 62.1% of the voters, with a
+margin of 3.9%," it is saying,
+
+> A 95% confidence interval for X's support is (58.2%,66.0%).
+
+A key ppint is the meaning of "95% confident."  Imagine forming this
+interval on each possible sample from the given population.  Then 95% of
+the intervals would cover the true value, q.
+
+Of course, we do not collect all possible samples; we just have 1.  We
+say we are 95% that q is in our particular interval in the above sense.
+
+It's exactly like gambling.  We don't know whether our particular roll
+of the dice will yield a winner, but if most rolls of the dice do so,
+then we may be willing to go ahead.
+
+A note on the phrasing "q is in our interval":  Some may take this to
+mean that q is random, which it is not; q is unknown but fixed.
 
 ## LICENSING
 
