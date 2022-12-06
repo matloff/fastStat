@@ -141,9 +141,16 @@ Unbiasedness at first seems to be a very desirable property.  It does
 hold for some classical statistical methods, but does NOT hold for many
 others, one of which is the sample variance, as follows.
 
-This sentence uses `$` delimiters to show math inline:  $\sqrt{3x-1}+(1+x)^2$
+Say we wish to estimate the population variance &sigma;<sup>2</sup>.
+(We are NOT necessarily assuming a normal distribution.)  In the
+population, that is the average squared difference between the data and
+their mean.  The sample analog is
 
+S<sup>2</sup> = (1/n) &Sigma;<sub>i</sub><sup>n</sup>
+(X<sub>i</sub> - &#x100;)<sup>2</sup>
 
+where &#x100; is the sample mean, (1/n)  &Sigma;<sub>i</sub><sup>n</sup>
+X<sub>i</sub>.
 
 ## LICENSING
 
