@@ -23,8 +23,10 @@ quickly becoming proficient in R.
 ## <a name="intuition">Lesson 0:  What Is Really Going on?</a> 
 
 Professional statisticians, especially Statistics professors, may find
-the presentation here to be a familiar story, but with an odd plot and
-a different cast of characters.  Indeed, **many of readers of this
+the presentation here to be a familiar story, but with an odd plot,
+a different cast of characters, and a different ending. :-) 
+
+Indeed, **many of readers of this
 tutorial will be surprised to see that it does not contain many
 equations.**  But sadly, many people know the mechanics of statistics
 very well, without truly understanding an intuitive levels what those
@@ -109,6 +111,10 @@ think of them as having been sampled from the population of all
 diabetics, even though we did not actually select the patients in our
 sample, whether randomly or otherwise.
 
+This issue can become quite a challenge in, say, economic analysis.
+If we have 10 years of annual data, i.e. n = 10, what population
+is that a "sample" from?
+
 ## <a name="stderr">Lesson 4:  Standard Errors</a> 
 
 Earlier we mentioned the "margin of error" in reporting the results of
@@ -188,9 +194,15 @@ s<sup>2</sup> = (1/(n-1)) &Sigma;<sub>i</sub><sup>n</sup>
 (In the field of probability and statistics, it is customary to use
 capital letters for random variables.  This is an exception.)
 
+The standard error of &#x100; is
+
+s.e.(&#x100;) = S/n<sup>0.5</sup>
+
+(use s instead of S if you wish).
+
 But most estimators are not only biased, but also lack simple
-adjustments like that.  So, one must accept bias in general, and
-consider its implications.
+adjustments like that for S above.  So, one must accept bias in general,
+and consider its implications.
 
 In that light, let's return to the discussion of standard error in the
 last lesson.  We stated that an estimator with small standard error
@@ -202,7 +214,23 @@ of size O(1/n), as above.  Typically the size of the standard error is
 O(1/n<sup>0.5</sup>).  In other words, the bias is small relative to the
 standard error, so the argument in the last lesson still holds.
 
-## <a name="CIs">Lesson 6:  Confidence Intervals, Asymptotics</a> 
+## <a name="CIs">Lesson 6:  Indicator Variables</a> 
+
+Often X has only the values only 1 and 0, indicating the presence or
+absence of some trait.  That is the case in the opinion poll, for
+example, where the respondent replies Yes or not Yes.  Such a variable
+is called an *indicator variable*, as it indicates whether the trait is
+present or not.
+
+In this case, &#x100; reduces to the proportion of 1s, as with Q, the
+proportion of Yes responses to the opinion poll.  After some algebraic
+simplification, it turns out that 
+
+S<sup>2</sup> = &#x100; (1-&#x100;) / n
+
+(or use n-1 instead of n for s).
+
+## <a name="CIs">Lesson 7:  Confidence Intervals</a> 
 
 In our opinion poll example, Q is called a *point estimate* of q.  We
 would also like to have an interval estimate, which gives a range of
@@ -210,21 +238,80 @@ values.  If say in in an election, the results of an opinion poll are
 reported as, Candidate X has support of 62.1% of the voters, with a
 margin of 3.9%," it is saying,
 
-> A 95% confidence interval for X's support is (58.2%,66.0%).
+> A 95% confidence interval (CI) for X's support is (58.2%,66.0%).
 
-A key ppint is the meaning of "95% confident."  Imagine forming this
+A key point is the meaning of "95% confident."  Imagine forming this
 interval on each possible sample from the given population.  Then 95% of
 the intervals would cover the true value, q.
 
 Of course, we do not collect all possible samples; we just have 1.  We
 say we are 95% that q is in our particular interval in the above sense.
+(A note on the phrasing "q is in our interval":  Some may take this to
+mean that q is random, which it is not; q is unknown but fixed.)
 
 It's exactly like gambling.  We don't know whether our particular roll
 of the dice will yield a winner, but if most rolls of the dice do so,
 then we may be willing to go ahead.
 
-A note on the phrasing "q is in our interval":  Some may take this to
-mean that q is random, which it is not; q is unknown but fixed.
+## <a name="asymp">Lesson 8:  Confidence Intervals from Asymptotics</a> 
+
+The early developers of statistics defined a distribution family known
+as *Student's t*.  This supposedly can be used to form "exact," i.e. the
+probability of the CI covering the target population value is exactly
+0.95, if the population distribution of X is normal.  Student-t is
+widely taught, and thus widely used.  But that is just an illusion.  As
+pointed out earlier, no distribution in practice is exactly normal.
+
+What saves the day, though, is the Central Limit Theorem.  &#x100; is a
+sum, which the CLT tells us is asymptocially normally distributed
+as n goes to infinity/
+
+In other words, if we were to compute &#x100; on each of the possible
+samples of size n from the population, and then plot the results in a
+histogram, the graph would be approximately bell-shaped, and the
+probabilities for any range of values would be approximately those of a
+normal distribution.
+
+Ah, so we're in business:  For any random variable W, the quantity
+
+(W - EW) / (Var(W)<sup>0.5</sup>
+
+has mean 0 and variance 1.  (This has nothing to do with whether W is
+normal or not.)  So,
+
+Z = (&#x100; - &mu;) / s.e.(&#x100;)
+
+has mean 0 and variance 1, where &mu; is the population mean of X.
+(Recall that &#x100; is unbiased for &mu;.)  And since Z actually DOES
+have an approximately normal distribution, its distribution is thus
+approximately N(0,1).  
+
+Now since the N(0,1) distribution has 95% of its area between -1.96 and
+1.96, we have
+
+0.95 &approx; P[-1.96 < (&#x100; - &mu;) / s.e.(&#x100;) < 1.96]
+
+which after algebra becomes
+
+0.95 &approx; P[
+&#x100; - 1.96 s.e.(&#x100;) < &mu; <
+&#x100; + 1.96 s.e.(&#x100;))
+
+There's our CI for &mu;!
+
+(&#x100; - 1.96 s.e.(&#x100;), &#x100; + 1.96 s.e.(&#x100;))
+
+We are (approximately) 95% confident that the true population mean is in
+that interval.  (Remember. it is the interval that is random, not &mu;)
+
+For large n, the Student-t distribution is almost identical to N(0,1),
+so "No harm, no foul" -- Student-t will be approximately correct.  But
+it won't be exactly correct, in spite of the claim.
+
+And things don't stop there.  Actually, many types of estimators have
+some kind of sum within them, and thus have an approximately normal
+distribution.  Thus approximate CIs can be found for lots of different
+estimators, as we will see in a later lesson.
 
 ## LICENSING
 
