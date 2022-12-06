@@ -132,7 +132,7 @@ possible samples is q.
 
 Unbiasedness
 
-$\bar{X})
+$\bar{X}$
 
 ## LICENSING
 
