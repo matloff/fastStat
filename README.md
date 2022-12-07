@@ -304,14 +304,75 @@ There's our CI for &mu;!
 We are (approximately) 95% confident that the true population mean is in
 that interval.  (Remember. it is the interval that is random, not &mu;)
 
-For large n, the Student-t distribution is almost identical to N(0,1),
-so "No harm, no foul" -- Student-t will be approximately correct.  But
-it won't be exactly correct, in spite of the claim.
-
 And things don't stop there.  Actually, many types of estimators have
 some kind of sum within them, and thus have an approximately normal
 distribution.  Thus approximate CIs can be found for lots of different
-estimators, as we will see in a later lesson.
+estimators, notably Maximum Likelihood Estimators and least-squares
+parametric regression estimators, as we will see in a later lesson.
+
+In other words, we have the following principle (the name is mind, the
+principle general):
+
+**The Fundamental Tool of Statistical Inference:**
+
+> If R is a "smooth" estimator of a population quantity r, based on an
+> i.i.d. sample, then an approximate 95% confidence interval for r is
+> 
+> (R - 1.96 s.e.(R), R + 1.96 s.e.(R)
+
+The term *smooth* roughly means that R is a differentiable function of
+X<sub>1</sub>, ..., X<sub>n</sub>.
+
+By the way, for large n, the Student-t distribution is almost identical
+to N(0,1), so "No harm, no foul" -- Student-t will be approximately
+correct.  But it won't be exactly correct, in spite of the claim.
+
+## <a name="asymp">Lesson 10:  Some Derivations</a> 
+
+As noted earlier, the goal of this tutorial is to develop within the
+reader an understanding of the intuition underlying statistical concepts
+of methods.  It is not a tutorial on math stat.  Nevertheless, it's
+important to show a few derivations.
+
+**&#x100; is an unbiased estimator of &mu;:**
+
+By the linerity of E(), 
+
+E&#x100; = (1/n) &Sigma;<sub>i</sub><sup>n</sup> EX<sub>i</sub>
+= (1/n) n &mu; = &mu; 
+
+**Var(&#x100;) = (1/n) &sigma;<sup>2</sup>, where
+&sigma;<sup>2</sup> is the population variance of X**
+
+By the fact that the variance of a sum of independent random variables
+is the sum of their variances,
+
+Var(&#x100;) = (1/n<sup>2</sup>) &Sigma;<sub>i</sub><sup>n</sup>
+Var(X<sub>i</sub>) = (1/n<sup>2</sup>) n &sigma;<sup>2</sup> = (1/n)
+&sigma;<sup>2</sup>
+
+**S<sup>2</sup> is a biased estimator of &sigma;<sup>2</sup></sup>**
+
+For any random variable W (with finite variance), 
+
+Var(W) = E(W<sup>2</sup>) - (EW)<sup>2</sup>  
+
+We will use this fact multiple times.
+
+And the sample analog (just algebraic manipulation) is
+
+S<sup>2</sup> = (1/n) &Sigma;<sub>i</sub><sup>n</sup>
+X<sub>i</sub><sup>2</sup> - &#x100;<sup>2</sup>
+
+Applying E() to both sides of this last equation, we have
+
+E(S<sup>2</sup>) =
+(1/n) n E(X<sub>i</sub><sup>2</sup>) -
+(Var(&#x100;) + &mu;<sup>2</sup>) =
+(&sigma;<sup>2</sup> + &mu;<sup>2</sup>) - [(1/n) &sigma;<sup>2</sup> + &mu;<sup>2</sup>] =
+[(n-1)/n] &sigma;<sup>2</sup>
+ 
+
 
 ## LICENSING
 
