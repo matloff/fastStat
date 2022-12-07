@@ -26,7 +26,7 @@ by one of my favorite statisticians, Larry Wasserman.  Both books are
 quite thin, making their "All of" titles ironic.  Well, my short
 tutorial here is even more "all of" in that sense.
 
-## <a name="intuition">Lesson 0:  What Is Really Going on?</a> 
+## <a name="intuition">Lesson INTRO:  What Is Really Going on?</a> 
 
 Professional statisticians, especially Statistics professors, may find
 the presentation here to be a familiar story, but with an odd plot,
@@ -49,8 +49,7 @@ textbooks and courses.
 We will indeed do some math derivations here, but not at the outset, and
 not highlighted.  This tutorial aims to explain the practical ISSUES. 
 
-
-## <a name="sampling">Lesson 1:  The Notion of a Sample</a> 
+## <a name="sampling">Lesson SAMPLING:  The Notion of a Sample</a> 
 
 We've all heard the term *margin of error* in an opinion poll.  It will
 be discussed in detail in a later lesson, but what question is it
@@ -74,7 +73,7 @@ equal to that of the sampled population.  If, say 22.8% of people in
 this population are taller than 70 inches, then P(X<sub>i</sub> > 70) =
 0.228.
 
-## <a name="normal">Lesson 2:  The Role of Normal (Gaussian) and Other Parametric Distribution Families</a> 
+## <a name="normal">Lesson NORMALETC:  The Role of Normal (Gaussian) and Other Parametric Distribution Families</a> 
 
 In the last lesson, we talked about the distribution of X in the
 population.  Although the population is finite (more on this below) and
@@ -125,7 +124,7 @@ distribution.  Then in some sense, depending on how we estimate, we are
 estimating the gamma distribution that is closest to our true population
 distribution.
 
-## <a name="normal">Lesson 3:  Conceptual Populations</a> 
+## <a name="normal">Lesson CONCEPTPOPS:  Conceptual Populations</a> 
 
 In the opinion poll example, it is clear as to which population is
 sampled.  In many applications, the issue is more conceptual.  If for
@@ -138,7 +137,7 @@ This issue can become quite a challenge in, say, economic analysis.
 If we have 10 years of annual data, i.e. n = 10, what population
 is that a "sample" from?
 
-## <a name="stderr">Lesson 4:  Standard Errors</a> 
+## <a name="stderr">Lesson STDERRS:  Standard Errors</a> 
 
 Earlier we mentioned the "margin of error" in reporting the results of
 opinion polls.  To make that notion concrete, let's first discuss a
@@ -171,7 +170,7 @@ deviation*.  In the case of an estimator, Q here, we use the term
 *standard error*.  In some cases, it will be only the approximate
 standard deviation, as will be seen below.
 
-## <a name="bias">Lesson 5:  Bias, and Impact on Standard Errors</a> 
+## <a name="bias">Lesson BIAS:  Bias, and Impact on Standard Errors</a> 
 
 In our last lesson, we assumed that EQ = q.  We say that Q is an 
 *unbiased* estimator of q.  In English:  the average value of Q over all
@@ -237,7 +236,7 @@ of size O(1/n), as above.  Typically the size of the standard error is
 O(1/n<sup>0.5</sup>).  In other words, the bias is small relative to the
 standard error, so the argument in the last lesson still holds.
 
-## <a name="CIs">Lesson 6:  Indicator Variables</a> 
+## <a name="CIs">Lesson INDICATORS:  Indicator Variables</a> 
 
 Often X has only the values only 1 and 0, indicating the presence or
 absence of some trait.  That is the case in the opinion poll, for
@@ -253,7 +252,7 @@ S<sup>2</sup> = &#x100; (1-&#x100;) / n
 
 (or use n-1 instead of n for s).
 
-## <a name="CIs">Lesson 7:  Confidence Intervals</a> 
+## <a name="CIs">Lesson CI:  Confidence Intervals</a> 
 
 In our opinion poll example, Q is called a *point estimate* of q.  We
 would also like to have an interval estimate, which gives a range of
@@ -276,7 +275,7 @@ It's exactly like gambling.  We don't know whether our particular roll
 of the dice will yield a winner, but if most rolls of the dice do so,
 then we may be willing to go ahead.
 
-## <a name="asymp">Lesson 8:  Confidence Intervals from Asymptotics</a> 
+## <a name="asymp">Lesson CIAPPROX:  Confidence Intervals from Asymptotics</a> 
 
 The early developers of statistics defined a distribution family known
 as *Student's t*.  This supposedly can be used to form "exact," i.e. the
@@ -350,7 +349,7 @@ By the way, for large n, the Student-t distribution is almost identical
 to N(0,1), so "No harm, no foul" -- Student-t will be approximately
 correct.  But it won't be exactly correct, in spite of the claim.
 
-## <a name="asymp">Lesson 10:  Some Derivations</a> 
+## <a name="asymp">Lesson SOMEMATH:  Some Derivations</a> 
 
 As noted earlier, the goal of this tutorial is to develop within the
 reader an understanding of the intuition underlying statistical concepts
@@ -395,7 +394,7 @@ E(S<sup>2</sup>) =
 (&sigma;<sup>2</sup> + &mu;<sup>2</sup>) - [(1/n) &sigma;<sup>2</sup> + &mu;<sup>2</sup>] =
 [(n-1)/n] &sigma;<sup>2</sup>
 
-## <a name="geyser">Lesson 11:  Old Faithful Geyser Example</a> 
+## <a name="geyser">Lesson GEYSER:  Old Faithful Geyser Example</a> 
 
 To start to make the concepts tangible, let's look at **faithful**, a
 built-in dataset in R, recording eruptions of the Old Faithful geyser in
@@ -417,7 +416,7 @@ c(sampleMean - 1.96*stdErr, sampleMean + 1.96*stdErr)
 # (3.35,3.62)
 ```
 
-## <a name="distrs">Lesson 12:  Estimating Entire Distributions</a> 
+## <a name="distrs">Lesson ESTDISTRS:  Estimating Entire Distributions</a> 
 
 Recall the *cumulative distribution function*` (cdf) pf a random variable 
 
@@ -450,6 +449,22 @@ let's just speak of estimating "the" pdf.
 
 Actually, the familiar histogram is a pdf estimator, provided we specify
 that the total area under it is 1.0.
+
+``` r
+hist(erps,freq=FALSE)
+```
+
+![alt text](HistErps.png)
+
+This is interesting, as it is bimodal.  There have been many geophysical
+theories on this, e.g. postulating that there are 2 kinds of eruptions.
+
+Histograms are considered rather crude estimators of a density, as they
+are so choppy.  A more advanced approach is that of *kernel* density
+estimators.  
+
+![alt text](DensErps.png)
+
 
 
 
