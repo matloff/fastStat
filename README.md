@@ -1,5 +1,5 @@
 
-# fastStat: Fast Lane to Learning Statistics! 
+# fastStat: All of REAL Statistics
 
 ## *"Quick intro to statistics for those who know probability"*
 
@@ -18,7 +18,13 @@ a broader and more nuanced field than they had realized.
 **This document will enable such people to quickly acquire the needed
 concepts, with a good intuitive understanding.**  It is modeled after
 my popular [fasteR tutorial](https://github.com/matloff/fasteR) for
-quickly becoming proficient in R.  
+quickly becoming proficient in R. 
+
+By the way, the title, "All of REAL Statistics," is a play on two 
+excellent books, *All of Statistics* and *All of Nonparametric Statistics*,
+by one of my favorite statisticians, Larry Wasserman.  Both books are
+quite thin, making their "All of" titles ironic.  Well, my short
+tutorial here is even more "all of" in that sense.
 
 ## <a name="intuition">Lesson 0:  What Is Really Going on?</a> 
 
@@ -32,9 +38,16 @@ equations.**  But sadly, many people know the mechanics of statistics
 very well, without truly understanding an intuitive levels what those
 equations are really doing.
 
+For instance, consider estimator bias. Students in a math stat course
+learn the mathematical definition of bias, after which they learn that
+the sample mean is unbiased and that the sample variance can be
+adjusted to be unbiased.  But that is the last they hear of the issue.
+Actually, most estimators are in fact biased, and lack "fixes" like that
+of the sample variance.  Does it matter?  None of that is discussed in
+textbooks and courses.
+
 We will indeed do some math derivations here, but not at the outset, and
-not highlighted.  This tutorial aims to explain the ISSUES, in ways not
-commonly addressed in textbooks and courses.
+not highlighted.  This tutorial aims to explain the practical ISSUES. 
 
 
 ## <a name="sampling">Lesson 1:  The Notion of a Sample</a> 
@@ -98,9 +111,19 @@ which makes it a suitable model in some applications.
 Note that, as models, these are necessarily inexact.  No distribution in
 practice is exactly normal, for instance.  No one is 900 feet tall, and
 no one has a negative height.  For that matter, a normal distribution is
-continuous, whereas X is discrete, both due to sampling from a finite
-population and because our measuring instruments have only finite
-precision.
+continuous, whereas X is discrete, for two reasons:
+
+* We are sampling from a finite population.
+
+* Our measuring instruments have only finite precision.  If, say, X is
+  bounded between 0 and 10, and is measured to 2 decimal places, X can
+take on 1000 values, and thus is discrete.
+
+But what are we estimating, in light of the fact that our model is only
+approximate?  Say for instance we model X as having a gamma
+distribution.  Then in some sense, depending on how we estimate, we are
+estimating the gamma distribution that is closest to our true population
+distribution.
 
 ## <a name="normal">Lesson 3:  Conceptual Populations</a> 
 
@@ -371,7 +394,63 @@ E(S<sup>2</sup>) =
 (Var(&#x100;) + &mu;<sup>2</sup>) =
 (&sigma;<sup>2</sup> + &mu;<sup>2</sup>) - [(1/n) &sigma;<sup>2</sup> + &mu;<sup>2</sup>] =
 [(n-1)/n] &sigma;<sup>2</sup>
- 
+
+## <a name="geyser">Lesson 11:  Old Faithful Geyser Example</a> 
+
+To start to make the concepts tangible, let's look at **faithful**, a
+built-in dataset in R, recording eruptions of the Old Faithful geyser in
+the US national park, Yellowstone.
+
+The object consists of an R data frame with 2 columns, **eruptions** and
+**waiting**, showing the eruption durations and times between eruptions.
+The conceptual "population" here is the set of all Old Faithful
+eruptions, past, present and future.
+
+Let's start simple, with a CI for the population mean duration:
+
+``` r
+erps <- faithful$eruptions
+sampleMean <- mean(erps)
+s2 <- var(erps)  # this is s^2 not S^2
+stdErr <- sqrt(s2/length(erps))
+c(sampleMean - 1.96*stdErr, sampleMean + 1.96*stdErr)
+# (3.35,3.62)
+```
+
+## <a name="distrs">Lesson 12:  Estimating Entire Distributions</a> 
+
+Recall the *cumulative distribution function*` (cdf) pf a random variable 
+
+F<sub>X</sub>(t) = P(X <= t)
+
+This is indeed a function; for different values of t, we get different
+values of the cdf.
+
+And as always, there are population and sample estimates.  If X is human
+height, then F<sub>X</sub>(66.5) is the population proportion of people
+with height at most 66.5 inches; the sample estimate of that quantity is
+the corresponding population proportion.
+
+Let's plot the ecdf for the geyser data.
+
+``` r
+plot(ecdf(erps))
+```
+
+![alt text](FaithfulCDF.png)
+
+The sample estimate is called the *empirical cdf* (hence the name of the
+function).  Note:  Since it consists of proportions, it is
+unbiased.
+
+What about estimating the probability density function (pdf)?  As noted,
+pdfs do not really exist in practice, so "the" pdf here is the one that
+best approximates the true population distribution, but from here on,
+let's just speak of estimating "the" pdf.
+
+Actually, the familiar histogram is a pdf estimator, provided we specify
+that the total area under it is 1.0.
+
 
 
 ## LICENSING
