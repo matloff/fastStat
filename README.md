@@ -418,7 +418,7 @@ c(sampleMean - 1.96*stdErr, sampleMean + 1.96*stdErr)
 
 ## <a name="distrs">Lesson ESTDISTRS:  Estimating Entire Distributions</a> 
 
-Recall the *cumulative distribution function*` (cdf) pf a random variable 
+Recall the *cumulative distribution function*` (cdf) of a random variable 
 
 F<sub>X</sub>(t) = P(X <= t)
 
@@ -463,7 +463,23 @@ Histograms are considered rather crude estimators of a density, as they
 are so choppy.  A more advanced approach is that of *kernel* density
 estimators.  
 
-![alt text](DensErps.png)
+In estimating the density at a given point t, kernel estimators work by
+placing more weight on the data points that are closer to t, with the
+weights being smooth functions of the distance to t.  A smooth curve
+results.
+
+But what does "close" mean?  Just like histograms have a *tuning
+parameter* (called a *hyperparameter* in Machine Learning circles) in
+the form of the bin width, kernel estimators have something called the
+*bandwidth*.  Let's not go into the formula here, but the point is that
+smaller bandwidths yield a more peaked graph, while larger values
+produce flatter curves.
+
+Here are the graphs for bandwidths of 0.25 and 0.75:
+
+![alt text](DensErps025.png)
+
+![alt text](DensErps075.png)
 
 
 
