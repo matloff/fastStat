@@ -477,9 +477,64 @@ produce flatter curves.
 
 Here are the graphs for bandwidths of 0.25 and 0.75:
 
+``` r
+plot(density(erps,bw=0.25))
+plot(density(erps,bw=0.75))
+
+```
+
 ![alt text](DensErps025.png)
 
 ![alt text](DensErps075.png)
+
+The first graph seems to clearly show 2 bells, but the second one is
+rather ambiguous.  With even larger values for the bandwidth (try it
+yourself), we see a single bell, no hint of 2.
+
+How should we choose the bandwidth, or for that matter, the bin width?
+If we make the bandwidth too large, some important "bumps" may not be
+visible.  On the other hand, if we make it too small, this will just
+expose sampling variability, thus displaying "false" bumps.
+
+We'll address this (but unfortunately not answer it) next.
+
+## <a name="trade">Lesson TRADE:  The Bias-Variance Tradeoff</a> 
+
+In the above histogram of the **erps** data, the graph seems,
+for example, to be increasing from 2.5 o 4.5.  Consider in particular
+the bin from 3.5 to 4.
+
+This suggests that the true population density curve f(t) is also rising
+from 2.5 to 4.5, and in particular, from 3.5 to 4.  Yet the histogram
+height is a constant from 3.5 to 4.  This likely would mean that
+the true f(t) curve is higher than the histogram for t near 4, and lower
+than the histogram for t near 3.5.  In other words:
+
+> The histogram, as an estimate of f, is likely biased upward (i.e. >
+> 0) near 3.5 and downward (< 0) near 4.
+
+And what if the bin width were much narrower? Then the bias described
+above would still exist, but would be smaller.
+
+On the other hand, the narrower the bin, the fewer the number of data
+points, and thus the more the bin's height will vary from sample to
+sample.
+
+In other words:
+
+> There is a tradeoff here: Smaller bins produce smaller bias but larger
+> variance (and the opposite for larger bins).
+
+So, even though bias was seen not to be an issue in the context of CIs,
+it *is* an issue here.
+
+There is no good, universally agreed-to way to choose the bin size.
+Various math stat people have done some theoretical work that has led to
+suggestions, which you can try, such as setting **breaks='FD'** in your
+call to **hist()**.
+
+Where the bias-variance really becomes an isssue is in
+prediction/machine learning contexts, to be covered later.
 
 
 
