@@ -536,8 +536,118 @@ call to **hist()**.
 Where the bias-variance really becomes an isssue is in
 prediction/machine learning contexts, to be covered later.
 
+## <a name="predict">Lesson PREDICT:  Predictive Models</a> 
 
+From the 19th century linear models to today's fancy machine learning 
+(ML) algorithms, a major application of statistics has been prediction.  In
+this lesson, we set the stage for discussing prediction.
 
+Say we are predicting a scalar Y from (a possibly vector-valued) X.  Let
+p(X) denote our prediction.  Classically, we wish to minimize the Mean
+Squared Prediction Error,
+
+E[(Y - p(X))<sup>2</sup>]
+
+Note that E() will be the average over all possible (X,Y) pairs in the
+population.  Other loss functions besides squared-error are possible,
+but this one is mathematically tractable.
+
+The minimizer is easily shown to be 
+
+p(X) = E(Y | X)
+
+Note that in the case of Y being an indicator variable, this reduces
+to 
+
+p(X) = P(Y = 1 | X)
+
+Borrowing from the fact that a typical symbol for the mean is &mu;,
+let's define the function
+
+&mu;(t) = E(Y | X = t)
+
+which, as noted, in the case of dichotomous Y becomes
+
+&mu;(t) = P(Y =  | X = t)
+
+This is called the *regression function of Y on X*.  Note that this is a
+general term, NOT restricted just to the linear model.
+
+Our goal, then, is to use our sample data
+
+(X<sub>1</sub>,Y<sub>1</sub>),...  (X<sub>n</sub>,Y<sub>n</sub>)
+
+to estimate &mu;(t).  Denote the sample estimate by m(t).  Keep in mind,
+we are estimating an entire function here, one value for each t.
+
+We will often take as a convenient example predicting weight Y from
+height X, or a vector X = (height,age).
+
+The Bias-Variance Tradeoff becomes key in such models.  The more
+predictors we use (*features* in ML parlance),* the smaller the bias in
+m(t) but the larger the variance.  If we keep adding features, at some
+point the variance becomes dominant, and we overfi.
+
+## <a name="lin">Lesson LIN:  Linear Predictive Model</a> 
+
+One can show that (X,Y) has a multivariate normal distribution, then
+
+* &mu;(t) is linear in t
+
+* the conditional distribution of Y given X = t is normal
+
+* Var(Y | X = t) is constant in t
+
+So, classically one assumes that
+
+&mu;(t) = 
+&beta;<sub>0</sub> +
+&beta;<sub>1</sub> +
+...
+&beta;<sub>p</sub> 
+
+for a p-predictor model, where t = (t<sub></sub>,...,t<sub>p</sub>).
+
+In vector form, our assumption is
+
+&mu;(t) = &beta;'(1,t)
+
+where &beta; and (1,t) are taken to be column vectors and ' means matrix
+transpose.
+
+Again, the &beta;<sub>i</sub> are population values
+
+The sample estimates vector b is computed by minimizing
+
+&Sigma;<sub>1</sub><sup>n</sup>
+[Y<sub>i</sub> - b'X<sub>i</sub>]<sup>2</sup>
+
+A closed-form solution exists, and is implemented in R as **lm()**.
+
+**But what about that multivariate normal assumption?**  ML
+approaches work better in many cases, because they don't have to make
+such assumptions.
+
+The answer is that the linear model is hugely popular, and often for
+good reason:  In practice, &mu;(t) is often in fact approximately
+linear.  And:
+
+> A parametric model may perform better than a nonparametric one if
+> the former is approximately correct.  Better to estimate a few values,
+> e.g. &beta;, than infinitely many (one for each value of t).
+
+Moreover, one can fit more complex models that are still linear, e.g.
+a full quadratic model of the regression of weight on height and age,
+
+mean wt =  
+&beta;<sub>0</sub> +  
+&beta;<sub>1</sub> ht +
+&beta;<sub>2</sub> age +
+&beta;<sub>3</sub> ht<sup>2</sup> +
+&beta;<sub>4</sub> age<sup>2</sup> +
+&beta;<sub>5</sub> ht age
+
+This is still a linear model, as it is linear in &beta;.
 
 ## LICENSING
 
