@@ -736,7 +736,8 @@ mean wt =
 &beta;<sub>4</sub> age<sup>2</sup> +
 &beta;<sub>5</sub> ht age
 
-This is still a linear model, as it is linear in &beta;.
+This is still a linear model, as it is linear in &beta;, even though it
+is nonlinear in height and age.
 
 We can fit polynomial models using the 
 [polreg](https://cran.rstudio.com/web/packages/polyreg/index.html)
@@ -744,11 +745,71 @@ package (or use **qeML::qePoly()**).  But as we fit polynomials of
 higher and higher degree, we quickly run into the Bias-Variance
 Tradeoff, and risk overfitting.
 
-Bottom likne:
+In that case, a nonparametric model, such as from ML, may work much
+better.  However, keep in mind that ML models can overfit too.
 
-> A parametric model may perform better than a nonparametric one if
-> the former is approximately correct.  Better to estimate a few values,
-> e.g. &beta;, than infinitely many (one for each value of t).
+## <a name="logit">Lesson LOGIT:  Logistic Predictive Model</a> 
+
+What about the case in which Y is an indicator variable, say Diabetic (Y
+= 1) vs. Nondiabetic (Y = 0)?  
+
+Recall that in this setting, &mu;(t) reduces to P(Y = 1 | X = t).
+
+As we did in the lesson about on the linear model, again let's start
+with the classical normal-distribution based model.  This is known as
+*Fisher Linear Discriminant Analysis* (LDA).
+
+Here, the distribution of X, given that Y = i, is assumed multivariate 
+normal with mean vector &nu;<sub>i</sub> and covariance matrix C that
+does not depend on i.  Let r denote P(Y = 1) (unconditional).
+
+If one then applies Bayes' Rule (this is NOT Bayesian statistics), one
+finds that 
+
+P(Y = 1 | X = t)
+
+has a *logistic* form.  If X we have a single predictor (so
+&nu;<sub>i</sub> is a scalar and C is just the standard deviation
+&sigma;), the form is
+
+P(Y = 1 
+| X = t) = 1 / [1 + exp(-{&gamma;<sub>0</sub> + &gamma;<sub>1</sub>t)}]
+
+for parameters &gamma;<sub>0</sub> and &gamma;<sub>1</sub>
+that depend on &nu;<sub>i</sub> and &sigma;
+
+In the case of multiple features, this is
+
+P(Y = 1 | X = t) = 1 / [1 + exp(-&gamma;'t)]
+
+(Let's call the above, "the Logistic Equation.")
+
+Again as in the case of the linear model discussion above, we must ask,
+**WHAT IF THE ASSUMPTIONS, E.G. NORMALITY, DON'T HOLD?**
+
+And the answer is that the logistic model )often called *logit*) is
+quite popular.  The Logistic Equation does produce a value in (0,1),
+which is what we want for a probability of course, yet we still have a
+linear ingredient.
+
+Moreover, as in the linear case, we can introduce polynomial terms to
+reduce model bias.  (It will turn out below that there is also a "polynomial
+connection to some popular ML methods, SVM and neural networks.)
+
+By the way, many books present the logit model in terms of "linear
+log-odds ratio."  The odds ratio is 
+
+P(Y = 1 | X = t) / [P(Y = 0 | X = t)]
+
+While it is true that the log of that quantity is linear in logit, this
+description seems indirect.  We might be interested in the odds, but why
+would the *logarithm* of the odds be of interest?  It's best to stick to
+the basics:
+
+* A model for a probability should produce values in (0,1).
+
+* It would be nice if the model has an ingredient the familiar linear
+  form.
 
 ## LICENSING
 
