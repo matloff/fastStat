@@ -306,7 +306,7 @@ Z = (&#x100; - &mu;) / s.e.(&#x100;)
 has mean 0 and variance 1, where &mu; is the population mean of X.
 (Recall that &#x100; is unbiased for &mu;.)  And since Z actually DOES
 have an approximately normal distribution, its distribution is thus
-approximately N(0,1).  
+approximately N(0,1), i.e. normal with mean 0 and variance 1..  
 
 Now since the N(0,1) distribution has 95% of its area between -1.96 and
 1.96, we have
@@ -398,6 +398,75 @@ E(S<sup>2</sup>) =
 (&sigma;<sup>2</sup> + &mu;<sup>2</sup>) - [(1/n) &sigma;<sup>2</sup> + &mu;<sup>2</sup>] =
 [(n-1)/n] &sigma;<sup>2</sup>
 
+## <a name="sig">Lesson SIG: Significance Testing </a> 
+
+The notion of *signficance testing* (ST) (also known as
+*hypothesis testing*, and *p-values*) is
+one of the real oddities in statistics.  
+
+* On the one hand, statisticians are well aware of the fact that ST can
+  be highly miseadling.
+
+* But on the other hand, they teach ST either with ilttle or
+no warning about its dangers.  As a result, its use is widespread.
+
+A few years ago, the American Statistical Association released its
+first-ever position paper on any topic, stating what everyone had known
+for decades: ST is simply not a good tool.
+
+The stopped just short of recommending fully against ST,
+but it is my position that ST should simply not be used.  Instead, analysis
+should be based on CIs.  
+
+But first, what is ST?  To keep things simple, let's say we have some
+coin, and want to test the hypothesis H<sub>0</sub>: r = 0.5, where r is
+the probability of heads.  We will toss the coin n times, and set R to
+the proportion of heads in our sample.
+
+We take an "innocent until proven guilty" approach, clinging to our
+belief in H<sub>0</sub> until/unless we see very strong evidence to the
+contrary.  Well, what constituters "strong"?
+
+We look at the ratio Z = (R-0.5) / s.e.(R).  R is approximately normal,
+as noted earlier, and under H<sub>0</sub> R has mean 0.  So under
+H<sup>0</sup>, W ~ N(0,1).  (Tilde is standard notation for "distributed
+as.")
+
+So, P(|Z| > 1.96) &approx; 0.05 and 5% is the traditional standard for
+"strong evidence."  So we reject H<sup>0</sup> if and only if |Z| >
+1.96.
+
+And we can get greedy.  What if, say, we find that R = 2.2?  Note:
+
+``` r
+> pnorm(-2.2)
+[1] 0.01390345
+```
+
+Under H<sub>0</sub>, P(|Z| > 2.2) &approx; 0.028.  Ah, we would have
+rejected H<sub>0</sub> even under the more stringent "strong evidence"
+criterion of 0.028.  So we report 0.028, known as the *p-value*.  The
+smaller the p-value, the more *signficant* we declare our finding.
+
+Well, what's wrong with that?
+
+* We know *a priori* that H<sub>0</sub> is false.  No coin is exactly
+  balanced.  So it's rather silly to ask the question re H<sub>0</sub>.
+
+* We might be interested in knowing whether the coin is *approximately*
+  balanced.  Fine, the the ST is not addressing THAT question.  Even if
+r is just a little different from 0, then as the number of tosses n goes
+to infinity, the denominator in Z goes to 0, and thus R goes to
+&pm;&infin;--and the p-value goes to 0.
+
+* In such a scenario, we declare that the coin is "signficantly" 
+unbalanced, an egregiously misleading statement.
+
+See 
+[this document](https://github.com/matloff/regtools/blob/master/inst/NoPVals.md)
+for the details, including the use of CIs in lieu of ST.  (NOT a matter
+of "Check to see whether the CI contains 0.5, 0 or whatever.")
+
 ## <a name="geyser">Lesson GEYSER:  Old Faithful Geyser Example</a> 
 
 To start to make the concepts tangible, let's look at **faithful**, a
@@ -419,6 +488,97 @@ stdErr <- sqrt(s2/length(erps))
 c(sampleMean - 1.96*stdErr, sampleMean + 1.96*stdErr)
 # (3.35,3.62)
 ```
+
+## <a name="mlemm">Lesson MLEMM:  General Methods of Estimation</a> 
+
+So far, we've discussed only ad hoc estimators, set up for a specific
+purpose.  It would be nice to have general ways of forming estimators.
+The two most common such techniques are *Maximum Likelihood Estimation*
+(MLE) and the *Method of Moments* (MM).  Let's illustrate them with a
+simple example, MM first.
+
+**The Method of Moments**
+
+> Say we are estimating some parameter &theta; with the estimator to be
+> found and named T.  Then, in the formal expression for EX, replace
+> &theta; by T; set the result to the sample mean &#x100; and solve for T.
+
+Say we are modeling our data X<sub>i</sub> as coming from a population
+with an exponential distribution, i.e.
+
+f<sub>X</sub>(t) = &lambda;e<sup>-&lambda;t</sup>, t > 0
+
+It is well known (and easy to derive) that EX = 1 / &lambda;.  Denote
+our estimator of &lambda; by L.  Then the above recipe gives us
+
+1 / L = &#x100;
+
+and thus 
+
+L = 1 / &#x100;
+
+It may be that our parametric model has 2 parameters rather than 1,
+so now  &theta; = (&theta;<sub>1</sub>,&theta;<sub>2</sub>) and
+T = (T<sub>1</sub>,T<sub>2</sub>).
+Then in addition to generating an equation for the sample mean as above,
+we also generate a second equation for the sample variance in terms of
+the &theta;<sub>i</sub>; we replace the &theta;<sub>i</sub> by
+T<sub>i</sub>; on the right-hand side, we write the sample variance.
+That gives us 2 equations in 2 unknowns, and we solve for the
+T<sub>i</sub>.
+
+There are variations.  E.g. instead of the variance and sample variance, we
+can use the *second moment*, E(X<sup>k</sup>) and its sample analog
+
+(1/n) &Sigma;<sub>i</sub><sup>n</sup> X<sub>i</sub><sup>k</sup>
+
+This may be easier if, say, we have 3 parameters to estimate.
+
+**The Method of Maximum Likelihood**
+
+Discrete case:
+
+> Say we model the population as having a probability mass function
+> p<sub>X</sub> that depends on some (scalar or vector) parameter &theta;.
+> Calculate the probability (i.e. "likelihood") of our observed data, as a
+> function of &theta;.  Replace &theta; by T everywhere in that
+> expression; and finally, then take the MLE to be whatever value of T
+> maximizes that likelihood.
+
+If our X<sub>i</sub> are independent, then the likelihood expression is
+
+&Pi;<sub>i</sub><sup>n</sup> p(X<sub>i</sub>)
+
+We take the logarithm, to make derivatives easier.  
+
+Continuous case:
+
+A density function is NOT a probability -- it can be larger than 1 --
+but it does work roughly as a likelihood; if say f(12.3) is large, then
+one will see many X that are near 12.3.  So, in the above prescription,
+replace p by f.
+
+*Asymptotic normality:*  
+
+We mentioned earlier that the CLT not only applies to sums but
+also extends to smooth (i.e. differentiable) functions of sums.
+That fact is important here.  How does that play out with MMs and MLEs?
+
+MMs: By definition, we are working with sums! 
+
+MLE: The log-likelihood is a sum!
+
+Again, we must be working with smooth functions.  Consider the *negative
+binomial* distribution family,
+
+P(X = j) = C(n-1,i-1) r<sup>i</sup> (1-r)<sup>n-i</sup>
+
+This arises, say, from tossing a coin until we accumulate k heads.
+
+If our parameter is r, with known k, the above is a differentiable
+function of r.  But if we don't know k, say we have the data but did not
+collect it ourselves, then we don't have differentiability in that
+parameter.
 
 ## <a name="distrs">Lesson ESTDISTRS:  Estimating Entire Distributions</a> 
 
@@ -540,7 +700,8 @@ call to **hist()**.
 Where the bias-variance really becomes an isssue is in
 prediction/machine learning contexts, to be covered later.
 
-## <a name="predict">Lesson PREDICT:  Predictive Models</a> 
+## <a name="predict">Lesson PREDICT:  Predictive Modeling --
+Preliminaries</a> 
 
 From the 19th century linear models to today's fancy machine learning 
 (ML) algorithms, a major application of statistics has been prediction.  In
@@ -592,9 +753,6 @@ predictors we use (*features* in ML parlance),* the smaller the bias in
 m(t) but the larger the variance.  If we keep adding features, at some
 point the variance becomes dominant, and we overfit.
 
-Most regression models, both parametric and ML, have regularized
-versions, again, to guard against extreme data having too much impact.
-
 ## <a name="mlb">Lesson MLB:  The mlb dataset</a> 
 
 This data, on major league baseball players in the US, is included with
@@ -612,7 +770,7 @@ my [**qeML** package](github.com/matloff/qeML) ("quick ML").
 
 We'll usually use just Height, Weight and Age.
 
-## <a name="lin">Lesson LIN:  Linear Predictive Model</a> 
+## <a name="lin">Lesson LIN:  Predictive Modeling -- Linear</a> 
 
 One can show that (X,Y) has a multivariate normal distribution, then
 the following attributes hold:
@@ -748,7 +906,7 @@ Tradeoff, and risk overfitting.
 In that case, a nonparametric model, such as from ML, may work much
 better.  However, keep in mind that ML models can overfit too.
 
-## <a name="logit">Lesson LOGIT:  Logistic Predictive Model</a> 
+## <a name="logit">Lesson LOGIT:  Predictive Modeling -- Logistic</a> 
 
 What about the case in which Y is an indicator variable, say Diabetic (Y
 = 1) vs. Nondiabetic (Y = 0)?  
@@ -810,6 +968,11 @@ the basics:
 
 * It would be nice if the model has an ingredient the familiar linear
   form.
+
+## <a name="dimred">Lesson LOGIT:  Predictive Modeling -- Avoiding Overfitting</a> 
+
+Most regression models, both parametric and ML, have regularized
+versions, again, to guard against extreme data having too much impact.
 
 ## LICENSING
 
