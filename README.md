@@ -327,8 +327,12 @@ We are (approximately) 95% confident that the true population mean is in
 that interval.  (Remember. it is the interval that is random, not &mu;)
 
 And things don't stop there.  Actually, many types of estimators have
-some kind of sum within them, and thus have an approximately normal
-distribution.  Thus approximate CIs can be found for lots of different
+some kinds of sums within them, and thus have an approximately normal
+distribution, provided the estimator is a smooth function of those sums.  
+(A Taylor series approximation results in a linear function of normal
+random variable, thus again linear.)
+
+Thus approximate CIs can be found for lots of different
 estimators, notably Maximum Likelihood Estimators and least-squares
 parametric regression estimators, as we will see in a later lesson.
 
@@ -586,17 +590,38 @@ height X, or a vector X = (height,age).
 The Bias-Variance Tradeoff becomes key in such models.  The more
 predictors we use (*features* in ML parlance),* the smaller the bias in
 m(t) but the larger the variance.  If we keep adding features, at some
-point the variance becomes dominant, and we overfi.
+point the variance becomes dominant, and we overfit.
+
+Most regression models, both parametric and ML, have regularized
+versions, again, to guard against extreme data having too much impact.
+
+## <a name="mlb">Lesson MLB:  The mlb dataset</a> 
+
+This data, on major league baseball players in the US, is included with
+my [**qeML** package](github.com/matloff/qeML) ("quick ML").
+
+``` r
+> head(mlb)
+        Position Height Weight   Age
+1        Catcher     74    180 22.99
+2        Catcher     74    215 34.69
+3        Catcher     72    210 30.78
+4  First_Baseman     72    210 35.43
+5  First_Baseman     73    188 35.71
+```
+
+We'll usually use just Height, Weight and Age.
 
 ## <a name="lin">Lesson LIN:  Linear Predictive Model</a> 
 
 One can show that (X,Y) has a multivariate normal distribution, then
+the following attributes hold:
 
-* &mu;(t) is linear in t
+* linearity of the regresion function:  &mu;(t) is linear in t
 
-* the conditional distribution of Y given X = t is normal
+* conditional normality of Y given X = t 
 
-* Var(Y | X = t) is constant in t
+* conditional homogeneous variance:  Var(Y | X = t) is constant in t
 
 So, classically one assumes that
 
@@ -624,19 +649,83 @@ The sample estimates vector b is computed by minimizing
 
 A closed-form solution exists, and is implemented in R as **lm()**.
 
-**But what about that multivariate normal assumption?**  ML
-approaches work better in many cases, because they don't have to make
-such assumptions.
+``` r
+> z <- lm(Weight ~ Height+Age,data=mlb)
+> summary(z)
 
-The answer is that the linear model is hugely popular, and often for
-good reason:  In practice, &mu;(t) is often in fact approximately
-linear.  And:
+Call:
+lm(formula = Weight ~ Height + Age, data = mlb)
 
-> A parametric model may perform better than a nonparametric one if
-> the former is approximately correct.  Better to estimate a few values,
-> e.g. &beta;, than infinitely many (one for each value of t).
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-50.535 -12.297  -0.297  10.824  74.300 
 
-Moreover, one can fit more complex models that are still linear, e.g.
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -187.6382    17.9447  -10.46  < 2e-16 ***
+Height         4.9236     0.2344   21.00  < 2e-16 ***
+Age            0.9115     0.1257    7.25 8.25e-13 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+...
+```
+
+Note the standard errors.  An approximate 95% confidence interval for 
+&beta;<sub>Age</sub> is
+
+``` r
+> rad <- 1.96*0.1257
+> c(0.9115 - rad, 0.9115 + rad)
+[1] 0.665128 1.157872
+
+```
+
+Ah, even these professional athletes, tend to gain weight as they age,
+something like a pound per year.
+
+**BUT WHAT ABOUT THOSE CLASSICAL ASSUMPTIONS FOR THE LINEAR MODEL?**  
+Do they matter?
+
+On the one hand, the answer is "Not much."  
+
+* The formula for the least-squares estimator b consists of various
+  sums, so that the Central Limit Theorem tells us that b is
+approximaely normal even if the conditional normality assumption doesn't
+hold.
+
+* Violations of the homogeneous conditional variance assumption can be
+  handled by *sandwich estimators*, e.g.
+
+``` r
+> library(sandwich)
+> vcovHC(z)
+            (Intercept)       Height          Age
+(Intercept) 323.5135765 -4.151528253 -0.629074510
+Height       -4.1515283  0.055692865  0.002166495
+Age          -0.6290745  0.002166495  0.015967653
+
+```
+
+A more accurate standard error for &beta;<sub>Age</sub> is thus
+
+``` r
+> sqrt(0.015967653)
+[1] 0.1263632
+```
+
+(not much change here, but there is a larger difference in some cases).
+
+On the other hand, those considerations are important if our goal is
+*understanding*, e.g. understanding weight gain in pro ball players.
+For the *prediction* goal, those issues are irrelevant; all that really
+matters is whether the true &mu;(t) is approximately linear.  (And if it
+isn't, we aren't achieving the understanding goal either; our CIs will
+be invalid.)  That would seem to argue in favor of using ML models,
+which do not make linearity assumptions.
+
+But there's more:
+
+One can fit more complex models that are still linear, e.g.
 a full quadratic model of the regression of weight on height and age,
 
 mean wt =  
@@ -648,6 +737,18 @@ mean wt =
 &beta;<sub>5</sub> ht age
 
 This is still a linear model, as it is linear in &beta;.
+
+We can fit polynomial models using the 
+[polreg](https://cran.rstudio.com/web/packages/polyreg/index.html)
+package (or use **qeML::qePoly()**).  But as we fit polynomials of
+higher and higher degree, we quickly run into the Bias-Variance
+Tradeoff, and risk overfitting.
+
+Bottom likne:
+
+> A parametric model may perform better than a nonparametric one if
+> the former is approximately correct.  Better to estimate a few values,
+> e.g. &beta;, than infinitely many (one for each value of t).
 
 ## LICENSING
 
