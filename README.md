@@ -777,6 +777,20 @@ call to **hist()**.
 Where the bias-variance really becomes an isssue is in
 prediction/machine learning contexts, to be covered later.
 
+## <a name="predict">Lesson MULTI:  Multivariate Distributions</a> 
+
+Say we have continuous random variables X and Y.  We of course can talk
+about their density functions f<sub>X</sub> and f<sub>Y</sub>, but it's
+also important to talk about how they vary (or not) *together*.  Here
+are a few facts:
+
+* f<sub>X,Y</sub>(u,v) = d/&part;u d/&part;v F<sub>X,Y</sub>(u,v) =
+P(X &le;u and Y &le;v)
+
+* P((X,Y) in A) = &int; &int;<sub>A</sub> f<sub>X,Y</sub>(u,v) du dv
+
+* f<sub>Y | X = v</sub>(u) = 
+
 ## <a name="predict">Lesson PREDICT:  Predictive Modeling -- Preliminaries</a> 
 
 From the 19th century linear models to today's fancy machine learning 
