@@ -657,11 +657,20 @@ lamb    2.195     0.2195
 
 ```
 
+*Extent of usage:*
+
+MLEs have appealing theoretical properties.  In smooth settings, they
+are optimal, i.e. minimal standard error.  They are quite widely used.
+
+MMs are less popular.  But they are easier to explain, and by the way,
+the inventor of the Generalized Method of Moments won the Nobel Prize in
+Econoomics in 2013 that developing that method.
+
 ## <a name="distrs">Lesson ESTDISTRS:  Estimating Entire Distributions</a> 
 
 Recall the *cumulative distribution function*` (cdf) of a random variable 
 
-F<sub>X</sub>(t) = P(X <= t)
+F<sub>X</sub>(t) = P(X &le; t)
 
 This is indeed a function; for different values of t, we get different
 values of the cdf.
@@ -669,7 +678,7 @@ values of the cdf.
 And as always, there are population and sample estimates.  If X is human
 height, then F<sub>X</sub>(66.5) is the population proportion of people
 with height at most 66.5 inches; the sample estimate of that quantity is
-the corresponding population proportion.
+the corresponding sample proportion.
 
 Let's plot the ecdf for the geyser data.
 
@@ -689,7 +698,7 @@ best approximates the true population distribution, but from here on,
 let's just speak of estimating "the" pdf.
 
 Actually, the familiar histogram is a pdf estimator, provided we specify
-that the total area under it is 1.0.
+that the total area under it is 1.0.  Here it is for the geyser data:
 
 ``` r
 hist(erps,freq=FALSE)
@@ -710,7 +719,7 @@ weights being smooth functions of the distance to t.  A smooth curve
 results.
 
 But what does "close" mean?  Just like histograms have a *tuning
-parameter* (called a *hyperparameter* in Machine Learning circles) in
+parameter* (called a *hyperparameter* in machine learning circles) in
 the form of the bin width, kernel estimators have something called the
 *bandwidth*.  Let's not go into the formula here, but the point is that
 smaller bandwidths yield a more peaked graph, while larger values
@@ -745,21 +754,23 @@ In the above histogram of the **erps** data, the graph seems,
 for example, to be increasing from 2.5 o 4.5.  Consider in particular
 the bin from 3.5 to 4.
 
-This suggests that the true population density curve f(t) is also rising
-from 2.5 to 4.5, and in particular, from 3.5 to 4.  Yet the histogram
-height is a constant from 3.5 to 4.  This likely would mean that
-the true f(t) curve is higher than the histogram for t near 4, and lower
-than the histogram for t near 3.5.  In other words:
+The increasing nature of the histogram in that region suggests that the
+true population density curve f(t) is also rising from 2.5 to 4.5, and
+in particular, from 3.5 to 4.  Yet the histogram height is a constant
+from 3.5 to 4.  This likely would mean that the true f(t) curve is
+higher than the histogram for t near 4, and lower than the histogram for
+t near 3.5.  In other words:
 
-> The histogram, as an estimate of f, is likely biased upward (i.e. >
-> 0) near 3.5 and downward (< 0) near 4.
+> The histogram, as an estimate of f, is likely biased upward (i.e. 
+> bias > 0) near 3.5 and downward (< 0) near 4.
 
 And what if the bin width were much narrower? Then the bias described
 above would still exist, but would be smaller.
 
 On the other hand, the narrower the bin, the fewer the number of data
-points, and thus the more the bin's height will vary from sample to
-sample.
+points in each bin, so the greater the standard error of the histogram
+height within a bin.  (The "n" for the standard error is the number of
+points in the bin.)
 
 In other words:
 
@@ -789,7 +800,27 @@ P(X &le;u and Y &le;v)
 
 * P((X,Y) in A) = &int; &int;<sub>A</sub> f<sub>X,Y</sub>(u,v) du dv
 
-* f<sub>Y | X = v</sub>(u) = 
+* f<sub>Y | X = v</sub>(u) = f<sub>X,Y</sub>(u,v) / f<sub>X</sub>(u)
+
+* Unlike the univariate case, there are very few widely-used parametric
+  families of multivariate distributions.  The main one is multivariate
+normal.
+
+* The MV normal family does have some interesting properties, though:
+
+    - all marginal distributions are MV normal
+
+    - AX is MV normal for MV normal X and constant matrix A
+
+    - conditional distributions, given a singleton value, are MV normal
+
+    - those conditional distributions have mean that is linear in the
+      conditioning value, and variance (or covariance matrix) that does
+      not depend on that value
+
+* One common measure of the relation between variables U and V is their
+  (Pearson) *correlation*, E(U - EU)`(V - EV)] / sqrt[Var(U Var(V)].  They
+  need not be normal.  This is a quanttty in [0,1].[
 
 ## <a name="predict">Lesson PREDICT:  Predictive Modeling -- Preliminaries</a> 
 
@@ -797,7 +828,7 @@ From the 19th century linear models to today's fancy machine learning
 (ML) algorithms, a major application of statistics has been prediction.  In
 this lesson, we set the stage for discussing prediction.
 
-Say we are predicting a scalar Y from (a possibly vector-valued) X.  Let
+Say we are predicting a scalar Y from (a typically vector-valued) X.  Let
 p(X) denote our prediction.  Classically, we wish to minimize the Mean
 Squared Prediction Error,
 
@@ -832,8 +863,9 @@ Our goal, then, is to use our sample data
 
 (X<sub>1</sub>,Y<sub>1</sub>),...  (X<sub>n</sub>,Y<sub>n</sub>)
 
-to estimate &mu;(t).  Denote the sample estimate by m(t).  Keep in mind,
-we are estimating an entire function here, one value for each t.
+to estimate &mu;(t).  Denote the sample estimate by m(t).  To predict a
+new case, X<sub>new</sub>, we use m(X<sub>new</sub>).  Keep in mind,
+m(t) is an estimate of  an entire function here, one value for each t.
 
 We will often take as a convenient example predicting weight Y from
 height X, or a vector X = (height,age).
