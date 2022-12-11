@@ -1,7 +1,7 @@
 
 # fastStat: All of REAL Statistics
 
-## *"Quick intro to statistics for those who know probability"*
+## *"Quick intro to (real) statistics for those who know probability"*
 
 ### Norm Matloff, Prof. of Computer Science, UC Davis; [my bio](http://heather.cs.ucdavis.edu/matloff.html)
 
@@ -20,11 +20,11 @@ concepts, with a good intuitive understanding.**  It is modeled after
 my popular [fasteR tutorial](https://github.com/matloff/fasteR) for
 quickly becoming proficient in R. 
 
-By the way, the title, "All of REAL Statistics," is a play on two 
-excellent books, *All of Statistics* and *All of Nonparametric Statistics*,
-by one of my favorite statisticians, Larry Wasserman.  Both books are
-quite thin, making their "All of" titles ironic.  Well, my short
-tutorial here is even more "all of" in that sense.
+By the way, the title, "All of REAL Statistics," is a play on the titles
+of two excellent books, *All of Statistics* and *All of Nonparametric
+Statistics*, by one of my favorite statisticians, Larry Wasserman.  Both
+books are quite thin, making their "All of" titles ironic.  Well, my
+short tutorial here is even more "all of" in that sense.
 
 ## <a name="intuition">Lesson INTRO:  What Is Really Going on?</a> 
 
@@ -36,7 +36,7 @@ Indeed, **many of readers of this
 tutorial will be surprised to see that it does not contain many
 equations.**  But sadly, many people know the mechanics of statistics
 very well, without truly understanding an intuitive levels what those
-equations are really doing.
+equations are really doing, and this is our focus.
 
 For instance, consider estimator bias. Students in a math stat course
 learn the mathematical definition of bias, after which they learn that
@@ -48,6 +48,9 @@ textbooks and courses.
 
 We will indeed do some math derivations here, but not at the outset, and
 not highlighted.  This tutorial aims to explain the practical ISSUES. 
+Many of these are rather generally known, but not written down in books.
+Some are actually not widely known.  And some are entirely new ways of
+looking at familiar statistical concepts and properties.
 
 ## <a name="sampling">Lesson SAMPLING:  The Notion of a Sample</a> 
 
@@ -60,8 +63,10 @@ randomly from some list, say a list of phone numbers.  The point is that
 if we were to do this again, we would get 1200 other people, and the
 percentage saying Yes to our question would change.  Thus we want to
 have some idea as to how much our Yes percentage varies from one sample
-of 1200 people (note: this is NOT referred to as "1200 samples") to
-another.
+of 1200 people to another.  
+
+(Note: Sampling 1200 people is NOT referred to as "1200 samples."  The
+set of 1200 people is referred to as one sample of size 1200.) 
 
 Let's set some notation.  Say we are interested in some quantity X, say
 human height.  We take a sample of n people from a given target
@@ -95,13 +100,15 @@ there are non-i.i.d. versions of the CLT.)
 thus amenable to closed-form "exact" solutions.
 
 * It is often the case in math that discrete quantities are approximated
-  by continuous ones.
+  by continuous ones (also vice versa).
 
 * A normal distribution is determined by two parameters, the mean and
   variance of the distribution.  Without that assumption, we have many
   parameters, essentially infinitely many.  Let F<sub>X</sub> be the cdf
   of X, i.e. F<sub>X</sub>(t) = P(X &le; t).  Well, there are infinitely
-  many possible values for t.
+  many possible values for t, thus infinitely many values of F<sub>X</sub>(t).
+  But if we assume X is normal, those infinitely many values are all
+  expressible in terms of just two numbers.
 
 Another popular model is the exponential distribution family.  You
 probably learned in your probability course that it is "memoryless,"
@@ -159,7 +166,7 @@ samples, is q.  For some samples, Q > q, for others Q <- q, but on
 average we get q.  This relates to the issue of *bias*, which we will
 turn to later, but for now, say we have this situation, i.e. EQ = q.
 
-The key point:  If Var(Q) is small, then Q doesn't vary much from one
+**The key point:**  If Var(Q) is small, then Q doesn't vary much from one
 sample to another, and if EQ = q, then for "most" sample, Q should be
 near q.  That exactly what we hope for!  We only have one sample, of
 course, but if we know that Q is usually near q, we feel
@@ -176,7 +183,7 @@ In our last lesson, we assumed that EQ = q.  We say that Q is an
 *unbiased* estimator of q.  In English:  the average value of Q over all
 possible samples is q. 
 
-In the above example, in which Q is the sample proportion of Yes's an
+In the above example, in which Q is the sample proportion of Yes's and
 q is the correspondng population proportion, it does turn out that Q is
 unbiased.  In fact, any sample mean is an unbiased estimator for the
 population mean.  (Here X is 1 or 0, so the average of the X<sub>i</sub>
@@ -207,7 +214,7 @@ low.  The amount of bias is
 
 E(S<sup>2</sup>) -  &sigma;<sup>2</sup> = -1/n  &sigma;<sup>2</sup> 
 
-This bothered the early developers of statistics, who defined the
+This bothered the early developers of statistics, who then defined the
 sample variance as
 
 s<sup>2</sup> = (1/(n-1)) &Sigma;<sub>i</sub><sup>n</sup>
