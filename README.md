@@ -247,9 +247,9 @@ standard error, so the argument in the last lesson still holds.
 
 Often X has only the values only 1 and 0, indicating the presence or
 absence of some trait.  That is the case in the opinion poll, for
-example, where the respondent replies Yes or not Yes.  Such a variable
-is called an *indicator variable*, as it indicates whether the trait is
-present or not.
+example, where the respondent replies Yes (1) or not-Yes (0).  Such a
+variable is called an *indicator variable*, as it indicates whether the
+trait is present or not.
 
 In this case, &#x100; reduces to the proportion of 1s, as with Q, the
 proportion of Yes responses to the opinion poll.  After some algebraic
@@ -264,7 +264,7 @@ S<sup>2</sup> = &#x100; (1-&#x100;) / n
 In our opinion poll example, Q is called a *point estimate* of q.  We
 would also like to have an interval estimate, which gives a range of
 values.  If say in in an election, the results of an opinion poll are
-reported as, Candidate X has support of 62.1% of the voters, with a
+reported as, "Candidate X has support of 62.1% of the voters, with a
 margin of 3.9%," it is saying,
 
 > A 95% confidence interval (CI) for X's support is (58.2%,66.0%).
@@ -276,7 +276,8 @@ the intervals would cover the true value, q.
 Of course, we do not collect all possible samples; we just have 1.  We
 say we are 95% that q is in our particular interval in the above sense.
 (A note on the phrasing "q is in our interval":  Some may take this to
-mean that q is random, which it is not; q is unknown but fixed.)
+mean that q is random, which it is not; q is unknown but fixed.  The CI
+is what varies from one sample to another.)
 
 It's exactly like gambling.  We don't know whether our particular roll
 of the dice will yield a winner, but if most rolls of the dice do so,
@@ -285,15 +286,15 @@ then we may be willing to go ahead.
 ## <a name="asymp">Lesson CIAPPROX:  Confidence Intervals from Asymptotics</a> 
 
 The early developers of statistics defined a distribution family known
-as *Student's t*.  This supposedly can be used to form "exact," i.e. the
+as *Student's t*.  This supposedly can be used to form "exact" CIs, i.e. the
 probability of the CI covering the target population value is exactly
 0.95, if the population distribution of X is normal.  Student-t is
-widely taught, and thus widely used.  But that is just an illusion.  As
+widely taught, and thus widely used.  **But that is just an illusion.**  As
 pointed out earlier, no distribution in practice is exactly normal.
 
 What saves the day, though, is the Central Limit Theorem.  &#x100; is a
-sum, which the CLT tells us is asymptocially normally distributed
-as n goes to infinity/
+sum, which the CLT tells us is asymptotically normally distributed
+as n goes to infinity.
 
 In other words, if we were to compute &#x100; on each of the possible
 samples of size n from the population, and then plot the results in a
@@ -335,21 +336,22 @@ that interval.  (Remember. it is the interval that is random, not &mu;)
 
 And things don't stop there.  Actually, many types of estimators have
 some kinds of sums within them, and thus have an approximately normal
-distribution, provided the estimator is a smooth function of those sums.  
+distribution, provided the estimator is a smooth function of those sums.
 (A Taylor series approximation results in a linear function of normal
-random variable, thus again linear.)
+random variable, thus again normal.)
 
 Thus approximate CIs can be found for lots of different
 estimators, notably Maximum Likelihood Estimators and least-squares
-parametric regression estimators, as we will see in a later lesson.
+parametric regression estimators, as we will see in later lessons.
 
-In other words, we have the following principle (the name is mind, the
+In other words, we have the following principle (the name is mine, the
 principle general):
 
 **The Fundamental Tool of Statistical Inference:**
 
-> If R is a "smooth" estimator of a population quantity r, based on an
-> i.i.d. sample, then an approximate 95% confidence interval for r is
+> If R is a "smooth" estimator of a population quantity r consisting of
+> sums, based on an i.i.d. sample, then an approximate 95% confidence
+> interval for r is
 > 
 > (R - 1.96 s.e.(R), R + 1.96 s.e.(R)
 
@@ -364,7 +366,7 @@ correct.  But it won't be exactly correct, in spite of the claim.
 
 As noted earlier, the goal of this tutorial is to develop within the
 reader an understanding of the intuition underlying statistical concepts
-of methods.  It is not a tutorial on math stat.  Nevertheless, it's
+or methods.  It is not a tutorial on math stat.  Nevertheless, it's
 important to show a few derivations.
 
 **&#x100; is an unbiased estimator of &mu;:**
@@ -414,16 +416,16 @@ one of the real oddities in statistics.
 * On the one hand, statisticians are well aware of the fact that ST can
   be highly miseadling.
 
-* But on the other hand, they teach ST either with ilttle or
+* But on the other hand, they teach ST with ilttle or
 no warning about its dangers.  As a result, its use is widespread.
 
 A few years ago, the American Statistical Association released its
 first-ever position paper on any topic, stating what everyone had known
-for decades: ST is simply not a good tool.
+for decades: ST is just not a good tool.
 
 The stopped just short of recommending fully against ST,
 but it is my position that ST should simply not be used.  Instead, analysis
-should be based on CIs.  
+should be based on CIs, as explained later in this lesson..  
 
 But first, what is ST?  To keep things simple, let's say we have some
 coin, and want to test the hypothesis H<sub>0</sub>: r = 0.5, where r is
@@ -436,11 +438,11 @@ contrary.  Well, what constituters "strong"?
 
 We look at the ratio Z = (R-0.5) / s.e.(R).  R is approximately normal,
 as noted earlier, and under H<sub>0</sub> R has mean 0.  So under
-H<sup>0</sup>, W ~ N(0,1).  (Tilde is standard notation for "distributed
+H<sub>0</sub>, W ~ N(0,1).  (Tilde is standard notation for "distributed
 as.")
 
 So, P(|Z| > 1.96) &approx; 0.05 and 5% is the traditional standard for
-"strong evidence."  So we reject H<sup>0</sup> if and only if |Z| >
+"strong evidence."  So we reject H<sub>0</sub> if and only if |Z| >
 1.96.
 
 And we can get greedy.  What if, say, we find that R = 2.2?  Note:
@@ -458,10 +460,11 @@ smaller the p-value, the more *signficant* we declare our finding.
 Well, what's wrong with that?
 
 * We know *a priori* that H<sub>0</sub> is false.  No coin is exactly
-  balanced.  So it's rather silly to ask the question re H<sub>0</sub>.
+  balanced.  So it's rather silly to ask the question regarding
+  H<sub>0</sub>.
 
 * We might be interested in knowing whether the coin is *approximately*
-  balanced.  Fine, the the ST is not addressing THAT question.  Even if
+  balanced.  Fine, but the ST is not addressing THAT question.  Even if
 r is just a little different from 0, then as the number of tosses n goes
 to infinity, the denominator in Z goes to 0, and thus R goes to
 &pm;&infin;--and the p-value goes to 0.
@@ -469,10 +472,47 @@ to infinity, the denominator in Z goes to 0, and thus R goes to
 * In such a scenario, we declare that the coin is "signficantly" 
 unbalanced, an egregiously misleading statement.
 
+* We have the opposite problem with small n.  We will declare "no
+  signficant difference" when we actually should say, "We have too
+little data to make any claims."
+
+One reason that ST is so appealing is that it allows the user to be
+lazy.  Say we have two drugs, an old one A and a new one B, for treating
+high blood pressure.  The user here may be a government agency, deciding
+whether to approve the new drug.
+
+Let &mu;<sub>A</sub> and &mu;<sub>B</sub> denote the population mean
+effects of the two drugs.  Then the null hypothesis is
+
+H<sub>0</sub>: &mu;<sub>A</sub> = &mu;<sub>B</sub>
+
+Again, we know *a priori* that H<sub>0</sub> must be false--the two
+means can't be equal, to infinitely many decimal places--so the test is
+meaningless in the first place, and we will have the problems described
+above.  But, forget all that--the test gives us an ANSWER, and the user
+is happy.
+
+A more careful analysis would be based on forming a CI for the
+difference &mu;<sub>A</sub> - &mu;<sub>B</sub>.  That gives us a range
+of values, against which we can weigh things like cost differences
+between the two drugs, possible side effects and so on.  In addition,
+the width of the interval gives the user an idea as to whether there is
+enough data for accurate estimation of the means.
+
+Yes, the user does have to make a decision, but it is an INFORMED
+decision.  In other words:
+
+> The user is taking responsibility, making an informed decision,
+> instead of allowing a poor statistical procedure to make the decision
+> for him/her.
+
+Note by the way that what we are NOT doing is
+"Check to see whether the CI contains 0.")
+
 See 
 [this document](https://github.com/matloff/regtools/blob/master/inst/NoPVals.md)
-for the details, including the use of CIs in lieu of ST.  (NOT a matter
-of "Check to see whether the CI contains 0.5, 0 or whatever.")
+for further details.  
+
 
 ## <a name="geyser">Lesson GEYSER:  Old Faithful Geyser Example</a> 
 
