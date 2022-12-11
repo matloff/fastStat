@@ -580,6 +580,36 @@ function of r.  But if we don't know k, say we have the data but did not
 collect it ourselves, then we don't have differentiability in that
 parameter.
 
+*R **mle()** function:*
+
+This function will calculute MLEs and give standard errors, in smooth
+cases.
+
+``` r
+> library(stats4)
+> n <- 100
+> x <- rexp(n,2)
+> ll  # user supplies the log likelihood function
+function(lamb) {
+   loglik <- n*log(lamb) - lamb*sum(x)
+   -loglik
+}
+<bytecode: 0x105ae8368>
+> z <- mle(minuslogl=ll,start=list(lamb=1))
+> summary(z)
+Maximum likelihood estimation
+
+Call:
+mle(minuslogl = ll, start = list(lamb = 1))
+
+Coefficients:
+     Estimate Std. Error
+lamb    2.195     0.2195
+
+-2 log L: 42.76 
+
+```
+
 ## <a name="distrs">Lesson ESTDISTRS:  Estimating Entire Distributions</a> 
 
 Recall the *cumulative distribution function*` (cdf) of a random variable 
@@ -700,8 +730,7 @@ call to **hist()**.
 Where the bias-variance really becomes an isssue is in
 prediction/machine learning contexts, to be covered later.
 
-## <a name="predict">Lesson PREDICT:  Predictive Modeling --
-Preliminaries</a> 
+## <a name="predict">Lesson PREDICT:  Predictive Modeling -- Preliminaries</a> 
 
 From the 19th century linear models to today's fancy machine learning 
 (ML) algorithms, a major application of statistics has been prediction.  In
@@ -898,10 +927,12 @@ This is still a linear model, as it is linear in &beta;, even though it
 is nonlinear in height and age.
 
 We can fit polynomial models using the 
-[polreg](https://cran.rstudio.com/web/packages/polyreg/index.html)
+[polyreg](https://cran.rstudio.com/web/packages/polyreg/index.html)
 package (or use **qeML::qePoly()**).  But as we fit polynomials of
 higher and higher degree, we quickly run into the Bias-Variance
-Tradeoff, and risk overfitting.
+Tradeoff.  The variance becomes large, i.e. the fitted coefficients will
+vary a lot from one sample to another, while the reduction in bias slows
+down.  So we risk overfitting.
 
 In that case, a nonparametric model, such as from ML, may work much
 better.  However, keep in mind that ML models can overfit too.
@@ -969,10 +1000,68 @@ the basics:
 * It would be nice if the model has an ingredient the familiar linear
   form.
 
-## <a name="dimred">Lesson LOGIT:  Predictive Modeling -- Avoiding Overfitting</a> 
+## <a name="dimred">Lesson OVER:  Predictive Modeling -- a Polynomial View of Overfitting in ML</a> 
 
-Most regression models, both parametric and ML, have regularized
+In Lesson LIN, we discussed overfitting in the context of
+polynomial regression. Polynomials will also give us a look into how ML
+algorithms can also over fit, in this case SVM and neural networks.
+
+SVM is used mainly in classification context. Here we will assume just
+two classes, for simplicity.                                                 
+
+The idea behind SPM is very simple. Think of the case of two features.
+We can plot the situation as follows. Then I add my graphs from my ml
+book.                                                                        
+
+Probably would like to draw a line so that most of the plus signs are
+in one side of the line and most of the minuses are on the other side.
+We then use that volume too predict future cases.                            
+
+Well, why just limit ourselves to a straight line? Why not make it a
+quadratic curve, a cubic curve and so on? That is exactly what svm
+methods do, apply a transformation to the features and then find a
+straight line separating the transform data. This is equivalent to
+forming a curvy line in the original space. Of course if we have more
+than two features the line becomes a plane or hyperplane.                    
+
+Clearly we have a situation in which the line may get so curvy that it
+fits the noise as they say rather than the data. There is a true
+population line that corresponds to mio of tea, and the curvier we
+allow the fit to be the smaller the bias, but as in the linear case,
+the larger the variants. Befitted prayers which is very too much from
+one sample to another.
+
+In the case of nb's, we have a set of layers. Think of them as being
+from left to right. The input data goes in on the left side and the
+predicted values come out on the right side. The output of each layer
+gets fed in as input to the next layer, being fed through an activation
+function. At each layer, in essence the input is sent through a linear
+regression estimation, with a coefficients then being fed into the next
+layer.                                                                       
+
+Almost common activation function today is r e l u, which is piecewise
+linear. So basically we are doing a lot of linear regression pits and
+as the that goes from layer to layer it gets multiplied. You're
+basically building up polynomials of higher and higher degree. So again
+it's clear how easily we can run into overfitting.                           
+
+
+
+## <a name="dimred">Lesson OVER:  Predictive Modeling -- Avoiding Overfitting</a> 
+
+How can we try to avoid overfitting?
+
+* Most regression models, both parametric and ML, have regularized
 versions, again, to guard against extreme data having too much impact.
+
+* We can do *dimension reduction* by mapping our features into a 
+lower-dimensional subspace, e.g. via Principal Components Analysis of
+UMAP.
+
+* We cam do *cross validation*:  Take many subsamples of the data (i.e.
+  a subset of the rows).  In each one fit, our model to the subsample
+  and use the result to predict the remaining data.  In this way, choose
+  among competing models.
 
 ## LICENSING
 
