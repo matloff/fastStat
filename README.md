@@ -1000,51 +1000,95 @@ the basics:
 * It would be nice if the model has an ingredient the familiar linear
   form.
 
-## <a name="dimred">Lesson OVER:  Predictive Modeling -- a Polynomial View of Overfitting in ML</a> 
+## <a name="dimred">Lesson POLYML:  Predictive Modeling -- a Feature Neighborhood View of Overfitting in ML</a> 
+
+One of the simplest ML methods is k-Nearest Neighbors.  Say we are
+predicting weight from height and age, and must do so for a new case in
+which X = (70,28).  Then we find the k rows in our training data that
+are closest to (70,28), find the average weigh among those data points,
+and use that average as our predicted value for the new case.
+
+The Bias-Variance Tradeoff here is clear (and similar to the density
+estimation example above).  If k is large, the neighborhood of (70,28)
+will be large, and thus will contain some unrepresentative points that
+are far from (70,28).  If k is small, the sample mean in our
+neighborhood will have a large standard error, as its "n" (k here) is
+small.
+
+The situation is similar for tree-based methods (CART, random forests,
+gradient boosting).  As we move down a tree, we add more and more
+features to our collection, and the nodes have less and less data.  For
+a fixed amount of data, the more levels in the tree, the fewer data
+points in each of the leaves.  Since the leaves are similar to
+neighborhoods in k-NN, we see the same Bias-Variance Tradeoff.
+
+## <a name="dimred">Lesson POLYML:  Predictive Modeling -- a Polynomial View of Overfitting in ML</a> 
 
 In Lesson LIN, we discussed overfitting in the context of
-polynomial regression. Polynomials will also give us a look into how ML
-algorithms can also over fit, in this case SVM and neural networks.
+polynomial regression.  Here polynomials will give us a look into how ML
+algorithms can also overfit, specifically SVM and neural networks (NNs).
 
-SVM is used mainly in classification context. Here we will assume just
+SVM is used mainly in classification contexts. Here we will assume just
 two classes, for simplicity.                                                 
 
 The idea behind SPM is very simple. Think of the case of two features.
-We can plot the situation as follows. Then I add my graphs from my ml
-book.                                                                        
+We can plot the situation as follows.  Consider this graph, in the
+context of predicting diabetes, from blood glucose and age:
 
-Probably would like to draw a line so that most of the plus signs are
-in one side of the line and most of the minuses are on the other side.
-We then use that volume too predict future cases.                            
+![alt text](PimaGlucAgeDiab.png)
+
+The red dots are the diabetics.  We would like to draw a line so that
+most of the red dots are on one side of the line and most of the black
+ones are on the other side.  We then use that line too predict future
+cases.  Of course if we have more than two features the line becomes a
+plane or hyperplane.                    
 
 Well, why just limit ourselves to a straight line? Why not make it a
 quadratic curve, a cubic curve and so on? That is exactly what svm
-methods do, apply a transformation to the features and then find a
-straight line separating the transform data. This is equivalent to
-forming a curvy line in the original space. Of course if we have more
-than two features the line becomes a plane or hyperplane.                    
+methods do, apply a transformation (a *kernel*) to the features and then
+find a straight line separating the transformed data. This is equivalent
+to forming a curvy line in the original space. 
 
-Clearly we have a situation in which the line may get so curvy that it
-fits the noise as they say rather than the data. There is a true
-population line that corresponds to mio of tea, and the curvier we
-allow the fit to be the smaller the bias, but as in the linear case,
-the larger the variants. Befitted prayers which is very too much from
-one sample to another.
+Clearly we can have a situation in which the line may get so curvy that
+it "fits the noise rather than the data," as they say. There is a true
+population curve, consisting of all the points t for which &mu;(t) =
+0.5, and the curvier we allow our fit, the smaller the bias.  But as in
+the linear case, the curvier the fit, the larger the variance.  The
+fitted curve varies too much from one sample to another.
 
-In the case of nb's, we have a set of layers. Think of them as being
-from left to right. The input data goes in on the left side and the
-predicted values come out on the right side. The output of each layer
-gets fed in as input to the next layer, being fed through an activation
-function. At each layer, in essence the input is sent through a linear
-regression estimation, with a coefficients then being fed into the next
-layer.                                                                       
+And though we motivated the above discussion by using polynomial curves,
+just about any common kernel function can be approximated by
+polynomials.
 
-Almost common activation function today is r e l u, which is piecewise
-linear. So basically we are doing a lot of linear regression pits and
-as the that goes from layer to layer it gets multiplied. You're
-basically building up polynomials of higher and higher degree. So again
-it's clear how easily we can run into overfitting.                           
+In the case of NNs, we have a set of layers. Think of them as being
+arranged from left to right. The input data goes in on the left side and
+the predicted values come out on the right side. The output of each
+layer gets fed in as input to the next layer, being fed through some
+transformation (an *activation function*). At each layer, in essence the
+input is sent through a linear regression estimation, with the
+result then passed on to the next layer.
 
+Suppose the activation function is a(t) = t<sup>2</sup>.  This is not a
+common choice at all, but it will make the point.  The output of the
+first layer in our example here is a linear combination of the Glucose
+and Age features.  The activation function squares that, giving us a
+quadratic polynomial in Glucose and Age.  After the second stage, we
+will have a quartic (i.e. fourth degree) polynomial and so on.
+
+And again, almost any activation function can be approximated by a
+polynomial, so the same argument holds.  So again it's clear how easily
+we can run into overfitting.                           
+
+A very common activation function today is reLU, which is piecewise
+linear:  a(t) = t for t > 0, but = 0 for t < 0.  This has the effect of
+partitioning the X space like a patchwork quilt, except that the
+"patches" are of irregular shape.  Well, again:  The more layers we
+have, the smaller the "patches," i.e. the smaller the neighborhoods.  So
+the situation is just like that of k-NN etc.
+
+So basically we are doing a lot of linear regression fits and
+as this goes from layer to layer, they gets multiplied. You're
+basically building up polynomials of higher and higher degree. 
 
 
 ## <a name="dimred">Lesson OVER:  Predictive Modeling -- Avoiding Overfitting</a> 
