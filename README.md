@@ -820,7 +820,7 @@ normal.
 
 * One common measure of the relation between variables U and V is their
   (Pearson) *correlation*, E(U - EU)`(V - EV)] / sqrt[Var(U Var(V)].  They
-  need not be normal.  This is a quanttty in [0,1].[
+  need not be normal.  This is a quanttty in [-1,1].
 
 ## <a name="predict">Lesson PREDICT:  Predictive Modeling -- Preliminaries</a> 
 
@@ -894,7 +894,7 @@ We'll usually use just Height, Weight and Age.
 
 ## <a name="lin">Lesson LIN:  Predictive Modeling -- Linear</a> 
 
-One can show that (X,Y) has a multivariate normal distribution, then
+As noted, if (X,Y) has a multivariate normal distribution, then
 the following attributes hold:
 
 * linearity of the regresion function:  &mu;(t) is linear in t
@@ -920,12 +920,12 @@ In vector form, our assumption is
 where &beta; and (1,t) are taken to be column vectors and ' means matrix
 transpose.
 
-Again, the &beta;<sub>i</sub> are population values
+Again, the &beta;<sub>i</sub> are population values.
 
 The sample estimates vector b is computed by minimizing
 
 &Sigma;<sub>1</sub><sup>n</sup>
-[Y<sub>i</sub> - b'X<sub>i</sub>]<sup>2</sup>
+[Y<sub>i</sub> - b'(1,X<sub>i</sub>)]<sup>2</sup>
 
 A closed-form solution exists, and is implemented in R as **lm()**.
 
@@ -960,11 +960,10 @@ Note the standard errors.  An approximate 95% confidence interval for
 
 ```
 
-Ah, even these professional athletes, tend to gain weight as they age,
+Ah, even these professional athletes tend to gain weight as they age,
 something like a pound per year.
 
-**BUT WHAT ABOUT THOSE CLASSICAL ASSUMPTIONS FOR THE LINEAR MODEL?**  
-Do they matter?
+**BUT WHAT ABOUT THOSE ABOVE CLASSICAL ASSUMPTIONS FOR THE LINEAR MODEL?**  Do they matter?
 
 On the one hand, the answer is "Not much."  
 
@@ -1008,13 +1007,7 @@ But there's more:
 One can fit more complex models that are still linear, e.g.
 a full quadratic model of the regression of weight on height and age,
 
-mean wt =  
-&beta;<sub>0</sub> +  
-&beta;<sub>1</sub> ht +
-&beta;<sub>2</sub> age +
-&beta;<sub>3</sub> ht<sup>2</sup> +
-&beta;<sub>4</sub> age<sup>2</sup> +
-&beta;<sub>5</sub> ht age
+mean wt =  &beta;<sub>0</sub> +  &beta;<sub>1</sub> ht + &beta;<sub>2</sub> age + &beta;<sub>3</sub> ht<sup>2</sup> + &beta;<sub>4</sub> age<sup>2</sup> + &beta;<sub>5</sub> ht age
 
 This is still a linear model, as it is linear in &beta;, even though it
 is nonlinear in height and age.
@@ -1028,16 +1021,19 @@ vary a lot from one sample to another, while the reduction in bias slows
 down.  So we risk overfitting.
 
 In that case, a nonparametric model, such as from ML, may work much
-better.  However, keep in mind that ML models can overfit too.
+better.  However, keep in mind that ML models can overfit too.  More on
+this shortly.
 
 ## <a name="logit">Lesson LOGIT:  Predictive Modeling -- Logistic</a> 
 
 What about the case in which Y is an indicator variable, say Diabetic (Y
 = 1) vs. Nondiabetic (Y = 0)?  
 
-Recall that in this setting, &mu;(t) reduces to P(Y = 1 | X = t).
+Recall that in this setting, &mu;(t) reduces to P(Y = 1 | X = t).  That
+makes a linear model untenable, as it would produce values outside the
+[0,1] range for probabilities.[
 
-As we did in the lesson about on the linear model, again let's start
+As we did in the lesson on the linear model, again let's start
 with the classical normal-distribution based model.  This is known as
 *Fisher Linear Discriminant Analysis* (LDA).
 
@@ -1045,60 +1041,62 @@ Here, the distribution of X, given that Y = i, is assumed multivariate
 normal with mean vector &nu;<sub>i</sub> and covariance matrix C that
 does not depend on i.  Let r denote P(Y = 1) (unconditional).
 
-If one then applies Bayes' Rule (this is NOT Bayesian statistics), one
-finds that 
+If one then applies Bayes' Rule (just a probability calculation,
+NOT Bayesian statistics), one finds that 
 
 P(Y = 1 | X = t)
 
-has a *logistic* form.  If X we have a single predictor (so
+has a *logistic* form:  If X we have a single predictor (so
 &nu;<sub>i</sub> is a scalar and C is just the standard deviation
 &sigma;), the form is
 
 P(Y = 1 
-| X = t) = 1 / [1 + exp(-{&gamma;<sub>0</sub> + &gamma;<sub>1</sub>t)}]
+| X = t) = 1 / [1 + exp(-{&omega;<sub>0</sub> + &omega;<sub>1</sub>t)}]
 
-for parameters &gamma;<sub>0</sub> and &gamma;<sub>1</sub>
-that depend on &nu;<sub>i</sub> and &sigma;
+for parameters &omega;<sub>0</sub> and &omega;<sub>1</sub>
+that depend on the v<sub>i</sub> and &sigma;
 
 In the case of multiple features, this is
 
-P(Y = 1 | X = t) = 1 / [1 + exp(-&gamma;'t)]
+P(Y = 1 | X = t) = 1 / [1 + exp(-&omega;'t)]
 
 (Let's call the above, "the Logistic Equation.")
 
 Again as in the case of the linear model discussion above, we must ask,
 **WHAT IF THE ASSUMPTIONS, E.G. NORMALITY, DON'T HOLD?**
 
-And the answer is that the logistic model )often called *logit*) is
+And the answer is that the logistic model (often called *logit*) is
 quite popular.  The Logistic Equation does produce a value in (0,1),
 which is what we want for a probability of course, yet we still have a
-linear ingredient.
+linear ingredient &omega;'t, the next-best thing to a pure linear model.
 
 Moreover, as in the linear case, we can introduce polynomial terms to
 reduce model bias.  (It will turn out below that there is also a "polynomial
-connection to some popular ML methods, SVM and neural networks.)
+connection" to some popular ML methods, SVM and neural networks.)
 
 By the way, many books present the logit model in terms of "linear
 log-odds ratio."  The odds ratio is 
 
 P(Y = 1 | X = t) / [P(Y = 0 | X = t)]
 
-While it is true that the log of that quantity is linear in logit, this
-description seems indirect.  We might be interested in the odds, but why
-would the *logarithm* of the odds be of interest?  It's best to stick to
-the basics:
+While it is true that the log of that quantity is linear in the logit
+model, this description seems indirect.  We might be interested in the
+odds, but why would the *logarithm* of the odds be of interest?  It's
+best to stick to the basics:
 
 * A model for a probability should produce values in (0,1).
 
 * It would be nice if the model has an ingredient the familiar linear
   form.
 
+Logit, which we have handy from LDA, satisfies those desiderata.
+
 ## <a name="dimred">Lesson POLYML:  Predictive Modeling -- a Feature Neighborhood View of Overfitting in ML</a> 
 
 One of the simplest ML methods is k-Nearest Neighbors.  Say we are
 predicting weight from height and age, and must do so for a new case in
 which X = (70,28).  Then we find the k rows in our training data that
-are closest to (70,28), find the average weigh among those data points,
+are closest to (70,28), find the average weight among those data points,
 and use that average as our predicted value for the new case.
 
 The Bias-Variance Tradeoff here is clear (and similar to the density
@@ -1119,12 +1117,13 @@ neighborhoods in k-NN, we see the same Bias-Variance Tradeoff.
 
 In Lesson LIN, we discussed overfitting in the context of
 polynomial regression.  Here polynomials will give us a look into how ML
-algorithms can also overfit, specifically SVM and neural networks (NNs).
+algorithms can also overfit, specifically in Support Vector Machines 
+(SVM) and neural networks (NNs).
 
 SVM is used mainly in classification contexts. Here we will assume just
 two classes, for simplicity.                                                 
 
-The idea behind SPM is very simple. Think of the case of two features.
+The idea behind SVM is very simple. Think of the case of two features.
 We can plot the situation as follows.  Consider this graph, in the
 context of predicting diabetes, from blood glucose and age:
 
@@ -1137,10 +1136,12 @@ cases.  Of course if we have more than two features the line becomes a
 plane or hyperplane.                    
 
 Well, why just limit ourselves to a straight line? Why not make it a
-quadratic curve, a cubic curve and so on? That is exactly what svm
-methods do, apply a transformation (a *kernel*) to the features and then
-find a straight line separating the transformed data. This is equivalent
-to forming a curvy line in the original space. 
+quadratic curve, a cubic curve and so on?  Each one gives us more
+flexibility than the last, hence a potentially better fit.
+
+That is exactly what SVM methods do, apply a transformation (a *kernel*)
+to the features and then find a straight line separating the transformed
+data. This is equivalent to forming a curvy line in the original space. 
 
 Clearly we can have a situation in which the line may get so curvy that
 it "fits the noise rather than the data," as they say. There is a true
@@ -1151,7 +1152,7 @@ fitted curve varies too much from one sample to another.
 
 And though we motivated the above discussion by using polynomial curves,
 just about any common kernel function can be approximated by
-polynomials.
+polynomials.  The principle is the same.
 
 In the case of NNs, we have a set of layers. Think of them as being
 arranged from left to right. The input data goes in on the left side and
@@ -1190,6 +1191,8 @@ How can we try to avoid overfitting?
 
 * Most regression models, both parametric and ML, have regularized
 versions, again, to guard against extreme data having too much impact.
+In the linear case, we have *ridge regression* and the LASSO.
+Regularized versions of SVM, NNs etc. also exist.
 
 * We can do *dimension reduction* by mapping our features into a 
 lower-dimensional subspace, e.g. via Principal Components Analysis of
@@ -1199,6 +1202,19 @@ UMAP.
   a subset of the rows).  In each one fit, our model to the subsample
   and use the result to predict the remaining data.  In this way, choose
   among competing models.
+
+* We can overfit and not worry about it.  A common claim is "ML models
+  drastically overfit, yet predict new cases very well."  This is
+  midleading, in my opinion.  In the celebrated ML successes, the
+  misclasification rate is very small, even without hyperparameter
+  tuning.  In the SVM sense, this means that the two classes are almost
+  completely separable after transformation of X.  Thus many straight
+  lines or hyperplanes can do the separation, which means that back in
+  the original X space, there are many separating curves, including some
+  of very high complexity.  In other words, due to the separability of
+  the data, we can get away with overfitting.
+
+
 
 ## LICENSING
 
