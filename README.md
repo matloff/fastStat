@@ -7,7 +7,7 @@
 
 (See notice at the end of this document regarding copyright.)
 
-## WHO IS THIS FOR?
+# WHO IS THIS FOR?
 
 Students in computer science, engineering, mathematics and the like
 typically take a course in calculus-based probability -- unconditional
@@ -26,7 +26,7 @@ Statistics*, by one of my favorite statisticians, Larry Wasserman.  Both
 books are quite thin, making their "All of" titles ironic.  Well, my
 short tutorial here is even more "all of" in that sense.
 
-## <a name="intuition">Lesson INTRO:  What Is Really Going on?</a> 
+# What Is Really Going on in Statistics?
 
 Professional statisticians, especially Statistics professors, may find
 the presentation here to be a familiar story, but with an odd plot,
@@ -52,7 +52,32 @@ Many of these are rather generally known, but not written down in books.
 Some are actually not widely known.  And some are entirely new ways of
 looking at familiar statistical concepts and properties.
 
-## <a name="sampling">Lesson SAMPLING:  The Notion of a Sample</a> 
+# Table of contents
+
+- [Lesson SAMPLING:  The Notion of a Sample](#lesson-sampling--the-notion-of-a-sample)
+- [Lesson NORMALETC:  The Role of Normal (Gaussian) and Other Parametric Distribution Families](#lesson-normaletc--the-role-of-normal-gaussian-and-other-parametric-distribution-families)
+- [Lesson CONCEPTPOPS:  Conceptual Populations](#lesson-conceptpops--conceptual-populations)
+- [Lesson STDERRS:  Standard Errors](#lesson-stderrs--standard-errors)
+- [Lesson BIAS:  Bias, and Impact on Standard Errors](#lesson-bias--bias-and-impact-on-standard-errors)
+- [Lesson INDICATORS:  Indicator Variables](#lesson-indicators--indicator-variables)
+- [Lesson CI:  Confidence Intervals](#lesson-ci--confidence-intervals)
+- [Lesson CIAPPROX:  Confidence Intervals from Asymptotics](#lesson-ciapprox--confidence-intervals-from-asymptotics)
+- [Lesson SOMEMATH:  Some Derivations](#lesson-somemath--some-derivations)
+- [Lesson SIG: Significance Testing](#lesson-sig-significance-testing)
+- [Lesson GEYSER:  Old Faithful Geyser Example](#lesson-geyser--old-faithful-geyser-example)
+- [Lesson MLEMM:  General Methods of Estimation](#lesson-mlemm--general-methods-of-estimation)
+- [Lesson ESTDISTRS:  Estimating Entire Distributions](#lesson-estdistrs--estimating-entire-distributions)
+- [Lesson TRADE:  The Bias-Variance Tradeoff](#lesson-trade--the-bias-variance-tradeoff)
+- [Lesson MULTI:  Multivariate Distributions](#lesson-multi--multivariate-distributions)
+- [Lesson PREDICT:  Predictive Modeling -- Preliminaries](#lesson-predict--predictive-modeling----preliminaries)
+- [Lesson MLB:  The mlb dataset](#lesson-mlb--the-mlb-dataset)
+- [Lesson LIN:  Predictive Modeling -- Linear](#lesson-lin--predictive-modeling----linear)
+- [Lesson LOGIT:  Predictive Modeling -- Logistic](#lesson-logit--predictive-modeling----logistic)
+- [Lesson POLYML:  Predictive Modeling -- a Feature Neighborhood View of Overfitting in ML](#lesson-polyml--predictive-modeling----a-feature-neighborhood-view-of-overfitting-in-ml)
+- [Lesson POLYML:  Predictive Modeling -- a Polynomial View of Overfitting in ML](#lesson-polyml--predictive-modeling----a-polynomial-view-of-overfitting-in-ml)
+- [Lesson OVER:  Predictive Modeling -- Avoiding Overfitting](#lesson-over--predictive-modeling----avoiding-overfitting)
+
+## Lesson SAMPLING:  The Notion of a Sample
 
 We've all heard the term *margin of error* in an opinion poll.  It will
 be discussed in detail in a later lesson, but what question is it
@@ -78,7 +103,7 @@ equal to that of the sampled population.  If, say 22.8% of people in
 this population are taller than 70 inches, then P(X<sub>i</sub> > 70) =
 0.228.
 
-## <a name="normal">Lesson NORMALETC:  The Role of Normal (Gaussian) and Other Parametric Distribution Families</a> 
+## Lesson NORMALETC:  The Role of Normal (Gaussian) and Other Parametric Distribution Families
 
 In the last lesson, we talked about the distribution of X in the
 population.  Although the population is finite (more on this below) and
@@ -131,7 +156,7 @@ distribution.  Then in some sense, depending on how we estimate, we are
 estimating the gamma distribution that is closest to our true population
 distribution.
 
-## <a name="normal">Lesson CONCEPTPOPS:  Conceptual Populations</a> 
+## Lesson CONCEPTPOPS:  Conceptual Populations
 
 In the opinion poll example, it is clear as to which population is
 sampled.  In many applications, the issue is more conceptual.  If for
@@ -144,7 +169,7 @@ This issue can become quite a challenge in, say, economic analysis.
 If we have 10 years of annual data, i.e. n = 10, what population
 is that a "sample" from?
 
-## <a name="stderr">Lesson STDERRS:  Standard Errors</a> 
+## Lesson STDERRS:  Standard Errors
 
 Earlier we mentioned the "margin of error" in reporting the results of
 opinion polls.  To make that notion concrete, let's first discuss a
@@ -177,7 +202,7 @@ deviation*.  In the case of an estimator, Q here, we use the term
 *standard error*.  In some cases, it will be only the approximate
 standard deviation, as will be seen below.
 
-## <a name="bias">Lesson BIAS:  Bias, and Impact on Standard Errors</a> 
+## Lesson BIAS:  Bias, and Impact on Standard Errors
 
 In our last lesson, we assumed that EQ = q.  We say that Q is an 
 *unbiased* estimator of q.  In English:  the average value of Q over all
@@ -243,7 +268,7 @@ of size O(1/n), as above.  Typically the size of the standard error is
 O(1/n<sup>0.5</sup>).  In other words, the bias is small relative to the
 standard error, so the argument in the last lesson still holds.
 
-## <a name="CIs">Lesson INDICATORS:  Indicator Variables</a> 
+## Lesson INDICATORS:  Indicator Variables
 
 Often X has only the values only 1 and 0, indicating the presence or
 absence of some trait.  That is the case in the opinion poll, for
@@ -259,7 +284,7 @@ S<sup>2</sup> = &#x100; (1-&#x100;) / n
 
 (or use n-1 instead of n for s).
 
-## <a name="CIs">Lesson CI:  Confidence Intervals</a> 
+## Lesson CI:  Confidence Intervals
 
 In our opinion poll example, Q is called a *point estimate* of q.  We
 would also like to have an interval estimate, which gives a range of
@@ -283,7 +308,7 @@ It's exactly like gambling.  We don't know whether our particular roll
 of the dice will yield a winner, but if most rolls of the dice do so,
 then we may be willing to go ahead.
 
-## <a name="asymp">Lesson CIAPPROX:  Confidence Intervals from Asymptotics</a> 
+## Lesson CIAPPROX:  Confidence Intervals from Asymptotics
 
 The early developers of statistics defined a distribution family known
 as *Student's t*.  This supposedly can be used to form "exact" CIs, i.e. the
@@ -362,7 +387,7 @@ By the way, for large n, the Student-t distribution is almost identical
 to N(0,1), so "No harm, no foul" -- Student-t will be approximately
 correct.  But it won't be exactly correct, in spite of the claim.
 
-## <a name="asymp">Lesson SOMEMATH:  Some Derivations</a> 
+## Lesson SOMEMATH:  Some Derivations
 
 As noted earlier, the goal of this tutorial is to develop within the
 reader an understanding of the intuition underlying statistical concepts
@@ -407,7 +432,7 @@ E(S<sup>2</sup>) =
 (&sigma;<sup>2</sup> + &mu;<sup>2</sup>) - [(1/n) &sigma;<sup>2</sup> + &mu;<sup>2</sup>] =
 [(n-1)/n] &sigma;<sup>2</sup>
 
-## <a name="sig">Lesson SIG: Significance Testing </a> 
+## Lesson SIG: Significance Testing 
 
 The notion of *signficance testing* (ST) (also known as
 *hypothesis testing*, and *p-values*) is
@@ -514,7 +539,7 @@ See
 for further details.  
 
 
-## <a name="geyser">Lesson GEYSER:  Old Faithful Geyser Example</a> 
+## Lesson GEYSER:  Old Faithful Geyser Example
 
 To start to make the concepts tangible, let's look at **faithful**, a
 built-in dataset in R, recording eruptions of the Old Faithful geyser in
@@ -536,7 +561,7 @@ c(sampleMean - 1.96*stdErr, sampleMean + 1.96*stdErr)
 # (3.35,3.62)
 ```
 
-## <a name="mlemm">Lesson MLEMM:  General Methods of Estimation</a> 
+## Lesson MLEMM:  General Methods of Estimation
 
 So far, we've discussed only ad hoc estimators, set up for a specific
 purpose.  It would be nice to have general ways of forming estimators.
@@ -666,7 +691,7 @@ MMs are less popular.  But they are easier to explain, and by the way,
 the inventor of the Generalized Method of Moments won the Nobel Prize in
 Econoomics in 2013 that developing that method.
 
-## <a name="distrs">Lesson ESTDISTRS:  Estimating Entire Distributions</a> 
+## Lesson ESTDISTRS:  Estimating Entire Distributions
 
 Recall the *cumulative distribution function*` (cdf) of a random variable 
 
@@ -748,7 +773,7 @@ expose sampling variability, thus displaying "false" bumps.
 
 We'll address this (but unfortunately not answer it) next.
 
-## <a name="trade">Lesson TRADE:  The Bias-Variance Tradeoff</a> 
+## Lesson TRADE:  The Bias-Variance Tradeoff
 
 In the above histogram of the **erps** data, the graph seems,
 for example, to be increasing from 2.5 o 4.5.  Consider in particular
@@ -788,7 +813,7 @@ call to **hist()**.
 Where the bias-variance really becomes an isssue is in
 prediction/machine learning contexts, to be covered later.
 
-## <a name="predict">Lesson MULTI:  Multivariate Distributions</a> 
+## Lesson MULTI:  Multivariate Distributions
 
 Say we have continuous random variables X and Y.  We of course can talk
 about their density functions f<sub>X</sub> and f<sub>Y</sub>, but it's
@@ -822,7 +847,7 @@ normal.
   (Pearson) *correlation*, E(U - EU)`(V - EV)] / sqrt[Var(U Var(V)].  They
   need not be normal.  This is a quanttty in [-1,1].
 
-## <a name="predict">Lesson PREDICT:  Predictive Modeling -- Preliminaries</a> 
+## Lesson PREDICT:  Predictive Modeling -- Preliminaries
 
 From the 19th century linear models to today's fancy machine learning 
 (ML) algorithms, a major application of statistics has been prediction.  In
@@ -875,7 +900,7 @@ predictors we use (*features* in ML parlance),* the smaller the bias in
 m(t) but the larger the variance.  If we keep adding features, at some
 point the variance becomes dominant, and we overfit.
 
-## <a name="mlb">Lesson MLB:  The mlb dataset</a> 
+## Lesson MLB:  The mlb dataset
 
 This data, on major league baseball players in the US, is included with
 my [**qeML** package](github.com/matloff/qeML) ("quick ML").
@@ -892,7 +917,7 @@ my [**qeML** package](github.com/matloff/qeML) ("quick ML").
 
 We'll usually use just Height, Weight and Age.
 
-## <a name="lin">Lesson LIN:  Predictive Modeling -- Linear</a> 
+## Lesson LIN:  Predictive Modeling -- Linear
 
 As noted, if (X,Y) has a multivariate normal distribution, then
 the following attributes hold:
@@ -1024,7 +1049,7 @@ In that case, a nonparametric model, such as from ML, may work much
 better.  However, keep in mind that ML models can overfit too.  More on
 this shortly.
 
-## <a name="logit">Lesson LOGIT:  Predictive Modeling -- Logistic</a> 
+## Lesson LOGIT:  Predictive Modeling -- Logistic
 
 What about the case in which Y is an indicator variable, say Diabetic (Y
 = 1) vs. Nondiabetic (Y = 0)?  
@@ -1091,7 +1116,7 @@ best to stick to the basics:
 
 Logit, which we have handy from LDA, satisfies those desiderata.
 
-## <a name="dimred">Lesson POLYML:  Predictive Modeling -- a Feature Neighborhood View of Overfitting in ML</a> 
+## Lesson POLYML:  Predictive Modeling -- a Feature Neighborhood View of Overfitting in ML
 
 One of the simplest ML methods is k-Nearest Neighbors.  Say we are
 predicting weight from height and age, and must do so for a new case in
@@ -1113,7 +1138,7 @@ a fixed amount of data, the more levels in the tree, the fewer data
 points in each of the leaves.  Since the leaves are similar to
 neighborhoods in k-NN, we see the same Bias-Variance Tradeoff.
 
-## <a name="dimred">Lesson POLYML:  Predictive Modeling -- a Polynomial View of Overfitting in ML</a> 
+## Lesson POLYML:  Predictive Modeling -- a Polynomial View of Overfitting in ML
 
 In Lesson LIN, we discussed overfitting in the context of
 polynomial regression.  Here polynomials will give us a look into how ML
@@ -1185,7 +1210,7 @@ as this goes from layer to layer, they gets multiplied. You're
 basically building up polynomials of higher and higher degree. 
 
 
-## <a name="dimred">Lesson OVER:  Predictive Modeling -- Avoiding Overfitting</a> 
+## Lesson OVER:  Predictive Modeling -- Avoiding Overfitting
 
 How can we try to avoid overfitting?
 
