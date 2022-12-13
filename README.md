@@ -35,7 +35,7 @@ a different cast of characters, and a different ending. :-)
 Indeed, **many of readers of this
 tutorial will be surprised to see that it does not contain many
 equations.**  But sadly, many people know the mechanics of statistics
-very well, without truly understanding an intuitive levels what those
+very well, without truly understanding on intuitive levels what those
 equations are really doing, and this is our focus.
 
 For instance, consider estimator bias. Students in a math stat course
