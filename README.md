@@ -73,9 +73,11 @@ looking at familiar statistical concepts and properties.
 - [Lesson MLB:  The mlb dataset](#lesson-mlb--the-mlb-dataset)
 - [Lesson LIN:  Predictive Modeling -- Linear](#lesson-lin--predictive-modeling----linear)
 - [Lesson LOGIT:  Predictive Modeling -- Logistic](#lesson-logit--predictive-modeling----logistic)
-- [Lesson POLYML:  Predictive Modeling -- a Feature Neighborhood View of Overfitting in ML](#lesson-polyml--predictive-modeling----a-feature-neighborhood-view-of-overfitting-in-ml)
+- [Lesson NBHR:  Predictive Modeling -- a Feature Neighborhood View of Overfitting in ML](#lesson-polyml--predictive-modeling----a-feature-neighborhood-view-of-overfitting-in-ml)
 - [Lesson POLYML:  Predictive Modeling -- a Polynomial View of Overfitting in ML](#lesson-polyml--predictive-modeling----a-polynomial-view-of-overfitting-in-ml)
 - [Lesson OVER:  Predictive Modeling -- Avoiding Overfitting](#lesson-over--predictive-modeling----avoiding-overfitting)
+- [Lesson NOWORRY:  Predictive Modeling -- Ignoring Overfitting](#lesson-over--predictive-modeling----ignoring-overfitting)
+
 
 ## Lesson SAMPLING:  The Notion of a Sample
 
@@ -561,7 +563,7 @@ c(sampleMean - 1.96*stdErr, sampleMean + 1.96*stdErr)
 # (3.35,3.62)
 ```
 
-## Lesson MLEMM:  General Methods of Estimation
+# Lesson MLEMM:  General Methods of Estimation
 
 So far, we've discussed only ad hoc estimators, set up for a specific
 purpose.  It would be nice to have general ways of forming estimators.
@@ -773,7 +775,7 @@ expose sampling variability, thus displaying "false" bumps.
 
 We'll address this (but unfortunately not answer it) next.
 
-## Lesson TRADE:  The Bias-Variance Tradeoff
+# Lesson TRADE:  The Bias-Variance Tradeoff
 
 In the above histogram of the **erps** data, the graph seems,
 for example, to be increasing from 2.5 o 4.5.  Consider in particular
@@ -813,7 +815,7 @@ call to **hist()**.
 Where the bias-variance really becomes an isssue is in
 prediction/machine learning contexts, to be covered later.
 
-## Lesson MULTI:  Multivariate Distributions
+# Lesson MULTI:  Multivariate Distributions
 
 Say we have continuous random variables X and Y.  We of course can talk
 about their density functions f<sub>X</sub> and f<sub>Y</sub>, but it's
@@ -847,7 +849,7 @@ normal.
   (Pearson) *correlation*, E(U - EU)`(V - EV)] / sqrt[Var(U Var(V)].  They
   need not be normal.  This is a quanttty in [-1,1].
 
-## Lesson PREDICT:  Predictive Modeling -- Preliminaries
+# Lesson PREDICT:  Predictive Modeling -- Preliminaries
 
 From the 19th century linear models to today's fancy machine learning 
 (ML) algorithms, a major application of statistics has been prediction.  In
@@ -900,7 +902,7 @@ predictors we use (*features* in ML parlance),* the smaller the bias in
 m(t) but the larger the variance.  If we keep adding features, at some
 point the variance becomes dominant, and we overfit.
 
-## Lesson MLB:  The mlb dataset
+# Lesson MLB:  The mlb dataset
 
 This data, on major league baseball players in the US, is included with
 my [**qeML** package](github.com/matloff/qeML) ("quick ML").
@@ -917,7 +919,7 @@ my [**qeML** package](github.com/matloff/qeML) ("quick ML").
 
 We'll usually use just Height, Weight and Age.
 
-## Lesson LIN:  Predictive Modeling -- Linear
+# Lesson LIN:  Predictive Modeling -- Linear
 
 As noted, if (X,Y) has a multivariate normal distribution, then
 the following attributes hold:
@@ -1049,7 +1051,7 @@ In that case, a nonparametric model, such as from ML, may work much
 better.  However, keep in mind that ML models can overfit too.  More on
 this shortly.
 
-## Lesson LOGIT:  Predictive Modeling -- Logistic
+# Lesson LOGIT:  Predictive Modeling -- Logistic
 
 What about the case in which Y is an indicator variable, say Diabetic (Y
 = 1) vs. Nondiabetic (Y = 0)?  
@@ -1116,7 +1118,7 @@ best to stick to the basics:
 
 Logit, which we have handy from LDA, satisfies those desiderata.
 
-## Lesson POLYML:  Predictive Modeling -- a Feature Neighborhood View of Overfitting in ML
+# Lesson NBHR:  Predictive Modeling -- a Feature Neighborhood View of Overfitting in ML
 
 One of the simplest ML methods is k-Nearest Neighbors.  Say we are
 predicting weight from height and age, and must do so for a new case in
@@ -1138,7 +1140,7 @@ a fixed amount of data, the more levels in the tree, the fewer data
 points in each of the leaves.  Since the leaves are similar to
 neighborhoods in k-NN, we see the same Bias-Variance Tradeoff.
 
-## Lesson POLYML:  Predictive Modeling -- a Polynomial View of Overfitting in ML
+# Lesson POLYML:  Predictive Modeling -- a Polynomial View of Overfitting in ML
 
 In Lesson LIN, we discussed overfitting in the context of
 polynomial regression.  Here polynomials will give us a look into how ML
@@ -1209,7 +1211,7 @@ So basically we are doing a lot of linear regression fits and
 as this goes from layer to layer, they gets multiplied. You're
 basically building up polynomials of higher and higher degree. 
 
-## Lesson OVER:  Predictive Modeling -- Avoiding Overfitting
+# Lesson OVER:  Predictive Modeling -- Avoiding Overfitting
 
 How can we try to avoid overfitting?
 
@@ -1227,25 +1229,36 @@ UMAP.
   and use the result to predict the remaining data.  In this way, choose
   among competing models.
 
-* We can overfit and not worry about it.  A common claim is "ML models
-  drastically overfit, yet predict new cases very well."  This is
-  midleading, in my opinion.  In the celebrated ML successes, the
-  misclasification rate is very small, even without hyperparameter
-  tuning.  In the SVM sense, this means that the two classes are almost
-  completely separable after transformation of X.  Thus many straight
-  lines or hyperplanes can do the separation, which means that back in
-  the original X space, there are many separating curves, including some
-  of very high complexity.  In other words, due to the separability of
-  the data, we can get away with overfitting.
+# Lesson NOWORRY:  Predictive Modeling -- Ignoring Overfitting
 
-  Here is an example, using a famous image recognition dataset
-  (generated by code available [here](https://jlmelville.github.io/uwot/metric-learning.html):
+Some people take a very different point of view: In some settings, we
+can overfit and not worry about it.  A common claim is "ML models
+drastically overfit, yet predict new cases very well."  
+
+This is misleading, in my opinion.  In the celebrated ML successes, the
+misclasification rate is very small, even without hyperparameter tuning.
+In the SVM sense, this means that the two classes are almost completely
+separable after transformation of X.  Thus **many different straight
+lines or hyperplanes can achieveo the separation,** which means that
+back in the original X space, there are many separating curves,
+including some of very high complexity.  In other words, due to the
+separability of the data, we can get away with overfitting.
+
+Here is an example, using a famous image recognition dataset
+(generated by code available [here](https://jlmelville.github.io/uwot/metric-learning.html):
 
 ![alt text](UMAPFMNIST.png)
 
-   
+There are 10 classes, each shown in a different color.  Here the SNE
+method (think of it as a nonlinear PCA) was applied for dimension
+reduction, dimension 2 here.  There are some isolated points here and
+there, but almost all the data is separated into 10 "islands."  Between
+any 2 islands, there are tons of high-dimensonal curves, say high-degree
+polynomials, that one can fit to separate them.  So we see that
+overfitting is just not an issue, even with high-degree polynomials.
 
-## LICENSING
+
+# LICENSING
 
 The document is covered by a 
 [Creative Commons](http://creativecommons.org/licenses/by-nd/3.0/us/) license,
