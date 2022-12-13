@@ -202,7 +202,7 @@ reasonably confident that the Q from our particular sample is near q.
 Of course, the square root of any variance is called the *standard
 deviation*.  In the case of an estimator, Q here, we use the term
 *standard error*.  In some cases, it will be only the approximate
-standard deviation, as will be seen below.
+standard deviation, in a sense to be seen below.
 
 ## Lesson BIAS:  Bias, and Impact on Standard Errors
 
@@ -384,6 +384,14 @@ principle general):
 
 The term *smooth* roughly means that R is a differentiable function of
 X<sub>1</sub>, ..., X<sub>n</sub>.
+
+Note:  Although an estimator may give us an asymptotically valid CI,
+using the standard error as above, the standard error is not actually
+the standard deviation of the estimator.  It is the standard deviation
+of the normal distribution that approximates the distribution of the
+estimator.  That may sound confusing, but the key point is that what
+counts is cdfs.  The cdfs of random variables U and V may be very close
+with their means etc. very different.
 
 By the way, for large n, the Student-t distribution is almost identical
 to N(0,1), so "No harm, no foul" -- Student-t will be approximately
