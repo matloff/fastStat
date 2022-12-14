@@ -744,7 +744,7 @@ This is indeed a function; for different values of t, we get different
 values of the cdf.
 
 And as always, there are population and sample estimates.  If X is human
-height, then f<sub>x</sub>(66.5) is the population proportion of people
+height, then F<sub>X</sub>(66.5) is the population proportion of people
 with height at most 66.5 inches; the sample estimate of that quantity is
 the corresponding sample proportion.
 
@@ -757,8 +757,8 @@ plot(ecdf(erps))
 ![alt text](FaithfulCDF.png)
 
 The sample estimate is called the *empirical cdf* (hence the name of the
-function).  Note:  Since it consists of proportions, it is
-unbiased.
+function).  Note:  Since it consists of proportions (one for each t), it
+is unbiased.
 
 What about estimating the probability density function (pdf)?  As noted,
 pdfs do not really exist in practice, so "the" pdf here is the one that
@@ -786,7 +786,7 @@ placing more weight on the data points that are closer to t, with the
 weights being smooth functions of the distance to t.  A smooth curve
 results.
 
-But what does "close" mean?  Just like histograms have a *tuning
+But what does "close" mean?  Just as histograms have a *tuning
 parameter* (called a *hyperparameter* in machine learning circles) in
 the form of the bin width, kernel estimators have something called the
 *bandwidth*.  Let's not go into the formula here, but the point is that
@@ -829,52 +829,52 @@ from 3.5 to 4.  This likely would mean that the true f(t) curve is
 higher than the histogram for t near 4, and lower than the histogram for
 t near 3.5.  In other words:
 
-> the histogram, as an estimate of f, is likely biased upward (i.e. 
+> The histogram, as an estimate of f, is likely biased upward (i.e. 
 > bias > 0) near 3.5 and downward (< 0) near 4.
 
-And what if the bin width were much narrower? then the bias described
-above would still exist, but would be smaller.
-
-On the other hand, the narrower the bin, the fewer the number of data
-points in each bin, so the greater the standard error of the histogram
-height within a bin.  (The "n" for the standard error is the number of
-points in the bin.)
+And what if the bin width were much narrower? Then the bias described
+above would still exist, but would be smaller.  On the other hand, the
+narrower the bin, the fewer the number of data points in each bin, so
+the greater the standard error of the histogram height within a bin.
+(Roughly speaking, the "n" for the standard error is the number 
+of points in the bin.)
 
 In other words:
 
-> there is a tradeoff here: smaller bins produce smaller bias but larger
+> There is a tradeoff here: smaller bins produce smaller bias but larger
 > variance (and the opposite for larger bins).
 
 So, even though bias was seen not to be an issue in the context of CIs,
 it *is* an issue here.
 
 There is no good, universally agreed-to way to choose the bin size.
-various math stat people have done some theoretical work that has led to
+Various math stat people have done some theoretical work that has led to
 suggestions, which you can try, such as setting **breaks='fd'** in your
 call to **hist()**.
 
 Where the Bias-Variance Tradeoff really becomes an isssue is in
-prediction/machine learning contexts, to be covered later.
+prediction/machine learning contexts, to be covered later
+.
 
 # Lesson MULTI:  Multivariate Distributions
 
 Say we have continuous random variables X and Y.  We of course can talk
-about their density functions f<sub>x</sub> and f<sub>y</sub>, but it's
+about their density functions f<sub>X</sub> and f<sub>Y</sub>, but it's
 also important to talk about how they vary (or not) *together*.  Here
 are a few facts:
 
-* f<sub>X,Y</sub>(u,v) = d/&part;u d/&part;v f<sub>X,Y</sub>(u,v) =
+* f<sub>X,Y</sub>(u,v) = &part;/&part;u &part;/&part;v F<sub>X,Y</sub>(u,v) =
 P(x &le;u and y &le;v)
 
-* P((x,y) in a) = &int; &int;<sub>a</sub> f<sub>X,Y</sub>(u,v) du dv
+* P((x,y) in A) = &int; &int;<sub>A</sub> f<sub>X,Y</sub>(u,v) du dv
 
 * f<sub>Y | X = v</sub>(u) = f<sub>X,Y</sub>(u,v) / f<sub>X</sub>(u)
 
-* unlike the univariate case, there are very few widely-used parametric
+* Unlike the univariate case, there are very few widely-used parametric
   families of multivariate distributions.  The main one is multivariate
 normal.
 
-* the MV normal family does have some interesting properties, though:
+* The MV normal family does have some interesting properties, though:
 
     - all marginal distributions are MV normal
 
@@ -897,18 +897,18 @@ From the 19th century linear models to today's fancy machine learning
 this lesson, we set the stage for discussing prediction.
 
 Say we are predicting a scalar Y from (a typically vector-valued) X.  Let
-p(x) denote our prediction.  Classically, we wish to minimize the mean
+p(X) denote our prediction.  Classically, we wish to minimize the mean
 squared prediction error,
 
-E[(Y - p(x))<sup>2</sup>]
+E[(Y - p(X))<sup>2</sup>]
 
-Note that E() will be the average over all possible (x,y) pairs in the
+Note that E() will be the average over all possible (X,Y) pairs in the
 population.  Other loss functions besides squared-error are possible,
 but this one is mathematically tractable.
 
 The minimizer is easily shown to be 
 
-p() = E(Y | X)
+p(X) = E(Y | X)
 
 Note that in the case of Y being an indicator variable, this reduces
 to 
@@ -920,7 +920,7 @@ let's define the function
 
 &mu;(t) = E(Y | X = t)
 
-which, as noted, in the case of dichotomous y becomes
+which, as noted, in the case of dichotomous Y becomes
 
 &mu;(t) = P(y = 1 | X = t)
 
@@ -929,24 +929,24 @@ general term, not restricted just to the linear model.
 
 Our goal, then, is to use our sample data
 
-(x<sub>1</sub>,y<sub>1</sub>),...  (x<sub>n</sub>,y<sub>n</sub>)
+(X<sub>1</sub>,Y<sub>1</sub>),...  (X<sub>n</sub>,Y<sub>n</sub>)
 
-To estimate &mu;(t).  denote the sample estimate by m(t).  To predict a
+to estimate &mu;(t).  Denote the sample estimate by m(t).  To predict a
 new case, X<sub>new</sub>, we use m(X<sub>new</sub>).  Keep in mind,
-m(t) is an estimate of  An entire function here, one value for each t.
+m(t) is an estimate of an entire function here, one value for each t.
 
 We will often take as a convenient example predicting weight Y from
 height X, or a vector X = (height,age).
 
 The Bias-Variance Tradeoff becomes key in such models.  The more
-predictors we use (*features* in ML parlance),* the smaller the bias in
+predictors we use (*features* in ML parlance), the smaller the bias in
 m(t) but the larger the variance.  If we keep adding features, at some
 point the variance becomes dominant, and we overfit.
 
 # Lesson MLB:  the MLB Dataset
 
-this data, on major league baseball players in the us, is included with
-my [**qeml** package](github.com/matloff/qeml) ("quick ml").
+This data, on major league baseball players in the US, is included with
+my [**qeML** package](github.com/matloff/qeML) ("quick ML").
 
 ``` r
 > head(mlb)
@@ -962,8 +962,8 @@ We'll usually use just height, weight and age.
 
 # Lesson LIN:  Predictive Modeling -- Linear
 
-As noted, if (X,Y) has a multivariate normal distribution, then
-the following attributes hold:
+As noted, if (X,Y) has a multivariate normal distribution (say with Y
+scalar and X vector), then the following attributes hold:
 
 * linearity of the regresion function:  &mu;(t) is linear in t
 
@@ -971,7 +971,7 @@ the following attributes hold:
 
 * conditional homogeneous variance:  Var(Y | X = t) is constant in t
 
-so, classically one assumes that
+So, classically one assumes that
 
 &mu;(t) = 
 &beta;<sub>0</sub> +
@@ -979,14 +979,14 @@ so, classically one assumes that
 ...
 &beta;<sub>p</sub> 
 
-For a p-predictor model, where t = (t<sub></sub>,...,t<sub>p</sub>).
+for a p-predictor model, where t = (t<sub></sub>,...,t<sub>p</sub>)', a
+column vector; ' means matrix transpose..
 
 in vector form, our assumption is
 
 &mu;(t) = &beta;'(1,t)
 
-where &beta; and (1,t) are taken to be column vectors and ' means matrix
-transpose.
+where &beta; and (1,t) are taken to be column vectors.
 
 Again, the &beta;<sub>i</sub> are population values.
 
@@ -1062,13 +1062,15 @@ A more accurate standard error for &beta;<sub>age</sub> is thus
 
 (not much change here, but there is a larger difference in some cases).
 
-On the other hand, those considerations are important if our goal is
+Those considerations are important if our goal is
 *understanding*, e.g. understanding weight gain in pro ball players.
-for the *prediction* goal, those issues are irrelevant; all that really
-matters is whether the true &mu;(t) is approximately linear.  (And if it
-isn't, we aren't achieving the understanding goal either; our CIs will
-be invalid.)  That would seem to argue in favor of using ML models,
-which do not make linearity assumptions.
+
+On the other hand, for the *prediction* goal, those issues are
+irrelevant; all that really matters is whether the true &mu;(t) is
+approximately linear.  (And if it isn't, we aren't achieving the
+understanding goal either; our CIs will be invalid.)  That would seem to
+argue in favor of using ML models, which do not make linearity
+assumptions.
 
 But there's more:
 
@@ -1094,16 +1096,16 @@ this shortly.
 
 # Lesson LOGIT:  Predictive Modeling -- Logistic
 
-What about the case in which y is an indicator variable, say diabetic (y
-= 1) vs. nondiabetic (y = 0)?  
+What about the case in which Y is an indicator variable, say diabetic (Y
+= 1) vs. nondiabetic (Y = 0)?  
 
 Recall that in this setting, &mu;(t) reduces to P(Y = 1 | X = t).  That
 makes a linear model untenable, as it would produce values outside the
-[0,1] range for probabilities.[
+[0,1] range for probabilities.
 
 As we did in the lesson on the linear model, again let's start
 with the classical normal-distribution based model.  This is known as
-*fisher linear discriminant analysis* (LDA).
+*Fisher Linear Discriminant Analysis* (LDA).
 
 Here, the distribution of X, given that Y = i, is assumed multivariate 
 normal with mean vector &nu;<sub>i</sub> and covariance matrix c that
@@ -1122,7 +1124,7 @@ P(Y = 1
 | X = t) = 1 / [1 + exp(-{&omega;<sub>0</sub> + &omega;<sub>1</sub>t)}]
 
 for parameters &omega;<sub>0</sub> and &omega;<sub>1</sub>
-that depend on the v<sub>i</sub> and &sigma;
+that depend on the v<sub>i</sub> and &sigma;.
 
 In the case of multiple features, this is
 
@@ -1134,9 +1136,10 @@ Again as in the case of the linear model discussion above, we must ask,
 **what if the assumptions, e.g. normality, don't hold?**
 
 And the answer is that the logistic model (often called *logit*) is
-quite popular.  The logistic equation does produce a value in (0,1),
-which is what we want for a probability of course, yet we still have a
-linear ingredient &omega;'t, the next-best thing to a pure linear model.
+quite popular anyway, and for good reason:  The logistic equation does
+produce a value in (0,1), which is what we want for a probability of
+course, yet we still have a linear ingredient &omega;'t, the next-best
+thing to a pure linear model.
 
 Moreover, as in the linear case, we can introduce polynomial terms to
 reduce model bias.  (It will turn out below that there is also a "polynomial
@@ -1174,12 +1177,12 @@ are far from (70,28).  If k is small, the sample mean in our
 neighborhood will have a large standard error, as its "n" (k here) is
 small.
 
-The situation is similar for tree-based methods (cart, random forests,
+The situation is similar for tree-based methods (CART, random forests,
 gradient boosting).  As we move down a tree, we add more and more
 features to our collection, and the nodes have less and less data.  For
 a fixed amount of data, the more levels in the tree, the fewer data
 points in each of the leaves.  Since the leaves are similar to
-neighborhoods in k-nn, we see the same Bias-Variance Tradeoff.
+neighborhoods in k-NN, we see the same Bias-Variance Tradeoff.
 
 # Lesson POLYML:  Predictive Modeling -- a Polynomial View of Overfitting in ML
 
@@ -1188,11 +1191,11 @@ polynomial regression.  Here polynomials will give us a look into how ML
 algorithms can also overfit, specifically in support vector machines 
 (SVM) and neural networks (NNs).
 
-SVM is used mainly in classification contexts. here we will assume just
+SVM is used mainly in classification contexts. Here we will assume just
 two classes, for simplicity.                                                 
 
 The idea behind SVM is very simple. think of the case of two features.
-we can plot the situation as follows.  Consider this graph, in the
+We can plot the situation as follows.  Consider this graph, in the
 context of predicting diabetes, from blood glucose and age:
 
 ![alt text](PimaGlucAgeDiab.png)
@@ -1203,16 +1206,16 @@ ones are on the other side.  We then use that line too predict future
 cases.  Of course if we have more than two features the line becomes a
 plane or hyperplane.                    
 
-Well, why just limit ourselves to a straight line? why not make it a
+Well, why just limit ourselves to a straight line? Why not make it a
 quadratic curve, a cubic curve and so on?  Each one gives us more
 flexibility than the last, hence a potentially better fit.
 
 That is exactly what SVM methods do, apply a transformation (a *kernel*)
 to the features and then find a straight line separating the transformed
-data. this is equivalent to forming a curvy line in the original space. 
+data. This is equivalent to forming a curvy line in the original X space. 
 
 Clearly we can have a situation in which the line may get so curvy that
-it "fits the noise rather than the data," as they say. there is a true
+it "fits the noise rather than the data," as they say. There is a true
 population curve, consisting of all the points t for which &mu;(t) =
 0.5, and the curvier we allow our fit, the smaller the bias.  But as in
 the linear case, the curvier the fit, the larger the variance.  The
@@ -1222,11 +1225,11 @@ And though we motivated the above discussion by using polynomial curves,
 just about any common kernel function can be approximated by
 polynomials.  The principle is the same.
 
-In the case of NNs, we have a set of layers. think of them as being
-arranged from left to right. the input data goes in on the left side and
+In the case of NNs, we have a set of layers. Think of them as being
+arranged from left to right. The input data goes in on the left side and
 the predicted values come out on the right side. the output of each
 layer gets fed in as input to the next layer, being fed through some
-transformation (an *activation function*). at each layer, in essence the
+transformation (an *activation function*). At each layer, in essence the
 input is sent through a linear regression estimation, with the
 result then passed on to the next layer.
 
@@ -1241,15 +1244,15 @@ And again, almost any activation function can be approximated by a
 polynomial, so the same argument holds.  So again it's clear how easily
 we can run into overfitting.                           
 
-A very common activation function today is relu, which is piecewise
-linear:  a(t) = t for t > 0, but = 0 for t < 0.  This has the effect of
-partitioning the X space like a patchwork quilt, except that the
-"patches" are of irregular shape.  Well, again:  The more layers we
-have, the smaller the "patches," i.e. the smaller the neighborhoods.  So
-the situation is just like that of k-nn etc.
+A very common activation function today is reLU, which is piecewise
+linear:  a(t) = t for t > 0, but = 0 for t < 0.  After several layers,
+this has the effect of partitioning the X space like a patchwork quilt,
+except that the "patches" are of irregular shape.  Well, again:  The
+more layers we have, the smaller the "patches," i.e. the smaller the
+neighborhoods.  So the situation is just like that of k-NN etc.
 
 So basically we are doing a lot of linear regression fits and
-as this goes from layer to layer, they gets multiplied. you're
+as this goes from layer to layer, they gets multiplied. You're
 basically building up polynomials of higher and higher degree. 
 
 # Lesson OVER:  Predictive Modeling -- Avoiding Overfitting
@@ -1257,16 +1260,16 @@ basically building up polynomials of higher and higher degree.
 How can we try to avoid overfitting?
 
 * Most regression models, both parametric and ML, have regularized
-versions, again, to guard against extreme data having too much impact.
-in the linear case, we have *ridge regression* and the lasso.
-regularized versions of SVM, NNs etc. also exist.
+versions, Again, to guard against extreme data having too much impact.
+In the linear case, we have *ridge regression* and the LASSO.
+Regularized versions of SVM, NNs etc. also exist.
 
 * We can do *dimension reduction* by mapping our features into a 
-lower-dimensional subspace, e.g. via Principal Components Analysis of
-umap.
+lower-dimensional subspace, e.g. via Principal Components Analysis or
+UMAP.
 
 * We cam do *cross validation*:  Take many subsamples of the data (i.e.
-  a subset of the rows).  In each one fit, our model to the subsample
+  a subset of the rows).  In each one fit our model to the subsample
   and use the result to predict the remaining data.  In this way, choose
   among competing models.
 
@@ -1280,7 +1283,7 @@ This is misleading, in my opinion.  In the celebrated ML successes, the
 misclasification rate is very small, even without hyperparameter tuning.
 in the SVM sense, this means that the two classes are almost completely
 separable after transformation of X.  Thus **many different straight
-lines or hyperplanes can achieveo the separation,** which means that
+lines or hyperplanes can achieve the separation,** which means that
 back in the original X space, there are many separating curves,
 including some of very high complexity.  In other words, due to the
 separability of the data, we can get away with overfitting.
@@ -1291,7 +1294,7 @@ Here is an example, using a famous image recognition dataset
 ![alt text](UMAPFMNIST.png)
 
 There are 10 classes, each shown in a different color.  Here the SNE
-method (think of it as a nonlinear pca) was applied for dimension
+method (think of it as a nonlinear PCA) was applied for dimension
 reduction, dimension 2 here.  There are some isolated points here and
 there, but almost all the data is separated into 10 "islands."  Between
 any 2 islands, there are tons of high-dimensonal curves, say high-degree
