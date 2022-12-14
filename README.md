@@ -1,7 +1,7 @@
 
 # fastStat: All of REAL Statistics
 
-## *"Quick intro to (real) statistics for those who know probability"*
+## *"Quick intro to (REAL) statistics for those who know probability"*
 
 ### Norm Matloff, Prof. of Computer Science, UC Davis; [my bio](http://heather.cs.ucdavis.edu/matloff.html)
 
@@ -89,11 +89,11 @@ addressing?
 Say the poll consists of querying 1200 people.  These were drawn
 randomly from some list, say a list of phone numbers.  The point is that
 if we were to do this again, we would get 1200 other people, and the
-percentage saying yes to our question would change.  Thus we want to
-have some idea as to how much our yes percentage varies from one sample
+percentage saying Yes to our question would change.  Thus we want to
+have some idea as to how much our Yes percentage varies from one sample
 of 1200 people to another.  
 
-(Note: sampling 1200 people is not referred to as "1200 samples."  The
+(Note: Sampling 1200 people is not referred to as "1200 samples."  The
 set of 1200 people is referred to as one sample of size 1200.) 
 
 Let's set some notation.  Say we are interested in some quantity X, say
@@ -103,7 +103,7 @@ our sample by X<sub>i</sub>.  If we sample with replacement (or if n is
 small relative to the total population size), the X<sub>i</sub> are
 independent random variables.  Also, each X<sub>i</sub> has distribution
 equal to that of the sampled population.  If, say 22.8% of people in
-this population are taller than 70 inches, then P(x<sub>i</sub> > 70) =
+this population are taller than 70 inches, then P(X<sub>i</sub> > 70) =
 0.228.
 
 ## Lesson NORMALETC:  the Role of Normal (Gaussian) and Other Parametric Distribution Families
@@ -132,11 +132,12 @@ thus amenable to closed-form "exact" solutions.
 
 * A normal distribution is determined by two parameters, the mean and
   variance of the distribution.  Without that assumption, we have many
-  parameters, essentially infinitely many.  Let f<sub>x</sub> be the cdf
-  of X, i.e. f<sub>X</sub>(t) = P(X &le; t).  Well, there are infinitely
-  many possible values for t, thus infinitely many values of f<sub>x</sub>(t).
-  but if we assume X is normal, those infinitely many values are all
-  expressible in terms of just two numbers.
+  parameters, essentially infinitely many.  Let F<sub>x</sub> be the cdf
+  of X, i.e. F<sub>X</sub>(t) = P(X &le; t).  Well, there are infinitely
+  many possible values for t, thus infinitely many values of F<sub>x</sub>(t).
+  But if we assume X is normal, those infinitely many values are all
+  expressible in terms of just two numbers.  We are then essentially
+estimating two numbers instead of infinitely many.
 
 Another popular model is the exponential distribution family.  You
 probably learned in your probability course that it is "memoryless,"
@@ -169,7 +170,7 @@ diabetics, even though we did not actually select the patients in our
 sample, whether randomly or otherwise.
 
 This issue can become quite a challenge in, say, economic analysis.
-if we have 10 years of annual data, i.e. n = 10, what population
+If we have 10 years of annual data, i.e. n = 10, what population
 is that a "sample" from?
 
 ## Lesson STDERRS:  Standard Errors
@@ -180,24 +181,24 @@ related idea, *standard errors*.
 
 We use our data X<sub>1</sub>,...,X<sub>n</sub> to estimate some
 quantity of interest, say the proportion q of people in the population
-who would answer yes to our poll if we had a chance to ask them all.
-our estimate, q, would be the proportion of people in our sample who say
-yes.  (Extremely important note:  Make sure to always carefully
+who would answer Yes to our poll if we had a chance to ask them all.
+Our estimate, Q, would be the proportion of people in our sample who say
+Yes.  (**Extremely important note:**  Make sure to always carefully
 distinguish between a population quantity, q in this case, and its
-sample estimate, q here.)
+sample estimate, Q here.)
 
-We want to have some measure of how much q varies from one sample to
-another.  Of course, var(q) is such a measure.
+We want to have some measure of how much Q varies from one sample to
+another.  Of course, Var(Q) is such a measure.
 
-Say for now that the average of q, averaged over all possible
-samples, is q.  For some samples, q > q, for others q <- q, but on
+Say for now that the average of Q, averaged over all possible
+samples, is q.  For some samples, Q > q, for others Q <- q, but on
 average we get q.  This relates to the issue of *bias*, which we will
-turn to later, but for now, say we have this situation, i.e. eq = q.
+turn to later, but for now, say we have this situation, i.e. EQ = q.
 
-**The key point:**  If var(q) is small, then q doesn't vary much from one
-sample to another, and if eq = q, then for "most" sample, q should be
+**The key point:**  If Var(Q) is small, then Q doesn't vary much from one
+sample to another, and if EQ = q, then for "most" samples, Q should be
 near q.  That is exactly what we hope for!  We only have one sample, of
-course, but if we know that q is usually near q, we feel
+course, but if we know that Q is usually near q, we feel
 reasonably confident that the q from our particular sample is near q.
 
 Of course, the square root of any variance is called the *standard
@@ -207,15 +208,15 @@ standard deviation, in a sense to be seen below.
 
 ## Lesson BIAS:  Bias, and Impact on Standard Errors
 
-In our last lesson, we assumed that eq = q.  We say that q is an 
-*unbiased* estimator of q.  In English:  The average value of q over all
+In our last lesson, we assumed that EQ = q.  We say that Q is an 
+*unbiased* estimator of q.  In English:  The average value of Q over all
 possible samples is q. 
 
-In the above example, in which q is the sample proportion of yes's and
-q is the correspondng population proportion, it does turn out that q is
+In the above example, in which Q is the sample proportion of Yes's and
+q is the correspondng population proportion, it does turn out that Q is
 unbiased.  In fact, any sample mean is an unbiased estimator for the
 population mean.  (Here X is 1 or 0, so the average of the X<sub>i</sub>
-is the proportion of yes's.)  Let's skip the derivation for now (we'll
+is the proportion of Yes's.)  Let's skip the derivation for now (we'll
 have a derivations lesson later), so we can get to the larger issues.
 
 Unbiasedness at first seems to be a very desirable property.  It does
@@ -223,21 +224,21 @@ hold for some classical statistical methods, but does not hold for many
 others, one of which is the sample variance, as follows.
 
 Say we wish to estimate the population variance &sigma;<sup>2</sup>.
-(we are not necessarily assuming a normal distribution.)  in the
+(We are not necessarily assuming a normal distribution.)  In the
 population, that is the average squared difference between the data and
 their mean.  The sample analog is
 
-S<sup>2</sup> = (1/n) &sigma;<sub>i</sub><sup>n</sup>
+S<sup>2</sup> = (1/n) &Sigma;<sub>i</sub><sup>n</sup>
 (X<sub>i</sub> - &#x100;)<sup>2</sup>
 
-Where &#x100; is the sample mean, (1/n)  &sigma;<sub>i</sub><sup>n</sup>
+Where &#x100; is the sample mean, (1/n)  &Sigma;<sub>i</sub><sup>n</sup>
 X<sub>i</sub>.
 
-It can be shown that s<sup>2</sup> is biased:
+It can be shown that S<sup>2</sup> is biased:
 
 E(s<sup>2</sup>) = [(n-1) / n] &sigma;<sup>2</sup>
 
-The average value of s<sup>2</sup> over all samples is a little too
+The average value of S<sup>2</sup> over all samples is a little too
 low.  The amount of bias is 
 
 E(S<sup>2</sup>) -  &sigma;<sup>2</sup> = -1/n  &sigma;<sup>2</sup> 
@@ -245,7 +246,7 @@ E(S<sup>2</sup>) -  &sigma;<sup>2</sup> = -1/n  &sigma;<sup>2</sup>
 This bothered the early developers of statistics, who then defined the
 sample variance as
 
-s<sup>2</sup> = (1/(n-1)) &sigma;<sub>i</sub><sup>n</sup>
+s<sup>2</sup> = (1/(n-1)) &Sigma;<sub>i</sub><sup>n</sup>
 (x<sub>i</sub> - &#x100;)<sup>2</sup>
 
 (In the field of probability and statistics, it is customary to use
@@ -255,42 +256,43 @@ The standard error of &#x100; is
 
 s.e.(&#x100;) = S/n<sup>0.5</sup>
 
-(use s instead of s if you wish).
+(use s instead of s if you wish; it won't matter below).
 
 But most estimators are not only biased, but also lack simple
-adjustments like that for s above.  So, one must accept bias in general,
+adjustments like that for S<sup>2</sup> above.  So, one must accept bias in general,
 and consider its implications.
 
 In that light, let's return to the discussion of standard error in the
 last lesson.  We stated that an estimator with small standard error
-would likely be near the population value it is estimating, but note now
+would likely be near the population value it is estimating. But note now
 that that argument depended on the estimator being unbiased.
 
-But it is much more optimistic, actually.  Say an estimator has bias
-of size o(1/n), as above.  Typically the size of the standard error is
-o(1/n<sup>0.5</sup>).  In other words, the bias is small relative to the
-standard error, so the argument in the last lesson still holds.
+But the situation is much more optimistic, actually.  Say an estimator
+has bias of size O(1/n), as above.  Typically the size of the standard
+error is O(1/n<sup>0.5</sup>).  In other words, the bias is small
+relative to the standard error, so the argument in the last lesson still
+holds.
 
 ## Lesson INDICATORS:  Indicator Variables
 
 Often X has only the values only 1 and 0, indicating the presence or
 absence of some trait.  That is the case in the opinion poll, for
-example, where the respondent replies yes (1) or not-yes (0).  Such a
+example, where the respondent replies Yes (1) or not-Yes (0).  Such a
 variable is called an *indicator variable*, as it indicates whether the
 trait is present or not.
 
-In this case, &#x100; reduces to the proportion of 1s, as with q, the
-proportion of yes responses to the opinion poll.  After some algebraic
+In this case, &#x100; reduces to the proportion of 1s, as with Q, the
+proportion of Yes responses to the opinion poll.  After some algebraic
 simplification, it turns out that 
 
-s<sup>2</sup> = &#x100; (1-&#x100;) / n
+S<sup>2</sup> = &#x100; (1-&#x100;) / n
 
 (or use n-1 instead of n for s).
 
 ## Lesson CI:  Confidence Intervals
 
-In our opinion poll example, q is called a *point estimate* of q.  We
-would also like to have an interval estimate, which gives a range of
+In our opinion poll example, Q is called a *point estimate* of q.  We
+would also like to have an *interval estimate*, which gives a range of
 values.  If say in in an election, the results of an opinion poll are
 reported as, "Candidate X has support of 62.1% of the voters, with a
 margin of 3.9%," it is saying,
@@ -302,10 +304,10 @@ interval on each possible sample from the given population.  Then 95% of
 the intervals would cover the true value, q.
 
 Of course, we do not collect all possible samples; we just have 1.  We
-say we are 95% that q is in our particular interval in the above sense.
-(a note on the phrasing "q is in our interval":  Some may take this to
-mean that q is random, which it is not; q is unknown but fixed.  The ci
-is what varies from one sample to another.)
+say we are 95% confident that q is in our particular interval in the
+above sense.  (A note on the phrasing "q is in our interval":  Some may
+take this to mean that q is random, which it is not; q is unknown but
+fixed.  The CI is what varies from one sample to another.)
 
 It's exactly like gambling.  We don't know whether our particular roll
 of the dice will yield a winner, but if most rolls of the dice do so,
@@ -314,10 +316,10 @@ then we may be willing to go ahead.
 ## Lesson CIAPPROX:  Confidence Intervals from Asymptotics
 
 The early developers of statistics defined a distribution family known
-as *student's t*.  This supposedly can be used to form "exact" cis, i.e. the
+as *Student's t*.  This supposedly can be used to form "exact" CIs, i.e. the
 probability of the CI covering the target population value is exactly
 0.95, if the population distribution of X is normal.  Student-t is
-widely taught, and thus widely used.  **BUt that is just an illusion.**  as
+widely taught, and thus widely used.  **BUT it is just an illusion.**  As
 pointed out earlier, no distribution in practice is exactly normal.
 
 What saves the day, though, is the Central Limit Theorem.  &#x100; is a
@@ -332,26 +334,26 @@ normal distribution.
 
 Ah, so we're in business:  For any random variable w, the quantity
 
-(w - ew) / (var(w)<sup>0.5</sup>
+(W - EW) / (Var(W)<sup>0.5</sup>)
 
-has mean 0 and variance 1.  (This has nothing to do with whether w is
+has mean 0 and variance 1.  (This has nothing to do with whether W is
 normal or not.)  So,
 
-z = (&#x100; - &mu;) / s.e.(&#x100;)
+Z = (&#x100; - &mu;) / s.e.(&#x100;)
 
 has mean 0 and variance 1, where &mu; is the population mean of X.
-(recall that &#x100; is unbiased for &mu;.)  And since z actually does
+(recall that &#x100; is unbiased for &mu;.)  And since Z actually does
 have an approximately normal distribution, its distribution is thus
 approximately N(0,1), i.e. normal with mean 0 and variance 1..  
 
 Now since the N(0,1) distribution has 95% of its area between -1.96 and
 1.96, we have
 
-0.95 &approx; p[-1.96 < (&#x100; - &mu;) / s.e.(&#x100;) < 1.96]
+0.95 &approx; P[-1.96 < (&#x100; - &mu;) / s.e.(&#x100;) < 1.96]
 
 which after algebra becomes
 
-0.95 &approx; p[
+0.95 &approx; P[
 &#x100; - 1.96 s.e.(&#x100;) < &mu; <
 &#x100; + 1.96 s.e.(&#x100;))
 
@@ -365,11 +367,11 @@ that interval.  (Remember. it is the interval that is random, not &mu;)
 And things don't stop there.  Actually, many types of estimators have
 some kinds of sums within them, and thus have an approximately normal
 distribution, provided the estimator is a smooth function of those sums.
-(a taylor series approximation results in a linear function of normal
+(A Taylor series approximation results in a linear function of normal
 random variable, thus again normal.)
 
 Thus approximate CIs can be found for lots of different
-estimators, notably maximum likelihood estimators and least-squares
+estimators, notably Maximum Likelihood Estimators and least-squares
 parametric regression estimators, as we will see in later lessons.
 
 In other words, we have the following principle (the name is mine, the
@@ -377,7 +379,7 @@ principle general):
 
 **The Fundamental Tool of Statistical Inference:**
 
-> if R is a "smooth" estimator of a population quantity r consisting of
+> If R is a "smooth" estimator of a population quantity r consisting of
 > sums, based on an i.i.d. sample, then an approximate 95% confidence
 > interval for r is
 > 
@@ -387,32 +389,38 @@ The term *smooth* roughly means that R is a differentiable function of
 X<sub>1</sub>, ..., X<sub>n</sub>.
 
 By the way, for large n, the Student-t distribution is almost identical
-to N(0,1), so "no harm, no foul" -- student-t will be approximately
+to N(0,1), so "no harm, no foul" -- Student-t will be approximately
 correct.  But it won't be exactly correct, in spite of the claim.
 
 ## Lesson CONVERGE:  More on Asymptotics
 
 The concept of standard error needs to be clarified.
 
-What does the CLT say, exactly?  Say s<sub>n</sub> is the sum of iid
+What does the CLT say, exactly?  Say S<sub>n</sub> is the sum of iid
 random variables, each with mean &mu; and variance &sigma;<sup>2</sup>.
 then 
 
-z<sub>n</sub> = s<sub>n</sub> / [&sigma; / sqrt(n)] 
+Z<sub>n</sub> = (S<sub>n</sub> - &mu;) / [&sigma; sqrt(n)] 
 
-*converges in distribution* to N(0,1), **meaning that** the cdf of z<sub>n</sub>
-converges to the N(0,1) cdf.
+*converges in distribution* to N(0,1), **meaning that** the cdf of
+Z<sub>n</sub> converges to the N(0,1) cdf.
 
 In other words, the asymptotics apply to probabilities--but not to
 expected values etc.  Two random variables can have almost the same cdf
 but have very different means, variances and so on.  E.g. take any
 random variable and shift a small amount of its probability mass from X
-= c to some huge number c = d; almost the same cdf, very different mean.
+= c to some huge number X = d; almost the same cdf, very different mean.
 
-So, the asymptotic statement about regarding R and r, enables us to
-compute valid CIs based on the N(0,1) cdf.  But the standard error used
-in that interval, s.e.(R), is not necessarily the standard deviation of
-R. 
+As noted, if a sum is an ingredient in some complicated function
+that produces our estimator, we can apply a Taylor series argument to
+say that the estimator is asymptotically normal.  But the standard
+deviation of that normal distribution may be different from that of the
+estimator itself, due to the inaccuracy of the Taylor approximation.
+
+So, the asymptotic statement about regarding R and r above enables us to
+compute asymptotically valid CIs based on the N(0,1) cdf.  But the
+standard error used in that interval, s.e.(R), is not necessarily the
+standard deviation of R. 
 
 ## Lesson SOMEMATH:  Some Derivations
 
@@ -423,9 +431,9 @@ important to show a few derivations.
 
 **&#x100; is an unbiased estimator of &mu;:**
 
-By the linerity of E(), 
+By the linearity of E(), 
 
-e&#x100; = (1/n) &sigma;<sub>i</sub><sup>n</sup> ex<sub>i</sub>
+E&#x100; = (1/n) &Sigma;<sub>i</sub><sup>n</sup> Ex<sub>i</sub>
 = (1/n) n &mu; = &mu; 
 
 **Var(&#x100;) = (1/n) &sigma;<sup>2</sup>, where
@@ -434,67 +442,70 @@ e&#x100; = (1/n) &sigma;<sub>i</sub><sup>n</sup> ex<sub>i</sub>
 By the fact that the variance of a sum of independent random variables
 is the sum of their variances,
 
-Var(&#x100;) = (1/n<sup>2</sup>) &sigma;<sub>i</sub><sup>n</sup>
-var(x<sub>i</sub>) = (1/n<sup>2</sup>) n &sigma;<sup>2</sup> = (1/n)
+Var(&#x100;) = (1/n<sup>2</sup>) &Sigma;<sub>i</sub><sup>n</sup>
+Var(x<sub>i</sub>) = (1/n<sup>2</sup>) n &sigma;<sup>2</sup> = (1/n)
 &sigma;<sup>2</sup>
 
-**s<sup>2</sup> is a biased estimator of &sigma;<sup>2</sup></sup>**
+**S<sup>2</sup> is a biased estimator of &sigma;<sup>2</sup></sup>**
 
-for any random variable w (with finite variance), 
+For any random variable W (with finite variance), 
 
-Var(w) = E(w<sup>2</sup>) - (EW)<sup>2</sup>  
+Var(W) = E(W<sup>2</sup>) - (EW)<sup>2</sup>  
 
 We will use this fact multiple times.
 
 And the sample analog (just algebraic manipulation) is
 
-S<sup>2</sup> = (1/n) &sigma;<sub>i</sub><sup>n</sup>
+S<sup>2</sup> = (1/n) &Sigma;<sub>i</sub><sup>n</sup>
 X<sub>i</sub><sup>2</sup> - &#x100;<sup>2</sup>
 
 Applying E() to both sides of this last equation, we have
 
 E(S<sup>2</sup>) =
-(1/n) n E(x<sub>i</sub><sup>2</sup>) -
+(1/n) n E(X<sup>2</sup>) -
 (Var(&#x100;) + &mu;<sup>2</sup>) =
 (&sigma;<sup>2</sup> + &mu;<sup>2</sup>) - [(1/n) &sigma;<sup>2</sup> + &mu;<sup>2</sup>] =
 [(n-1)/n] &sigma;<sup>2</sup>
 
 ## Lesson SIG: Significance Testing 
 
-The notion of *signficance testing* (ST) (also known as
-*hypothesis testing*, and *p-values*) is
-one of the real oddities in statistics.  
+The notion of *signficance testing* (ST) (also known as *hypothesis
+testing*, and *p-values*) is one of the real oddities in statistics.  
 
 * On the one hand, statisticians are well aware of the fact that ST can
   be highly miseadling.
 
-* But on the other hand, they teach ST with ilttle or
-no warning about its dangers.  As a result, its use is widespread.
+* But on the other hand, they teach ST with little or
+no warning about its dangers.  As a result, its use is widespread--or
+more accurately stated, entrenched.
 
-A few years ago, the American Statistical Association released its
-first-ever position paper on any topic, stating what everyone had known
-for decades: ST is just not a good tool.
+As mentioned, the problems of ST have always been well-known, but
+nothing was done about them.  Finally, in 2016, the American Statistical
+Association released its first-ever position paper on any topic, stating
+what everyone had known for decades: ST is just not a good tool.
 
-They stopped just short of recommending fully against ST,
-but it is my position that ST should simply not be used.  Instead, analysis
-should be based on CIs, as explained later in this lesson..  
+To be sure, the ASA stopped short of recommending fully against ST, as
+some on the committee were defenders of it to some extent.  The final
+statement did vaguely say ST is useful in some settings.  But they gave
+no examples of this, and at the very least agreed that ST is indeed
+widely misused.  But it is my position that ST should simply not be
+used.  Instead, analysis should be based on CIs, as explained later in
+this lesson.
 
 But first, what is ST?  To keep things simple, let's say we have some
-coin, and want to test the hypothesis H<sub>0</sub>: r = 0.5, where r is
-the probability of heads.  We will toss the coin n times, and set R to
-the proportion of heads in our sample.
+coin, and want to test the null hypothesis H<sub>0</sub>: r = 0.5, where
+r is the probability of heads.  We will toss the coin n times, and set R
+to the proportion of heads in our sample.
 
-we take an "innocent until proven guilty" approach, clinging to our
+We take an "innocent until proven guilty" approach, clinging to our
 belief in H<sub>0</sub> until/unless we see very strong evidence to the
 contrary.  Well, what constitutes "strong"?
 
-We look at the ratio Z = (R-0.5) / s.e.(R).  R is approximately normal,
-as noted earlier, and under H<sub>0</sub> r has mean 0.  so under
+We look at the ratio W = (R-0.5) / s.e.(R).  R is approximately normal,
+as noted earlier, and under H<sub>0</sub> R has mean 0.  So under
 H<sub>0</sub>, W ~ N(0,1).  (Tilde is standard notation for "distributed
-as.")
-
-So, P(|Z| > 1.96) &approx; 0.05 and 5% is the traditional standard for
-"strong evidence."  So we reject H<sub>0</sub> if and only if |Z| >
+as.") Then P(|W| > 1.96) &approx; 0.05 and 5% is the traditional standard
+for "strong evidence."  We reject H<sub>0</sub> if and only if |W| >
 1.96.
 
 And we can get greedy.  What if, say, we find that R = 2.2?  Note:
@@ -504,32 +515,32 @@ And we can get greedy.  What if, say, we find that R = 2.2?  Note:
 [1] 0.01390345
 ```
 
-Under H<sub>0</sub>, P(|z| > 2.2) &approx; 0.028.  Ah, we would have
+Under H<sub>0</sub>, P(|W| > 2.2) &approx; 0.028.  Ah, we would have
 rejected H<sub>0</sub> even under the more stringent "strong evidence"
 criterion of 0.028.  So we report 0.028, known as the *p-value*.  The
 smaller the p-value, the more *signficant* we declare our finding.
 
 Well, what's wrong with that?
 
-* We know *a priori* that <sub>0</sub> is false.  No coin is exactly
+* We know *a priori* that H<sub>0</sub> is false.  No coin is exactly
   balanced.  So it's rather silly to ask the question regarding
   H<sub>0</sub>.
 
 * We might be interested in knowing whether the coin is *approximately*
   balanced.  Fine, but the ST is not addressing that question.  Even if
 r is just a little different from 0, then as the number of tosses n goes
-to infinity, the denominator in z goes to 0, and thus r goes to
+to infinity, the denominator in W goes to 0, and thus R goes to
 &pm;&infin;--and the p-value goes to 0.
 
 * In such a scenario, we declare that the coin is "signficantly" 
-unbalanced, an egregiously misleading statement.
+unbalanced ("Look, a tiny p-value!"), an egregiously misleading statement.
 
-* we have the opposite problem with small n.  We will declare "no
-  signficant difference" when we actually should say, "we have too
+* We have the opposite problem with small n.  We will declare "No
+  signficant difference" when we actually should say, "We have too
 little data to make any claims."
 
-One reason that ST is so appealing is that it allows the user to be
-lazy.  Say we have two drugs, an old one a and a new one b, for treating
+One reason that ST is so appealing is that **it allows the user to be
+lazy.**  Say we have two drugs, an old one A and a new one B, for treating
 high blood pressure.  The user here may be a government agency, deciding
 whether to approve the new drug.
 
@@ -554,12 +565,13 @@ enough data for accurate estimation of the means.
 Yes, the user does have to make a decision, but it is an informed
 decision.  In other words:
 
-> the user is taking responsibility, making an informed decision,
+> The user is taking responsibility, making an informed decision,
 > instead of allowing a poor statistical procedure to make the decision
 > for him/her.
 
-Note by the way that what we are not doing is
-"check to see whether the CI contains 0.")
+Note by the way that what we are NOT doing is
+"check to see whether the CI contains 0," which would have all the
+problems cited above.
 
 See 
 [this document](https://github.com/matloff/regtools/blob/master/inst/nopvals.md)
@@ -569,12 +581,12 @@ for further details.
 ## Lesson GEYSER:  Old Faithful Geyser Example
 
 To start to make the concepts tangible, let's look at **faithful**, a
-built-in dataset in r, recording eruptions of the old faithful geyser in
-the us national park, yellowstone.
+built-in dataset in R, recording eruptions of the Old Faithful Geyser in
+the US National Park, Yellowstone.
 
-The object consists of an r data frame with 2 columns, **eruptions** and
+The object consists of an R data frame with 2 columns, **eruptions** and
 **waiting**, showing the eruption durations and times between eruptions.
-the conceptual "population" here is the set of all old faithful
+the conceptual "population" here is the set of all Old Faithful
 eruptions, past, present and future.
 
 Let's start simple, with a CI for the population mean duration:
@@ -592,13 +604,13 @@ c(samplemean - 1.96*stderr, samplemean + 1.96*stderr)
 
 So far, we've discussed only ad hoc estimators, set up for a specific
 purpose.  It would be nice to have general ways of forming estimators.
-the two most common such techniques are *maximum likelihood estimation*
-(MLe) and the *method of moments* (MM).  Let's illustrate them with a
-simple example, mm first.
+The two most common such techniques are *Maximum Likelihood Estimation*
+(MLE) and the *Method of Moments* (MM).  Let's illustrate them with a
+simple example, MM first.
 
 **The Method of Moments**
 
-> say we are estimating some parameter &theta; with the estimator to be
+> Say we are estimating some parameter &theta; with the estimator to be
 > found and named T.  Then, in the formal expression for EX, replace
 > &theta; by T; set the result to the sample mean &#x100; and solve for T.
 
@@ -619,17 +631,17 @@ l = 1 / &#x100;
 It may be that our parametric model has 2 parameters rather than 1,
 so now  &theta; = (&theta;<sub>1</sub>,&theta;<sub>2</sub>) and
 t = (t<sub>1</sub>,t<sub>2</sub>).
-then in addition to generating an equation for the sample mean as above,
+Then in addition to generating an equation for the sample mean as above,
 we also generate a second equation for the sample variance in terms of
 the &theta;<sub>i</sub>; we replace the &theta;<sub>i</sub> by
 t<sub>i</sub>; on the right-hand side, we write the sample variance.
-that gives us 2 equations in 2 unknowns, and we solve for the
+That gives us 2 equations in 2 unknowns, and we solve for the
 t<sub>i</sub>.
 
 There are variations.  E.g. instead of the variance and sample variance, we
-can use the *second moment*, E(x<sup>k</sup>) and its sample analog
+can use the *second moment*, E(X<sup>k</sup>) and its sample analog
 
-(1/n) &sigma;<sub>i</sub><sup>n</sup>X<sub>i</sub><sup>k</sup>
+(1/n) &Sigma;<sub>i</sub><sup>n</sup>X<sub>i</sub><sup>k</sup>
 
 This may be easier if, say, we have 3 parameters to estimate.
 
@@ -639,14 +651,14 @@ Discrete case:
 
 > Say we model the population as having a probability mass function
 > p<sub>X</sub> that depends on some (scalar or vector) parameter &theta;.
-> calculate the probability (i.e. "likelihood") of our observed data, as a
+> Calculate the probability (i.e. "likelihood") of our observed data, as a
 > function of &theta;.  Replace &theta; by T everywhere in that
 > expression; and finally, then take the MLE to be whatever value of T
 > maximizes that likelihood.
 
 If our X<sub>i</sub> are independent, then the likelihood expression is
 
-&pi;<sub>i</sub><sup>n</sup> p(x<sub>i</sub>)
+&Pi;<sub>i</sub><sup>n</sup> p(x<sub>i</sub>)
 
 We take the logarithm, to make derivatives easier.  
 
@@ -661,27 +673,31 @@ replace p by f.
 
 We mentioned earlier that the CLT not only applies to sums but
 also extends to smooth (i.e. differentiable) functions of sums.
-that fact is important here.  How does that play out with MMs and MLEs?
+That fact is important here.  How does that play out with MMs and MLEs?
 
-MMs: by definition, we are working with sums! 
+MMs: By definition, we are working with sums! 
 
-MLE: the log-likelihood is a sum!
+MLE: The log-likelihood is a sum!
 
 Again, we must be working with smooth functions.  Consider the *negative
 binomial* distribution family,
 
-P(x = j) = c(n-1,i-1) r<sup>i</sup> (1-r)<sup>n-i</sup>
+P(X = j) = c(n-1,i-1) r<sup>i</sup> (1-r)<sup>n-i</sup>
 
-This arises, say, from tossing a coin until we accumulate k heads.
+This arises, say, from tossing a coin until we accumulate k heads, with
+r being the probability of heads.
 
-If our parameter is r, with known k, the above is a differentiable
-function of r.  But if we don't know k, say we have the data but did not
-collect it ourselves, then we don't have differentiability in that
-parameter.
+If our parameter to be estimated is r, with known k, the above is a
+differentiable function of r.  But if we don't know k, say we have the
+data but did not collect it ourselves, then we don't have
+differentiability in that parameter.  Then we cannnot maximize the
+likelihood via derivatives, and cannot linearize the resulting equations.
+Since the asymptotic normality depends on the latter, we cannot form the
+CIs as described earlier.
 
-*r **mle()** function:*
+*R **mle()** function:*
 
-This function will calculute MLEs and give standard errors, in smooth
+This function will calculate MLEs and give standard errors, in smooth
 cases.
 
 ``` r
@@ -709,14 +725,14 @@ lamb    2.195     0.2195
 
 ```
 
-*extent of usage:*
+*Extent of usage:*
 
 MLEs have appealing theoretical properties.  In smooth settings, they
 are optimal, i.e. minimal standard error.  They are quite widely used.
 
 MMs are less popular.  But they are easier to explain, and by the way,
-the inventor of the generalized method of moments won the nobel prize in
-econoomics in 2013 that developing that method.
+the inventor of the generalized method of moments won the Nobel Prize in
+Econoomics in 2013 that developing that method.
 
 ## Lesson ESTDISTRS:  Estimating Entire Distributions
 
@@ -976,7 +992,7 @@ Again, the &beta;<sub>i</sub> are population values.
 
 The sample estimates vector b is computed by minimizing
 
-&sigma;<sub>1</sub><sup>n</sup>
+&Sigma;<sub>1</sub><sup>n</sup>
 [y<sub>i</sub> - b'(1,x<sub>i</sub>)]<sup>2</sup>
 
 A closed-form solution exists, and is implemented in r as **lm()**.
