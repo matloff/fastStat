@@ -1186,7 +1186,7 @@ best to stick to the basics:
 
 Logit, which we have handy from LDA, satisfies those desiderata.
 
-# Lesson KNN:  Predictive Modeling -- Tree-Based Algorithms 
+# Lesson KNN:  Predictive Modeling -- k-Nearest Neighbors 
 
 One of the simplest ML methods is k-Nearest Neighbors.  Say we are
 predicting weight from height and age, and must do so for a new case in
@@ -1216,7 +1216,44 @@ but the process should be clear.
 
 # Lesson SVM:  Predictive Modeling -- Support Vector Machines 
 
+SVM is used mainly in classification contexts. Here we will assume just
+two classes, for simplicity.                                                 
+
+The idea behind SVM is very simple. think of the case of two features.
+We can plot the situation as follows.  Consider this graph, in the
+context of predicting diabetes, from blood glucose and age:
+
+![alt text](PimaGlucAgeDiab.png)
+
+The red dots are the diabetics.  We would like to draw a line so that
+most of the red dots are on one side of the line and most of the black
+ones are on the other side.  We then use that line too predict future
+cases.  Of course if we have more than two features the line becomes a
+plane or hyperplane.                    
+
+Well, why just limit ourselves to a straight line? Why not make it a
+quadratic curve, a cubic curve and so on?  Each one gives us more
+flexibility than the last, hence a potentially better fit.
+
+That is exactly what SVM methods do, apply a transformation (a *kernel*)
+to the features, and then find a straight line separating the
+transformed data. This is equivalent to forming a curvy line in the
+original X space.  There are many common choices of kernels, including
+polynomials.
+
 # Lesson NEURAL:  Predictive Modeling -- Neural Networks
+
+In a neural network (NN), , we have a set of layers. Think of them as
+being arranged from left to right. The input data goes in on the left
+side and the predicted values come out on the right side. the output of
+each layer gets fed in as input to the next layer, being fed through
+some transformation (an *activation function*). At each layer, in
+essence the input is sent through a linear regression estimation, with
+the result then passed on to the next layer.  
+
+A layer consists of a number of *units*.  Every output of one layer is
+fed into each unit of the next layer.  So the number of units per layer,
+and the number of layers, are hyperparameters.
 
 # Lesson NBHR:  Predictive Modeling -- a Feature Neighborhood View of Overfitting in ML
 
@@ -1241,29 +1278,6 @@ polynomial regression.  Here polynomials will give us a look into how ML
 algorithms can also overfit, specifically in support vector machines 
 (SVM) and neural networks (NNs).
 
-SVM is used mainly in classification contexts. Here we will assume just
-two classes, for simplicity.                                                 
-
-The idea behind SVM is very simple. think of the case of two features.
-We can plot the situation as follows.  Consider this graph, in the
-context of predicting diabetes, from blood glucose and age:
-
-![alt text](PimaGlucAgeDiab.png)
-
-The red dots are the diabetics.  We would like to draw a line so that
-most of the red dots are on one side of the line and most of the black
-ones are on the other side.  We then use that line too predict future
-cases.  Of course if we have more than two features the line becomes a
-plane or hyperplane.                    
-
-Well, why just limit ourselves to a straight line? Why not make it a
-quadratic curve, a cubic curve and so on?  Each one gives us more
-flexibility than the last, hence a potentially better fit.
-
-That is exactly what SVM methods do, apply a transformation (a *kernel*)
-to the features and then find a straight line separating the transformed
-data. This is equivalent to forming a curvy line in the original X space. 
-
 Clearly we can have a situation in which the line may get so curvy that
 it "fits the noise rather than the data," as they say. There is a true
 population curve, consisting of all the points t for which &mu;(t) =
@@ -1274,14 +1288,6 @@ fitted curve varies too much from one sample to another.
 And though we motivated the above discussion by using polynomial curves,
 just about any common kernel function can be approximated by
 polynomials.  The principle is the same.
-
-In the case of NNs, we have a set of layers. Think of them as being
-arranged from left to right. The input data goes in on the left side and
-the predicted values come out on the right side. the output of each
-layer gets fed in as input to the next layer, being fed through some
-transformation (an *activation function*). At each layer, in essence the
-input is sent through a linear regression estimation, with the
-result then passed on to the next layer.
 
 Suppose the activation function is a(t) = t<sup>2</sup>.  This is not a
 common choice at all, but it will make the point.  The output of the
