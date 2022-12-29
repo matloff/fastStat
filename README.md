@@ -1196,7 +1196,23 @@ and use that average as our predicted value for the new case.
 
 # Lesson TREE:  Predictive Modeling -- Tree-Based Algorithms 
 
-This ML category is almost as simple to explain
+This ML category is almost as simple to explain.  At the root of the
+tree, we ask whether a given feature is above or below a given
+threshold, and then go left or right accordingly.  At our next node, we
+ask the same question of another feature, and so on.  
+
+Eventually we wind up in a leave.  In the continuous Y case, our
+prediction is the average Y value in the leaf; for categorical Y, our
+prediction is whichever category is most numerous in the leave.
+
+Here is a picture from using **qeML::qeDT()** on the Census data in
+**qeML**:
+
+Here we are predicting one of 5 occupations.  The picture is too small
+for this dataset, with all the leaves jumbled together at the bottom,
+but the process should be clear.
+
+![alt text](TreePredOcc.png)
 
 # Lesson SVM:  Predictive Modeling -- Support Vector Machines 
 
