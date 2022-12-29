@@ -12,7 +12,9 @@
 Students in computer science, engineering, mathematics and the like
 typically take a course in calculus-based probability -- unconditional
 and conditional probability, cdfs and density functions, expected value
-and so on.  But later they have a need to use statistics, and find it's
+and so on.  (The material is in Chapters 1-9 of 
+[my online book.](github.com/matloff/probstatbook).)
+But later they have a need to use statistics, and find it's
 a broader and more nuanced field than they had realized.
 
 **This document will enable such people to quickly acquire the needed
@@ -74,6 +76,10 @@ looking at familiar statistical concepts and properties.
 - [Lesson MLB:  the mlb dataset](#lesson-mlb--the-mlb-dataset)
 - [Lesson LIN:  predictive modeling -- linear](#lesson-lin--predictive-modeling----linear)
 - [Lesson LOGIT:  predictive modeling -- logistic](#lesson-logit--predictive-modeling----logistic)
+- [Lesson KNN:  predictive modeling -- k-nearest-neighbors](#lesson-knn--predictive-modeling----k-nearest-neighbors)
+- [Lesson TREE:  predictive modeling -- tree-based algorithms](#lesson-tree--predictive-modeling----tree-based-algorithms)
+- [Lesson SVM:  predictive modeling -- support vector machines](#lesson-svm--predictive-modeling----support-vector-machines)
+- [Lesson NEURAL:  predictive modeling -- neural networks](#lesson-neural--predictive-modeling----neural-networksmachines)
 - [Lesson NBHR:  predictive modeling -- a feature neighborhood view of overfitting in ml](#lesson-polyml--predictive-modeling----a-feature-neighborhood-view-of-overfitting-in-ml)
 - [Lesson POLYML:  predictive modeling -- a polynomial view of overfitting in ml](#lesson-polyml--predictive-modeling----a-polynomial-view-of-overfitting-in-ml)
 - [Lesson OVER:  predictive modeling -- avoiding overfitting](#lesson-over--predictive-modeling----avoiding-overfitting)
@@ -870,6 +876,19 @@ P(x &le;u and y &le;v)
 
 * f<sub>Y | X = v</sub>(u) = f<sub>X,Y</sub>(u,v) / f<sub>X</sub>(u)
 
+* One common measure of the relation between variables U and V is their
+  (Pearson) *correlation*, E(u - EU)`(V - EV)] / sqrt[Var(U Var(V)].  They
+  need not be normal.  This is a quantity in [-1,1], often denoted by
+  &rho;..  
+
+* If we are analyzing a group of variables X<sub>i</sub>, i = 1,...,p,
+their *correlation matrix* is p X p, with the i,j element being 
+&rho;(X<sub>i,X<sub>j</sub></sub>).
+
+* The *covariance* between variables U and V is the product of their
+  correlation and their standard deviations.  The *covariance matrix*
+is defined accordingly.
+
 * Unlike the univariate case, there are very few widely-used parametric
   families of multivariate distributions.  The main one is multivariate
 normal.
@@ -885,10 +904,6 @@ normal.
     - those conditional distributions have mean that is linear in the
       conditioning value, and variance (or covariance matrix) that does
       not depend on that value
-
-* One common measure of the relation between variables U and V is their
-  (Pearson) *correlation*, E(u - EU)`(V - EV)] / sqrt[Var(U Var(V)].  They
-  need not be normal.  This is a quanttty in [-1,1].
 
 # Lesson PREDICT:  Predictive Modeling -- Preliminaries
 
@@ -971,7 +986,8 @@ scalar and X vector), then the following attributes hold:
 
 * conditional homogeneous variance:  Var(Y | X = t) is constant in t
 
-So, classically one assumes that
+These traits led to the classical *linear regression
+model*:  One assumes that
 
 &mu;(t) = 
 &beta;<sub>0</sub> +
@@ -980,7 +996,8 @@ So, classically one assumes that
 &beta;<sub>p</sub> 
 
 for a p-predictor model, where t = (t<sub></sub>,...,t<sub>p</sub>)', a
-column vector; ' means matrix transpose..
+column vector; ' means matrix transpose and the default for vectors is
+column form..
 
 in vector form, our assumption is
 
@@ -989,6 +1006,9 @@ in vector form, our assumption is
 where &beta; and (1,t) are taken to be column vectors.
 
 Again, the &beta;<sub>i</sub> are population values.
+
+One also assumes homogeneous variance as above, and of course
+independent observations (X<sub>i</sub>,,Y<sub>i</sub>).
 
 The sample estimates vector b is computed by minimizing
 
@@ -1103,7 +1123,8 @@ Recall that in this setting, &mu;(t) reduces to P(Y = 1 | X = t).  That
 makes a linear model untenable, as it would produce values outside the
 [0,1] range for probabilities.
 
-As we did in the lesson on the linear model, again let's start
+Just as the linear model was originally inspired by multivariate
+distributions, the same is true for logit.  So again let's start
 with the classical normal-distribution based model.  This is known as
 *Fisher Linear Discriminant Analysis* (LDA).
 
@@ -1116,26 +1137,29 @@ not Bayesian statistics), one finds that
 
 P(Y = 1 | X = t)
 
-has a *logistic* form:  If X we have a single predictor (so
-&nu;<sub>i</sub> is a scalar and c is just the standard deviation
-&sigma;), the form is
+has a *logistic* (often nicknamed *logit*) form:  If X we have a single
+predictor (so &nu;<sub>i</sub> is a scalar and c is just the standard
+deviation &sigma;), the form is
 
 P(Y = 1 
 | X = t) = 1 / [1 + exp(-{&omega;<sub>0</sub> + &omega;<sub>1</sub>t)}]
 
 for parameters &omega;<sub>0</sub> and &omega;<sub>1</sub>
 that depend on the v<sub>i</sub> and &sigma;.
-
 In the case of multiple features, this is
 
 P(Y = 1 | X = t) = 1 / [1 + exp(-&omega;'t)]
 
-(Let's call the above, "the logistic equation.")
+**This probability interpretation of logit is key.**
 
-Again as in the case of the linear model discussion above, we must ask,
-**what if the assumptions, e.g. normality, don't hold?**
+Let's call the above, "the logistic equation."
 
-And the answer is that the logistic model (often called *logit*) is
+So again:  Just as the linear model originally arose in the context of
+multivariate normal distributions, this was the case for logit as well.
+But again, as in the case of the linear model discussion above, we must
+ask, **what if the assumptions, e.g. normality, don't hold?**
+
+And the answer is that the logit model is
 quite popular anyway, and for good reason:  The logistic equation does
 produce a value in (0,1), which is what we want for a probability of
 course, yet we still have a linear ingredient &omega;'t, the next-best
@@ -1162,7 +1186,7 @@ best to stick to the basics:
 
 Logit, which we have handy from LDA, satisfies those desiderata.
 
-# Lesson NBHR:  Predictive Modeling -- a Feature Neighborhood View of Overfitting in ML
+# Lesson KNN:  Predictive Modeling -- Tree-Based Algorithms 
 
 One of the simplest ML methods is k-Nearest Neighbors.  Say we are
 predicting weight from height and age, and must do so for a new case in
@@ -1170,7 +1194,17 @@ which X = (70,28).  Then we find the k rows in our training data that
 are closest to (70,28), find the average weight among those data points,
 and use that average as our predicted value for the new case.
 
-The Bias-Variance Tradeoff here is clear (and similar to the density
+# Lesson TREE:  Predictive Modeling -- Tree-Based Algorithms 
+
+This ML category is almost as simple to explain
+
+# Lesson SVM:  Predictive Modeling -- Support Vector Machines 
+
+# Lesson NEURAL:  Predictive Modeling -- Neural Networks
+
+# Lesson NBHR:  Predictive Modeling -- a Feature Neighborhood View of Overfitting in ML
+
+The Bias-Variance Tradeoff with k-NN is clear (and similar to the density
 estimation example above).  If k is large, the neighborhood of (70,28)
 will be large, and thus will contain some unrepresentative points that
 are far from (70,28).  If k is small, the sample mean in our
