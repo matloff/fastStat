@@ -1278,23 +1278,27 @@ polynomial regression.  Here polynomials will give us a look into how ML
 algorithms can also overfit, specifically in support vector machines 
 (SVM) and neural networks (NNs).
 
-Clearly we can have a situation in which the line may get so curvy that
-it "fits the noise rather than the data," as they say. There is a true
-population curve, consisting of all the points t for which &mu;(t) =
-0.5, and the curvier we allow our fit, the smaller the bias.  But as in
-the linear case, the curvier the fit, the larger the variance.  The
-fitted curve varies too much from one sample to another.
+Clearly we can have a situation in which the dividing line in SVM may
+get so curvy that it "fits the noise rather than the data," as they say.
+There is a true population curve, consisting of all the points t for
+which &mu;(t) = 0.5, and the curvier we allow our fit, the smaller the
+bias.  But as in the linear case, the curvier the fit, the larger the
+variance.  The fitted curve varies too much from one sample to another.
 
 And though we motivated the above discussion by using polynomial curves,
 just about any common kernel function can be approximated by
 polynomials.  The principle is the same.
 
-Suppose the activation function is a(t) = t<sup>2</sup>.  This is not a
-common choice at all, but it will make the point.  The output of the
-first layer in our example here is a linear combination of the glucose
-and age features.  The activation function squares that, giving us a
-quadratic polynomial in glucose and age.  After the second stage, we
-will have a quartic (i.e. fourth degree) polynomial and so on.
+For NNs, suppose the activation function is a(t) = t<sup>2</sup>.  This
+is not a common choice at all, but it will make the point.  The output
+of the first layer in our example here is a linear combination of the
+glucose and age features.  The activation function squares that, giving
+us a quadratic polynomial in glucose and age.  After the second stage,
+we will have a quartic (i.e. fourth degree) polynomial and so on.
+
+So basically we are doing a lot of linear regression fits and
+as this goes from layer to layer, they gets multiplied. You're
+basically building up polynomials of higher and higher degree. 
 
 And again, almost any activation function can be approximated by a
 polynomial, so the same argument holds.  So again it's clear how easily
@@ -1307,24 +1311,22 @@ except that the "patches" are of irregular shape.  Well, again:  The
 more layers we have, the smaller the "patches," i.e. the smaller the
 neighborhoods.  So the situation is just like that of k-NN etc.
 
-So basically we are doing a lot of linear regression fits and
-as this goes from layer to layer, they gets multiplied. You're
-basically building up polynomials of higher and higher degree. 
-
 # Lesson OVER:  Predictive Modeling -- Avoiding Overfitting
 
 How can we try to avoid overfitting?
 
-* Most regression models, both parametric and ML, have regularized
-versions, Again, to guard against extreme data having too much impact.
-In the linear case, we have *ridge regression* and the LASSO.
+* Most regression models, both parametric and ML, have *regularized*
+versions: to guard against extreme data having too much impact,
+predicted values are shrunken toward 0 in some manner.
+In the linear case, we have *ridge regression* and the LASSO,
+which work by shrinking b, the estimated &beta; vector.
 Regularized versions of SVM, NNs etc. also exist.
 
 * We can do *dimension reduction* by mapping our features into a 
 lower-dimensional subspace, e.g. via Principal Components Analysis or
 UMAP.
 
-* We cam do *cross validation*:  Take many subsamples of the data (i.e.
+* We can do *cross validation*:  Take many subsamples of the data (i.e.
   a subset of the rows).  In each one fit our model to the subsample
   and use the result to predict the remaining data.  In this way, choose
   among competing models.
@@ -1356,6 +1358,67 @@ there, but almost all the data is separated into 10 "islands."  Between
 any 2 islands, there are tons of high-dimensonal curves, say high-degree
 polynomials, that one can fit to separate them.  So we see that
 overfitting is just not an issue, even with high-degree polynomials.
+
+
+# Lesson PRIVACY:  Data Privacy/Statistical Disclosure Controla
+
+Consider a database of medical records, intended for research purposes
+but in which privacy of individual patient records is paramount.  The
+privacy and research goals are at odds with each other.
+How can we achieve both goals to an acceptable degree?  This is the
+*data privacy* or *statistical disclosure control* problem.
+
+**Clearly there is no perfect system**, achieving both goals perfectly.
+Instead, we must settle for aiming for just a degree of privacy, with
+higher degrees affording great protection from intruders but less
+accuracy for researchers, and vice versa:  less privacy protection for
+greater access for researchers.
+
+This is a vast, highly technical field, so I will just give an overview
+of some of the issues.  Here are three of the most common approaches:
+
+* Random noise addition.  To hide, say, the income of a person in the
+  database, we might add mean-0 random noise, say of standard deviation
+  &sigma;.  The larger the value of &sigma;, the less the intruder knows
+  about the person's true income.  On the other hand, large values of
+  &sigma; cause larger standard errors in statistical estimators, thus
+  hinder researchers.
+
+* Data swapping:  A percentage p of all records will have some sensitive
+  attributes swapped with others.
+
+* k-anonymity:  The data is modified in such a way that for any person
+  in the database, at least k-1 others in the database share the same
+  sensitive attributes as the given person.
+
+* Differential privacy:  For any statistical quantity, say the mean,
+  median, linear regression model etc., the data is modified so that
+  there is a controllably low probability that the quantity would change
+  much if a given record were removed from the database.  Note that a
+  different method must be devised for each kind of statistic, which
+  limits the kinds of analyses open to researchers.  There is a
+  hyperparameter &epsilon;.
+
+Note that in the first example here noise addition is a *method* for
+achieving privacy and &sigma; is a *measure* of the degree of privacy
+protection.  In the second, we again have both a method and a meausre.
+In the third and fourth examples, k and &epsilon; are only
+privacy *measures*, and do not specify methods top achieve the given
+levels of privacy.  
+
+DP has been the subject of much
+[controversy](https://www.bloomberg.com/news/articles/2021-08-12/data-scientists-ask-can-we-trust-the-2020-census).
+It was heavily promoted in the computer science community, and has many
+devoted adherents there.  On the other hand, some applied researchers
+have strenuously questioned its validity in practice.
+
+Again, there is no perfect privacy system.  I disagree with those who
+promote DP as "the" solution to the privacy problem.  After all, even
+they concede that DP is vulnerable to certain kinds of database attacks,
+and has various other drawbacks.  It should thus be clear:  A privacy
+specialist should have broad knowledge of the concepts and methods in
+the general privacy field, and should not rely solely on any particular
+one.
 
 
 # LICENSING
