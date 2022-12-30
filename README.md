@@ -1374,7 +1374,7 @@ accuracy for researchers, and vice versa:  less privacy protection for
 greater access for researchers.
 
 This is a vast, highly technical field, so I will just give an overview
-of some of the issues.  Here are three of the most common approaches:
+of some of the issues.  Here are a few common approaches:
 
 * Random noise addition.  To hide, say, the income of a person in the
   database, we might add mean-0 random noise, say of standard deviation
@@ -1400,7 +1400,7 @@ of some of the issues.  Here are three of the most common approaches:
 
 Note that in the first example here noise addition is a *method* for
 achieving privacy and &sigma; is a *measure* of the degree of privacy
-protection.  In the second, we again have both a method and a meausre.
+protection.  In the second, we again have both a method and a measure.
 In the third and fourth examples, k and &epsilon; are only
 privacy *measures*, and do not specify methods top achieve the given
 levels of privacy.  
