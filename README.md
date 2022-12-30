@@ -83,8 +83,8 @@ looking at familiar statistical concepts and properties.
 - [Lesson NBHR:  predictive modeling -- a feature neighborhood view of overfitting in ml](#lesson-polyml--predictive-modeling----a-feature-neighborhood-view-of-overfitting-in-ml)
 - [Lesson POLYML:  predictive modeling -- a polynomial view of overfitting in ml](#lesson-polyml--predictive-modeling----a-polynomial-view-of-overfitting-in-ml)
 - [Lesson OVER:  predictive modeling -- avoiding overfitting](#lesson-over--predictive-modeling----avoiding-overfitting)
-- [Lesson NOWORRY:  predictive modeling -- ignoring overfitting](#lesson-over--predictive-modeling----ignoring-overfitting)
-
+- [Lesson NOWORRY:  predictive modeling -- ignoring overfitting](#lesson-noworry--predictive-modeling----ignoring-overfitting)
+- [Lesson PRIVACY:  data privacy](#lesson-privacy--data-privacy)
 
 ## Lesson SAMPLING:  the Notion of a Sample
 
@@ -1359,8 +1359,7 @@ any 2 islands, there are tons of high-dimensonal curves, say high-degree
 polynomials, that one can fit to separate them.  So we see that
 overfitting is just not an issue, even with high-degree polynomials.
 
-
-# Lesson PRIVACY:  Data Privacy/Statistical Disclosure Controla
+# Lesson PRIVACY:  Data Privacy
 
 Consider a database of medical records, intended for research purposes
 but in which privacy of individual patient records is paramount.  The
