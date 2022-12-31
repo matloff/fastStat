@@ -71,7 +71,8 @@ looking at familiar statistical concepts and properties.
 - [Lesson MLEMM:  general methods of estimation](#lesson-mlemm--general-methods-of-estimation)
 - [Lesson ESTDISTRS:  estimating entire distributions](#lesson-estdistrs--estimating-entire-distributions)
 - [Lesson TRADE:  the bias-variance tradeoff](#lesson-trade--the-bias-variance-tradeoff)
-- [Lesson MULTI:  multivariate distributions](#lesson-multi--multivariate-distributions)
+- [Lesson MULTI:  multivariate distributions and correlation](#lesson-multi--multivariate-distributions-and-correlation)
+- [Lesson MVN:  the multivariate normal distribution family](#lesson-mvn--the-multivariate-normal-distribution-family)
 - [Lesson PREDICT:  predictive modeling -- preliminaries](#lesson-predict--predictive-modeling----preliminaries)
 - [Lesson MLB:  the mlb dataset](#lesson-mlb--the-mlb-dataset)
 - [Lesson LIN:  predictive modeling -- linear](#lesson-lin--predictive-modeling----linear)
@@ -859,15 +860,14 @@ suggestions, which you can try, such as setting **breaks='fd'** in your
 call to **hist()**.
 
 Where the Bias-Variance Tradeoff really becomes an isssue is in
-prediction/machine learning contexts, to be covered later
-.
+prediction/machine learning contexts, to be covered later.
 
-# Lesson MULTI:  Multivariate Distributions
+# Lesson MULTI:  Multivariate Distributions and Correlation
 
 Say we have continuous random variables X and Y.  We of course can talk
 about their density functions f<sub>X</sub> and f<sub>Y</sub>, but it's
-also important to talk about how they vary (or not) *together*.  Here
-are a few facts:
+also important to talk about how they vary (or not) *together*.  First,
+the basics:
 
 * f<sub>X,Y</sub>(u,v) = &part;/&part;u &part;/&part;v F<sub>X,Y</sub>(u,v) =
 P(x &le;u and y &le;v)
@@ -876,24 +876,34 @@ P(x &le;u and y &le;v)
 
 * f<sub>Y | X = v</sub>(u) = f<sub>X,Y</sub>(u,v) / f<sub>X</sub>(u)
 
-* One common measure of the relation between variables U and V is their
-  (Pearson) *correlation*, E(u - EU)`(V - EV)] / sqrt[Var(U Var(V)].  They
-  need not be normal.  This is a quantity in [-1,1], often denoted by
-  &rho;.  
+One common measure of the relation between variables U and V is their
+(Pearson) *correlation*, E(U - EU)`(V - EV)] / sqrt[Var(U Var(V)].  They
+need not be normal.  This is a quantity in [-1,1], often denoted by
+&rho;.  
 
-* If we are analyzing a group of variables X<sub>i</sub>, i = 1,...,p,
+If we are analyzing a group of variables X<sub>i</sub>, i = 1,...,p,
 their *correlation matrix* is p X p, with the i,j element being 
-&rho;(X<sub>i,X<sub>j</sub></sub>).
+&rho;(X<sub>i</sub>,X<sub>j</sub>).
 
-* The *covariance* between variables U and V is the product of their
-  correlation and their standard deviations.  The *covariance matrix*
-is defined accordingly.
+The *covariance* between variables U and V is the same as the
+correlation, but not standardized by the standard deviations:
 
-* Unlike the univariate case, there are very few widely-used parametric
-  families of multivariate distributions.  The main one is multivariate
-normal.
+Cov(U,V) = E(U - EU)`(V - EV)] = E(UV) - EU EV
 
-* The MV normal family does have some interesting properties, though:
+The *covariance matrix* is defined accordingly.
+
+Note that covariance is bilinear and unaffected by additive constants.
+E.g.
+
+Cov(aU+b,cV+d) = ac Cov(U,V)
+
+# Lesson MVN: The Multivariate Normal Distribution Family 
+
+Unlike the univariate case, there are very few widely-used parametric
+families of multivariate distributions.  The main one is multivariate
+normal. 
+
+The MV normal family does have some interesting properties, though:
 
     - all marginal distributions are MV normal
 
@@ -1373,6 +1383,8 @@ higher degrees affording great protection from intruders but less
 accuracy for researchers, and vice versa:  less privacy protection for
 greater access for researchers.
 
+## Overview
+
 This is a vast, highly technical field, so I will just give an overview
 of some of the issues.  Here are a few common approaches:
 
@@ -1386,24 +1398,55 @@ of some of the issues.  Here are a few common approaches:
 * Data swapping:  A percentage p of all records will have some sensitive
   attributes swapped with others.
 
+* Cell suppression:  Say our data consists of r categorical 
+  variables (or can be discretized).  This produces an r-way table. The
+  method then bars release of any cell with a count of below w. 
+
 * k-anonymity:  The data is modified in such a way that for any person
   in the database, at least k-1 others in the database share the same
   sensitive attributes as the given person.
 
-* Differential privacy:  For any statistical quantity, say the mean,
+* Differential privacy (DP):  For any statistical quantity, say the mean,
   median, linear regression model etc., the data is modified so that
   there is a controllably low probability that the quantity would change
-  much if a given record were removed from the database.  Note that a
-  different method must be devised for each kind of statistic, which
-  limits the kinds of analyses open to researchers.  There is a
-  hyperparameter &epsilon;.
+  much if a given record were removed from the database.  Methods
+  using DP as a privacy measure typically involve some DP-specific form
+  of noise addition.  There is a hyperparameter &epsilon;.
 
-Note that in the first example here noise addition is a *method* for
-achieving privacy and &sigma; is a *measure* of the degree of privacy
-protection.  In the second, we again have both a method and a measure.
-In the third and fourth examples, k and &epsilon; are only
-privacy *measures*, and do not specify methods top achieve the given
-levels of privacy.  
+  A different method must be devised for each kind of statistic, such as
+  one for means, one for medians, one for linear regression analysis,
+  and so on.  This limits the kinds of analyses open to researchers, as
+  they can only use methods that have been developed and installed in
+  the given database.
+
+## Privacy-Accuracy Tradeoff
+
+Note that noise addition is a *method* for achieving privacy and &sigma;
+is a *measure* of the degree of privacy protection.  With data swapping,
+we again have both a method and a measure (p), and similarly with cell
+supppression, where the measure is w.
+
+But in the k-anonymity and DP examples, k and &epsilon; are only privacy
+*measures*, and do not specify methods top achieve the given levels of
+privacy.  
+
+In all examples, though, there is what we will call the Privacy-Accuracy
+Tradeoff:  The greater the degree of privacy, the less the accuracy, 
+and vice versa.  With cell suppression, for instance, a small value of w
+gives better access for researchers, but has a greater risk of
+disclosure of private information.
+
+## Statistical issues
+
+Note that privacy measures based on probabilistic considerations
+involve only the privacy mechanism itself, rather than reflecting
+sampling error, key to statistical analysis.  Pure noise addition, for
+instance, adds further variance, beyond that arising via sampling
+variation.
+
+And even more concerning, privacy mechanisms add bias.
+
+## DP issues
 
 DP has been the subject of much
 [controversy](https://www.bloomberg.com/news/articles/2021-08-12/data-scientists-ask-can-we-trust-the-2020-census).
