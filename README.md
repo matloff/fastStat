@@ -72,6 +72,7 @@ looking at familiar statistical concepts and properties.
 - [Lesson ESTDISTRS:  estimating entire distributions](#lesson-estdistrs--estimating-entire-distributions)
 - [Lesson TRADE:  the bias-variance tradeoff](#lesson-trade--the-bias-variance-tradeoff)
 - [Lesson MULTI:  multivariate distributions and correlation](#lesson-multi--multivariate-distributions-and-correlation)
+- [Lesson CORR:  correlation](#lesson-corr---correlation)
 - [Lesson MVN:  the multivariate normal distribution family](#lesson-mvn--the-multivariate-normal-distribution-family)
 - [Lesson PREDICT:  predictive modeling -- preliminaries](#lesson-predict--predictive-modeling----preliminaries)
 - [Lesson MLB:  the mlb dataset](#lesson-mlb--the-mlb-dataset)
@@ -862,7 +863,7 @@ call to **hist()**.
 Where the Bias-Variance Tradeoff really becomes an isssue is in
 prediction/machine learning contexts, to be covered later.
 
-# Lesson MULTI:  Multivariate Distributions and Correlation
+# Lesson MULTI:  Multivariate Distributions 
 
 Say we have continuous random variables X and Y.  We of course can talk
 about their density functions f<sub>X</sub> and f<sub>Y</sub>, but it's
@@ -875,6 +876,8 @@ P(x &le;u and y &le;v)
 * P((x,y) in A) = &int; &int;<sub>A</sub> f<sub>X,Y</sub>(u,v) du dv
 
 * f<sub>Y | X = v</sub>(u) = f<sub>X,Y</sub>(u,v) / f<sub>X</sub>(u)
+
+# Lesson CORR:  Correlation
 
 One common measure of the relation between variables U and V is their
 (Pearson) *correlation*, E(U - EU)`(V - EV)] / sqrt[Var(U Var(V)].  They
@@ -896,6 +899,10 @@ Note that covariance is bilinear and unaffected by additive constants.
 E.g.
 
 Cov(aU+b,cV+d) = ac Cov(U,V)
+
+Note that if U and V are independent, then E(UV) = EU EV, so the
+covariance and correlation are 0.  The converse is not true; 0
+covariance and correlation do *not* imply independence.
 
 # Lesson MVN: The Multivariate Normal Distribution Family 
 
@@ -1444,7 +1451,12 @@ sampling error, key to statistical analysis.  Pure noise addition, for
 instance, adds further variance, beyond that arising via sampling
 variation.
 
-And even more concerning, privacy mechanisms add bias.
+And even more concerning, privacy mechanisms add bias.  Consider noise
+addition, for example.  Say we add independent 0-mean noise 
+variables &epsilon;<sub>1</sub> and &epsilon;<sub>2</sub> to U and V.
+That increases Var(U) and Var(V) in the denominator of &rho;(U,V),
+while in the numerator we have
+E[(U+ &epsilon;<sub>1</sub>)(V+ &epsilon;<sub>2</sub>]
 
 ## DP issues
 
