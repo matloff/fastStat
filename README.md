@@ -884,6 +884,10 @@ One common measure of the relation between variables U and V is their
 need not be normal.  This is a quantity in [-1,1], often denoted by
 &rho;.  
 
+One useful interpretation of correlation is that &rho;<sup>2</sup>(U,V)
+is the proportional reduction in Mean Squared Error in predicting V.
+Here we are comparing predicting V with and without using U.
+
 If we are analyzing a group of variables X<sub>i</sub>, i = 1,...,p,
 their *correlation matrix* is p X p, with the i,j element being 
 &rho;(X<sub>i</sub>,X<sub>j</sub>).
@@ -1390,7 +1394,7 @@ higher degrees affording great protection from intruders but less
 accuracy for researchers, and vice versa:  less privacy protection for
 greater access for researchers.
 
-## Overview
+**Overview**
 
 This is a vast, highly technical field, so I will just give an overview
 of some of the issues.  Here are a few common approaches:
@@ -1426,7 +1430,7 @@ of some of the issues.  Here are a few common approaches:
   they can only use methods that have been developed and installed in
   the given database.
 
-## Privacy-Accuracy Tradeoff
+**Privacy-Accuracy Tradeoff**
 
 Note that noise addition is a *method* for achieving privacy and &sigma;
 is a *measure* of the degree of privacy protection.  With data swapping,
@@ -1443,7 +1447,7 @@ and vice versa.  With cell suppression, for instance, a small value of w
 gives better access for researchers, but has a greater risk of
 disclosure of private information.
 
-## Statistical issues
+**Statistical issues**
 
 Note that privacy measures based on probabilistic considerations
 involve only the privacy mechanism itself, rather than reflecting
@@ -1455,16 +1459,45 @@ And even more concerning, privacy mechanisms add bias.  Consider noise
 addition, for example.  Say we add independent 0-mean noise 
 variables &epsilon;<sub>1</sub> and &epsilon;<sub>2</sub> to U and V.
 That increases Var(U) and Var(V) in the denominator of &rho;(U,V),
-while in the numerator we have
-E[(U+ &epsilon;<sub>1</sub>)(V+ &epsilon;<sub>2</sub>]
+while in the numerator
 
-## DP issues
+E[(U+ &epsilon;<sub>1</sub>)(V+ &epsilon;<sub>2</sub>)] = E(UV),
+
+E[(U+ &epsilon;<sub>1</sub>)] = E(U)
+
+E[(V+ &epsilon;<sub>2</sub>)] = E(V)
+
+In other words, the numerator of &rho;(U,V) is unchanged but the
+denominator increases.  So, |&rho;(U,V)| is reduced, i.e. the relation
+between U and V has been weakened.  This of course is a very serious
+problem, since the researchers are usually studying relations between
+variables.
+
+With simple noise addition, there is a simple remedy: Make
+&epsilon;<sub>1</sub> and &epsilon;<sub>2</sub> correlated, with the
+correlation structure as U and V.  But for other DP methods and
+measures, things are much less simple.
+
+**Rejected queries**
+
+In the cell suppression method, we reject queries that involve too few
+records and are thus more vulnerable to disclosure.  Some other methods
+may also involve some kind of cell suppression.  For instance, 
+[Google's Covid-19 mobility data](https://arxiv.org/pdf/2004.04145.pdf)
+exclude cell counts of less than 100.
+
+In addition to the correlation attenuation issue, i.e. weakened
+Accuracy, another problem with cell suppression is a potential reduction
+in Privacy.  A set of cleverly-designed queries, seemingly inoccuous,
+can lead to [information disclosure](https://www.fcsm.gov/assets/files/docs/2009FCSM_Cox_III-A.pdf).
+
+**DP issues**
 
 DP has been the subject of much
 [controversy](https://www.bloomberg.com/news/articles/2021-08-12/data-scientists-ask-can-we-trust-the-2020-census).
 It was heavily promoted in the computer science community, and has many
 devoted adherents there.  On the other hand, some applied researchers
-have strenuously questioned its validity in practice.
+have strenuously questioned its usefulness in practice.
 
 Again, there is no perfect privacy system.  I disagree with those who
 promote DP as "the" solution to the privacy problem.  After all, even
