@@ -301,7 +301,7 @@ In our opinion poll example, Q is called a *point estimate* of q.  We
 would also like to have an *interval estimate*, which gives a range of
 values.  If say in in an election, the results of an opinion poll are
 reported as, "Candidate X has support of 62.1% of the voters, with a
-margin of 3.9%," it is saying,
+margin of error of 3.9%," it is saying,
 
 > a 95% confidence interval (ci) for X's support is (58.2%,66.0%).
 
@@ -350,7 +350,7 @@ Z = (&#x100; - &mu;) / s.e.(&#x100;)
 has mean 0 and variance 1, where &mu; is the population mean of X.
 (recall that &#x100; is unbiased for &mu;.)  And since Z actually does
 have an approximately normal distribution, its distribution is thus
-approximately N(0,1), i.e. normal with mean 0 and variance 1..  
+approximately N(0,1), i.e. normal with mean 0 and variance 1.  
 
 Now since the N(0,1) distribution has 95% of its area between -1.96 and
 1.96, we have
@@ -879,7 +879,7 @@ P(x &le;u and y &le;v)
 * One common measure of the relation between variables U and V is their
   (Pearson) *correlation*, E(u - EU)`(V - EV)] / sqrt[Var(U Var(V)].  They
   need not be normal.  This is a quantity in [-1,1], often denoted by
-  &rho;..  
+  &rho;.  
 
 * If we are analyzing a group of variables X<sub>i</sub>, i = 1,...,p,
 their *correlation matrix* is p X p, with the i,j element being 
@@ -997,7 +997,7 @@ model*:  One assumes that
 
 for a p-predictor model, where t = (t<sub></sub>,...,t<sub>p</sub>)', a
 column vector; ' means matrix transpose and the default for vectors is
-column form..
+column form.
 
 in vector form, our assumption is
 
