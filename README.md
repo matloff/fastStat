@@ -1430,7 +1430,7 @@ of some of the issues.  Here are a few common approaches:
   they can only use methods that have been developed and installed in
   the given database.
 
-**Privacy-Accuracy Tradeoff**
+**Risk-Utility Tradeoff**
 
 Note that noise addition is a *method* for achieving privacy and &sigma;
 is a *measure* of the degree of privacy protection.  With data swapping,
@@ -1441,8 +1441,8 @@ But in the k-anonymity and DP examples, k and &epsilon; are only privacy
 *measures*, and do not specify methods top achieve the given levels of
 privacy.  
 
-In all examples, though, there is what we will call the Privacy-Accuracy
-Tradeoff:  The greater the degree of privacy, the less the accuracy, 
+In all examples, though, there is what we will call the Risk-Utility
+Tradeoff:  The lesser the degree of risk, the less the accuracy, 
 and vice versa.  With cell suppression, for instance, a small value of w
 gives better access for researchers, but has a greater risk of
 disclosure of private information.
@@ -1487,8 +1487,8 @@ may also involve some kind of cell suppression.  For instance,
 exclude cell counts of less than 100.
 
 In addition to the correlation attenuation issue, i.e. weakened
-Accuracy, another problem with cell suppression is a potential reduction
-in Privacy.  A set of cleverly-designed queries, seemingly inoccuous,
+Utility, another problem with cell suppression is a potential increase
+in Risk.  A set of cleverly-designed queries, seemingly inoccuous,
 can lead to [information disclosure](https://www.fcsm.gov/assets/files/docs/2009FCSM_Cox_III-A.pdf).
 
 **DP issues**
