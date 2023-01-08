@@ -13,7 +13,7 @@ Students in computer science, engineering, mathematics and the like
 typically take a course in calculus-based probability -- unconditional
 and conditional probability, cdfs and density functions, expected value
 and so on.  (The material is in Chapters 1-9 of 
-[my online book.](github.com/matloff/probstatbook).)
+[my online book.](https://github.com/matloff/probstatbook).)
 But later they have a need to use statistics, and find it's
 a broader and more nuanced field than they had realized.
 
