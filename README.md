@@ -13,7 +13,7 @@ Students in computer science, engineering, mathematics and the like
 typically take a course in calculus-based probability -- unconditional
 and conditional probability, cdfs and density functions, expected value
 and so on.  (The material is in Chapters 1-9 of 
-[my online book.](https://github.com/matloff/probstatbook).)
+[my online book](https://github.com/matloff/probstatbook).)
 But later they have a need to use statistics, and find it's
 a broader and more nuanced field than they had realized.
 
@@ -32,13 +32,15 @@ short tutorial here is even more "all of" in that sense.
 
 Professional statisticians, especially Statistics professors, may find
 the presentation here to be a familiar story, but with an odd plot,
-a different cast of characters, and a different ending. :-) 
+a different cast of characters, and a different ending. :-)  It will be
+the standard material, but viewed a broader contexts, especially real
+world practice.
 
-Indeed, **many of readers of this
-tutorial will be surprised to see that it does not contain many
-equations.**  But sadly, many people know the mechanics of statistics
-very well, without truly understanding on intuitive levels what those
-equations are really doing, and this is our focus.
+Indeed, **many of readers of this tutorial will be surprised to see that
+it does not contain many equations.**  But sadly, many people know the
+mechanics of statistics very well, without truly understanding on
+intuitive levels what those equations are really doing, and this is our
+focus.
 
 For instance, consider estimator bias. Students in a math stat course
 learn the mathematical definition of bias, after which they learn that
@@ -114,6 +116,9 @@ equal to that of the sampled population.  If, say 22.8% of people in
 this population are taller than 70 inches, then P(X<sub>i</sub> > 70) =
 0.228.
 
+So, X<sub>1</sub>,...,X<sub>n</sub> are independent, identically
+distributed random variables (iid).
+
 ## Lesson NORMALETC:  the Role of Normal (Gaussian) and Other Parametric Distribution Families
 
 In the last lesson, we talked about the distribution of X in the
@@ -142,7 +147,7 @@ thus amenable to closed-form "exact" solutions.
   variance of the distribution.  Without that assumption, we have many
   parameters, essentially infinitely many.  Let F<sub>x</sub> be the cdf
   of X, i.e. F<sub>X</sub>(t) = P(X &le; t).  Well, there are infinitely
-  many possible values for t, thus infinitely many values of F<sub>x</sub>(t).
+  many possible values for t, thus infinitely many values of F<sub>X</sub>(t).
   But if we assume X is normal, those infinitely many values are all
   expressible in terms of just two numbers.  We are then essentially
 estimating two numbers instead of infinitely many.
@@ -180,6 +185,9 @@ sample, whether randomly or otherwise.
 This issue can become quite a challenge in, say, economic analysis.
 If we have 10 years of annual data, i.e. n = 10, what population
 is that a "sample" from?
+
+Accordingly, in many applications, the population we model as being
+sampled from is largely conceptual rather than a tangible entity.
 
 ## Lesson STDERRS:  Standard Errors
 
@@ -239,8 +247,16 @@ their mean.  The sample analog is
 S<sup>2</sup> = (1/n) &Sigma;<sub>i</sub><sup>n</sup>
 (X<sub>i</sub> - &#x100;)<sup>2</sup>
 
-Where &#x100; is the sample mean, (1/n)  &Sigma;<sub>i</sub><sup>n</sup>
+where &#x100; is the sample mean, (1/n)  &Sigma;<sub>i</sub><sup>n</sup>
 X<sub>i</sub>.
+
+Note especially the word *analog* above.  Here is the analogy:
+
+* &sigma;<sup>2</sup> is the average squared distance of X, in the
+population, to the population mean.
+
+* S<sup>2</sup> is the average squared distance of X, in the
+sample, to the sample mean.
 
 It can be shown that S<sup>2</sup> is biased:
 
@@ -251,8 +267,8 @@ low.  The amount of bias is
 
 E(S<sup>2</sup>) -  &sigma;<sup>2</sup> = -1/n  &sigma;<sup>2</sup> 
 
-This bothered the early developers of statistics, who then defined the
-sample variance as
+This bothered the early developers of statistics, who then adjusted the
+definition of sample variance to
 
 s<sup>2</sup> = (1/(n-1)) &Sigma;<sub>i</sub><sup>n</sup>
 (x<sub>i</sub> - &#x100;)<sup>2</sup>
@@ -313,13 +329,22 @@ the intervals would cover the true value, q.
 
 Of course, we do not collect all possible samples; we just have 1.  We
 say we are 95% confident that q is in our particular interval in the
-above sense.  (A note on the phrasing "q is in our interval":  Some may
-take this to mean that q is random, which it is not; q is unknown but
-fixed.  The CI is what varies from one sample to another.)
+above sense.  
 
 It's exactly like gambling.  We don't know whether our particular roll
 of the dice will yield a winner, but if most rolls of the dice do so,
 then we may be willing to go ahead.
+
+A note on the phrasing "q is in our interval":  
+
+> Some may take this to mean that q is random, which it is not; q is
+> unknown but fixed.  The CI is what varies from one sample to another.
+> Some instructors are so worried about such misinterpreation that they
+> ban the phrasing "q is in the CI," insisting that students say "The CI
+> *contains* q, to emphasize that the CI is random, not q.  To me, that's
+> going to absurd lengths to make a point--the two statements are
+> linquistically equivalent, after all--but again, these instructors feel
+> that misintepretation is less likely this way.  
 
 ## Lesson CIAPPROX:  Confidence Intervals from Asymptotics
 
@@ -331,21 +356,23 @@ widely taught, and thus widely used.  **BUT it is just an illusion.**  As
 pointed out earlier, no distribution in practice is exactly normal.
 
 What saves the day, though, is the Central Limit Theorem.  &#x100; is a
-sum, which the CLT tells us is asymptotically normally distributed
+(scaled) sum, which the CLT tells us is asymptotically normally distributed
 as n goes to infinity.
 
 In other words, if we were to compute &#x100; on each of the possible
 samples of size n from the population, and then plot the results in a
 histogram, the graph would be approximately bell-shaped, and the
 probabilities for any range of values would be approximately those of a
-normal distribution.
+normal distribution.  Moreover, the large n, the more bell-shaped it
+would be.
 
 Ah, so we're in business:  For any random variable w, the quantity
 
 (W - EW) / (Var(W)<sup>0.5</sup>)
 
-has mean 0 and variance 1.  (This has nothing to do with whether W is
-normal or not.)  So,
+has mean 0 and variance 1.  (This stems simply from the properties of
+mean and variance; it has nothing to do with whether W is normal or
+not.)  So,
 
 Z = (&#x100; - &mu;) / s.e.(&#x100;)
 
@@ -370,13 +397,15 @@ There's our CI for &mu;!
 (&#x100; - 1.96 s.e.(&#x100;), &#x100; + 1.96 s.e.(&#x100;))
 
 We are (approximately) 95% confident that the true population mean is in
-that interval.  (Remember. it is the interval that is random, not &mu;)
+that interval.  (Remember. it is the interval that is random, not &mu;.)
 
 And things don't stop there.  Actually, many types of estimators have
 some kinds of sums within them, and thus have an approximately normal
 distribution, provided the estimator is a smooth function of those sums.
-(A Taylor series approximation results in a linear function of normal
-random variable, thus again normal.)
+
+(*Smooth* here means a smooth curve, no sharp corners, thus having a
+derivative.  A Taylor series approximation results in a linear function
+of normal random variable, thus again normal.)
 
 Thus approximate CIs can be found for lots of different
 estimators, notably Maximum Likelihood Estimators and least-squares
@@ -393,7 +422,7 @@ principle general):
 > 
 > (R - 1.96 s.e.(R), R + 1.96 s.e.(R)
 
-The term *smooth* roughly means that R is a differentiable function of
+Again, the term *smooth* roughly means that R is a differentiable function of
 X<sub>1</sub>, ..., X<sub>n</sub>.
 
 By the way, for large n, the Student-t distribution is almost identical
@@ -404,14 +433,15 @@ correct.  But it won't be exactly correct, in spite of the claim.
 
 The concept of standard error needs to be clarified.
 
-What does the CLT say, exactly?  Say S<sub>n</sub> is the sum of iid
-random variables, each with mean &mu; and variance &sigma;<sup>2</sup>.
-then 
+What does the CLT say, exactly?  The formal statement is
 
-Z<sub>n</sub> = (S<sub>n</sub> - &mu;) / [&sigma; sqrt(n)] 
-
-*converges in distribution* to N(0,1), **meaning that** the cdf of
-Z<sub>n</sub> converges to the N(0,1) cdf.
+> Say S<sub>n</sub> is the sum of iid random variables, each with mean
+> &mu; and variance &sigma;<sup>2</sup>.  Then 
+> 
+> Z<sub>n</sub> = (S<sub>n</sub> - &mu;) / [&sigma; sqrt(n)] 
+> 
+> *converges in distribution* to N(0,1), **meaning that** the cdf of
+> Z<sub>n</sub> converges to the N(0,1) cdf.
 
 In other words, the asymptotics apply to probabilities--but not to
 expected values etc.  Two random variables can have almost the same cdf
@@ -497,7 +527,7 @@ some on the committee were defenders of it to some extent.  The final
 statement did vaguely say ST is useful in some settings.  But they gave
 no examples of this, and at the very least agreed that ST is indeed
 widely misused.  But it is my position that ST should simply not be
-used.  Instead, analysis should be based on CIs, as explained later in
+used at all.  Instead, analysis should be based on CIs, as explained later in
 this lesson.
 
 But first, what is ST?  To keep things simple, let's say we have some
@@ -618,8 +648,8 @@ simple example, MM first.
 
 **The Method of Moments**
 
-> Say we are estimating some parameter &theta; with the estimator to be
-> found and named T.  Then, in the formal expression for EX, replace
+> Say we are estimating some parameter &theta; with the estimator (to be
+> derived) named T.  Then, in the formal expression for EX, replace
 > &theta; by T; set the result to the sample mean &#x100; and solve for T.
 
 Say we are modeling our data X<sub>i</sub> as coming from a population
@@ -628,23 +658,49 @@ with an exponential distribution, i.e.
 f<sub>X</sub>(t) = &lambda;e<sup>-&lambda;t</sup>, t > 0
 
 It is well known (and easy to derive) that EX = 1 / &lambda;.  Denote
-our estimator of &lambda; by l.  Then the above recipe gives us
+our estimator of &lambda; by L.  Then the above recipe gives us
 
-1 / l = &#x100;
+1 / L = &#x100;
 
 and thus 
 
-l = 1 / &#x100;
+L = 1 / &#x100;
 
-It may be that our parametric model has 2 parameters rather than 1,
-so now  &theta; = (&theta;<sub>1</sub>,&theta;<sub>2</sub>) and
-t = (t<sub>1</sub>,t<sub>2</sub>).
-Then in addition to generating an equation for the sample mean as above,
-we also generate a second equation for the sample variance in terms of
-the &theta;<sub>i</sub>; we replace the &theta;<sub>i</sub> by
-t<sub>i</sub>; on the right-hand side, we write the sample variance.
-That gives us 2 equations in 2 unknowns, and we solve for the
-t<sub>i</sub>.
+It may be that our parametric model has 2 parameters rather than 1, so
+now  &theta; = (&theta;<sub>1</sub>,&theta;<sub>2</sub>) and t =
+(t<sub>1</sub>,t<sub>2</sub>).  Then in addition to generating an
+equation for the sample mean as above, we also generate a second
+equation for the sample variance in terms of the &theta;<sub>i</sub>; we
+replace the &theta;<sub>i</sub> by t<sub>i</sub>; on the right-hand
+side, we write the sample variance.  That gives us 2 equations in 2
+unknowns, and we solve for the t<sub>i</sub>.
+
+For instance, say we wish to estimate the parameters &lambda; and c for
+a gamma distribution.  One can show that 
+
+EX = c/&lambda; 
+
+and 
+
+Var(X) = c/&lambda;<sup>2</sup>.  
+
+Let C and L denote our estimators of c
+and &lambda;, to be derived.  Replacing population quantities by sample
+analogs, we set
+
+&#x100; = C/L 
+
+and
+
+S<sup>2</sup> = C/L<sup>2</sup>
+
+Dividing the two equations, that gives us
+
+L = &#x100; / S<sup>2</sup>
+
+and
+
+C = L &#x100;
 
 There are variations.  E.g. instead of the variance and sample variance, we
 can use the *second moment*, E(X<sup>k</sup>) and its sample analog
