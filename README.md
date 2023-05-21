@@ -833,7 +833,8 @@ height, then F<sub>X</sub>(66.5) is the population proportion of people
 with height at most 66.5 inches; the sample estimate of that quantity is
 the corresponding sample proportion.
 
-Let's plot the ecdf for the geyser data.
+The entire sample estimate of F<sub>X</sub> is called the *empirical
+cdf* (ECDF).  Let's plot it for the geyser data.
 
 ``` r
 plot(ecdf(erps))
@@ -841,9 +842,8 @@ plot(ecdf(erps))
 
 ![alt text](FaithfulCDF.png)
 
-The sample estimate is called the *empirical cdf* (hence the name of the
-function).  Note:  Since it consists of proportions (one for each t), it
-is unbiased.
+Since the ECDF consists of proportions (one for each t), it
+is unbiased.  For each t, E[ECDF(t)] =F<sub>X</sub(t).
 
 What about estimating the probability density function (pdf)?  As noted,
 pdfs do not really exist in practice, so "the" pdf here is the one that
@@ -904,7 +904,7 @@ We'll address this (but unfortunately not answer it) next.
 # Lesson TRADE:  the Bias-Variance Tradeoff
 
 In the above histogram of the **erps** data, the graph seems,
-for example, to be increasing from 2.5 o 4.5.  Consider in particular
+for example, to be increasing from 2.5 to 4.5.  Consider in particular
 the bin from 3.5 to 4.
 
 The increasing nature of the histogram in that region suggests that the
@@ -934,7 +934,7 @@ it *is* an issue here.
 
 There is no good, universally agreed-to way to choose the bin size.
 Various math stat people have done some theoretical work that has led to
-suggestions, which you can try, such as setting **breaks='fd'** in your
+suggestions which you can try, such as setting **breaks='fd'** in your
 call to **hist()**.
 
 Where the Bias-Variance Tradeoff really becomes an isssue is in
@@ -957,13 +957,15 @@ P(x &le;u and y &le;v)
 # Lesson CORR:  Correlation
 
 One common measure of the relation between variables U and V is their
-(Pearson) *correlation*, E(U - EU)`(V - EV)] / sqrt[Var(U Var(V)].  They
+(Pearson) *correlation*, E(U - EU)`(V - EV)] / sqrt[Var(U) Var(V)].  They
 need not be normal.  This is a quantity in [-1,1], often denoted by
 &rho;.  
 
 One useful interpretation of correlation is that &rho;<sup>2</sup>(U,V)
 is the proportional reduction in Mean Squared Error in predicting V.
-Here we are comparing predicting V with and without using U.
+Here we are comparing predicting V with and without using U.  In the
+latter case, our prediction for V is EV; in the former case, its
+E(V | U).
 
 If we are analyzing a group of variables X<sub>i</sub>, i = 1,...,p,
 their *correlation matrix* is p X p, with the i,j element being 
@@ -1240,7 +1242,7 @@ vector of partial derivatives
 &part;W / &part;b<sub>p</sub>
 )'
 
-Using simple algebra, it's easy to show that &part;/&part;u (v'v) = 2v.
+Using simple algebra, it's easy to show that &part;/&part;v (v'v) = 2v.
 Applying this and the Chain Rule to the above, we have
 
 &part;/&part;b W = 2A'(D - Ab) 
