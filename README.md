@@ -642,9 +642,9 @@ c(samplemean - 1.96*stderr, samplemean + 1.96*stderr)
 
 So far, we've discussed only ad hoc estimators, set up for a specific
 purpose.  It would be nice to have general ways of forming estimators.
-The two most common such techniques are *Maximum Likelihood Estimation*
-(MLE) and the *Method of Moments* (MM).  Let's illustrate them with a
-simple example, MM first.
+The two most common such techniques are *Maximum Likelihood Estimators*
+(MLE) and the *Method of Moments Estimators* (MME).  Let's illustrate them with a
+simple example, MME first.
 
 **The Method of Moments**
 
@@ -724,7 +724,7 @@ If our X<sub>i</sub> are independent, then the likelihood expression is
 
 &Pi;<sub>i</sub><sup>n</sup> p(x<sub>i</sub>)
 
-We take the logarithm, to make derivatives easier.  
+We usually maximize the logarithm, to make derivatives easier.  
 
 Continuous case:
 
@@ -733,20 +733,29 @@ but it does work roughly as a likelihood; if say f(12.3) is large, then
 one will see many X that are near 12.3.  So, in the above prescription,
 replace p by f.
 
-*Asymptotic normality:*  
+For instance, consider the family of exponential distributions,
+f<sub>X</sub>(t) = &lambda; exp(-&lambda;t), t > 0.  The likelihood is
 
-We mentioned earlier that the CLT not only applies to sums but
-also extends to smooth (i.e. differentiable) functions of sums.
-That fact is important here.  How does that play out with MMs and MLEs?
+&Pi;<sub>1</sub><sup>n</sup> [&lambda; exp(-&lambda;X<sub>i</sub>)]
 
-MMs: By definition, we are working with sums! 
+with log likelihood
 
-MLE: The log-likelihood is a sum!
+n log(&lambda;) - &lambda; &Sum;<sub>i</sub><sup>n</sup> X<sub>i</sub>
 
-Again, we must be working with smooth functions.  Consider the *negative
-binomial* distribution family,
+Setting the derivative to 0, we have
 
-P(X = j) = c(n-1,i-1) r<sup>i</sup> (1-r)<sup>n-i</sup>
+n/&lambda; = &Sum;<sub>i</sub><sup>n</sup> X<sub>i</sub>
+
+so that the MLE is 1 / &#x100;.
+
+*Non-differentiable case*
+
+Consider the *negative binomial* distribution family,
+
+P(X = j) = C(n-1,i-1) r<sup>i</sup> (1-r)<sup>n-i</sup>
+
+where C(u,v) means the number of combinations of v objects, chosen from
+u of them.
 
 This arises, say, from tossing a coin until we accumulate k heads, with
 r being the probability of heads.
@@ -754,10 +763,21 @@ r being the probability of heads.
 If our parameter to be estimated is r, with known k, the above is a
 differentiable function of r.  But if we don't know k, say we have the
 data but did not collect it ourselves, then we don't have
-differentiability in that parameter.  Then we cannnot maximize the
-likelihood via derivatives, and cannot linearize the resulting equations.
-Since the asymptotic normality depends on the latter, we cannot form the
-CIs as described earlier.
+differentiability in that parameter.  *Ad hoc* methods must then be used
+to find the MLE.
+
+*Asymptotic normality:*  
+
+We mentioned earlier that the CLT not only applies to sums but
+also extends to smooth (i.e. differentiable) functions of sums.
+That fact is important here.  How does that play out with MMEs and MLEs?
+
+MMEs: By definition, we are working with sums! 
+
+MLE: The log-likelihood is a sum!
+
+So, MMEs and MLEs are generally asymptotically normal, with calculable
+standard errors.
 
 *R **mle()** function:*
 
@@ -766,14 +786,15 @@ cases.
 
 ``` r
 > library(stats4)
+# generate example data from an exponential distribution 
 > n <- 100
 > x <- rexp(n,2)
-> ll  # user supplies the log likelihood function
+> ll  # user supplies the negative log likelihood function
 function(lamb) {
    loglik <- n*log(lamb) - lamb*sum(x)
    -loglik
 }
-<bytecode: 0x105ae8368>
+# iterative calculation; user here says try 1.0 as the initial guess
 > z <- mle(minuslogl=ll,start=list(lamb=1))
 > summary(z)
 maximum likelihood estimation
@@ -1068,29 +1089,34 @@ model*:  One assumes that
 
 &mu;(t) = 
 &beta;<sub>0</sub> +
-&beta;<sub>1</sub> +
+&beta;<sub>1</sub> t<sub>1</sub> +
 ...
-&beta;<sub>p</sub> 
+&beta;<sub>p</sub> t<sub>p</sub>
 
 for a p-predictor model, where t = (t<sub></sub>,...,t<sub>p</sub>)', a
 column vector; ' means matrix transpose and the default for vectors is
 column form.
 
-in vector form, our assumption is
+In vector form, our assumption is
 
-&mu;(t) = &beta;'(1,t)
+&mu;(t) = (1,t)' &beta;
 
-where &beta; and (1,t) are taken to be column vectors.
+where &beta; and (1,t) are taken to be column vectors.  Note the
+presence of the 1, which is needed to pick up the &beta;<sub>0</sub>
+term.
 
 Again, the &beta;<sub>i</sub> are population values.
 
 One also assumes homogeneous variance as above, and of course
-independent observations (X<sub>i</sub>,,Y<sub>i</sub>).
+independent observations (X<sub>i</sub>,Y<sub>i</sub>).  Note thath the
+X<sub>i</sub> are vectors of length p.  If say we are predicting weight
+from height and age, then X<sub>i</sub> is the vector whose components 
+are the height and age of the i<sup>th</sup> person in our sample data.
 
 The sample estimates vector b is computed by minimizing
 
 &Sigma;<sub>1</sub><sup>n</sup>
-[y<sub>i</sub> - b'(1,x<sub>i</sub>)]<sup>2</sup>
+[Y<sub>i</sub> - (1,X<sub>i</sub>)' b]<sup>2</sup>
 
 A closed-form solution exists, and is implemented in r as **lm()**.
 
@@ -1190,6 +1216,36 @@ down.  So we risk overfitting.
 In that case, a nonparametric model, such as from ML, may work much
 better.  However, keep in mind that ML models can overfit too.  More on
 this shortly.
+
+# Lesson LMDERIVE:  The math behind least-squares estimation
+
+As noted, the sample estimate b of &beta; is obtained by minimizing
+
+&Sigma;<sub>1</sub><sup>n</sup>
+[Y<sub>i</sub> - (1,X<sub>i</sub>)' b]<sup>2</sup>
+
+In a matrix formulation, that sum of squares is
+
+W = (D - Ab)' (D - Ab)
+
+where D is the vector of Y values and row i of A is (1,X<sub>i</sub>)'.
+
+We need to find the derivative of this with respect to b.  That is the
+vector of partial derivatives
+
+(
+&part;W / &part;b<sub>0</sub>,
+&part;W / &part;b<sub>1</sub>,
+...,
+&part;W / &part;b<sub>p</sub>
+)'
+
+Using simple algebra, it's easy to show that &part;/&part;u (v'v) = 2v.
+Applying this and the Chain Rule to the above, we have
+
+&part;/&part;b W = 2A'(D - Ab) 
+
+(The order of factors here makes the multiplied matrices conformable.)
 
 # Lesson LOGIT:  Predictive Modeling -- Logistic
 
