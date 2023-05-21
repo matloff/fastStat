@@ -733,7 +733,7 @@ but it does work roughly as a likelihood; if say f(12.3) is large, then
 one will see many X that are near 12.3.  So, in the above prescription,
 replace p by f.
 
-*asymptotic normality:*  
+*Asymptotic normality:*  
 
 We mentioned earlier that the CLT not only applies to sums but
 also extends to smooth (i.e. differentiable) functions of sums.
