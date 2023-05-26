@@ -267,7 +267,7 @@ low.  The amount of bias is
 
 E(S<sup>2</sup>) -  &sigma;<sup>2</sup> = -1/n  &sigma;<sup>2</sup> 
 
-This is tiny, but it bothered the early developers of statistics, who then adjusted the
+This is usually tiny, but it bothered the early developers of statistics, who then adjusted the
 definition of sample variance to
 
 s<sup>2</sup> = (1/(n-1)) &Sigma;<sub>i</sub><sup>n</sup>
@@ -276,10 +276,12 @@ s<sup>2</sup> = (1/(n-1)) &Sigma;<sub>i</sub><sup>n</sup>
 Note our distinction between S<sup>2</sup> and the similar but slightly different quantity,
 s<sup>2</sup>. Both are random variables--they depend on the X<sub>i</sub>, which are random.
 
+Since for any random variable W (for which EW exists) and any constant c we have E(cW) = c EW, s<sup>2</sup> is now unbiased.
+
 (By the way, in the field of probability and statistics, it is customary to use
 capital letters for random variables.  This is an exception.)
 
-The standard error of &#x100; is
+The standard error of &#x100; can be shown to be
 
 s.e.(&#x100;) = S/n<sup>0.5</sup>
 
