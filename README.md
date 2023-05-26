@@ -260,20 +260,23 @@ sample, to the sample mean.
 
 It can be shown that S<sup>2</sup> is biased:
 
-E(s<sup>2</sup>) = [(n-1) / n] &sigma;<sup>2</sup>
+E(S<sup>2</sup>) = [(n-1) / n] &sigma;<sup>2</sup>
 
 The average value of S<sup>2</sup> over all samples is a little too
 low.  The amount of bias is 
 
 E(S<sup>2</sup>) -  &sigma;<sup>2</sup> = -1/n  &sigma;<sup>2</sup> 
 
-This bothered the early developers of statistics, who then adjusted the
-definition of sample variance to
+This is tiny, but it bothered the early developers of statistics, who then adjusted the
+definition of sample variance to a slightly different quantity,
 
 s<sup>2</sup> = (1/(n-1)) &Sigma;<sub>i</sub><sup>n</sup>
 (x<sub>i</sub> - &#x100;)<sup>2</sup>
 
-(In the field of probability and statistics, it is customary to use
+Note our distinction between S<sup>2</sup> and the slightly different quantity,
+s<sup>2</sup>. Both are random variables--they depend on the X<sub>i</sub>, which are random.
+
+(By the way, in the field of probability and statistics, it is customary to use
 capital letters for random variables.  This is an exception.)
 
 The standard error of &#x100; is
