@@ -371,7 +371,7 @@ probabilities for any range of values would be approximately those of a
 normal distribution.  Moreover, the large n, the more bell-shaped it
 would be.
 
-(Technically, the CLT is phrased only in terms of cumulative distribution functions, not probability density functions.  But there is the *Local Limit Theorem* for density convergence, and in practice, the density functions converge too.)
+(Technically, the CLT is phrased only in terms of cumulative distribution functions, not probability density functions. More on this below, but note that there is also the *Local Limit Theorem* for density convergence, and in practice, the density functions converge too.)
 
 Ah, so we're in business:  For any random variable w, the quantity
 
