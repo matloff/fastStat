@@ -371,6 +371,8 @@ probabilities for any range of values would be approximately those of a
 normal distribution.  Moreover, the large n, the more bell-shaped it
 would be.
 
+(Technically, the CLT is phrased only in terms of cumulative distribution functions, not probability density functions.  But there is the *Local Limit Theorem* for density convergence, and in practice, the density functions converge too.)
+
 Ah, so we're in business:  For any random variable w, the quantity
 
 (W - EW) / (Var(W)<sup>0.5</sup>)
@@ -421,7 +423,9 @@ principle general):
 
 **The Fundamental Tool of Statistical Inference:**
 
-> If R is a "smooth" estimator of a population quantity r consisting of
+(The name here is my own, not a general term, but the principle is widely used.)
+
+> If R is a "smooth" estimator of a population quantity r, and R consists of
 > sums, based on an i.i.d. sample, then an approximate 95% confidence
 > interval for r is
 > 
