@@ -218,7 +218,7 @@ course, but if we know that Q is usually near q, we feel
 reasonably confident that the q from our particular sample is near q.
 
 Of course, the square root of any variance is called the *standard
-deviation*.  In the case of an estimator, q here, we use the term
+deviation*.  In the case of an estimator, Q here, we use the term
 *standard error*.  In some cases, it will be only the approximate
 standard deviation, in a sense to be seen below.
 
