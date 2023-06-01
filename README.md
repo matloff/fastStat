@@ -641,7 +641,7 @@ Let's start simple, with a CI for the population mean duration:
 ``` r
 erps <- faithful$eruptions
 samplemean <- mean(erps)
-s2 <- var(erps)  # this is s^2 not s^2
+s2 <- var(erps)  # this is s^2 not S^2
 stderr <- sqrt(s2/length(erps))
 c(samplemean - 1.96*stderr, samplemean + 1.96*stderr)
 # (3.35,3.62)
