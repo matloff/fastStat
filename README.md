@@ -647,7 +647,7 @@ c(samplemean - 1.96*stderr, samplemean + 1.96*stderr)
 # (3.35,3.62)
 ```
 
-# Lesson MLEMM:  General Methods of Estimation
+# Less on MLEMM:  General Methods of Estimation
 
 So far, we've discussed only ad hoc estimators, set up for a specific
 purpose.  It would be nice to have general ways of forming estimators.
@@ -731,7 +731,7 @@ Discrete case:
 
 If our X<sub>i</sub> are independent, then the likelihood expression is
 
-&Pi;<sub>i</sub><sup>n</sup> p(x<sub>i</sub>)
+&Pi;<sub>i</sub><sup>n</sup> p(X<sub>i</sub>)
 
 We usually maximize the logarithm, to make derivatives easier.  
 
