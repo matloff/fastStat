@@ -63,8 +63,8 @@ looking at familiar statistical concepts and properties.
 - [Lesson CONCEPTPOPS:  Conceptual Populations](#lesson-conceptpops--conceptual-populations)
 - [Lesson STDERRS:  Standard Errors](#lesson-stderrs--standard-errors)
 - [Lesson BIAS:  Bias, and Impact on Standard Errors](#lesson-bias--bias-and-impact-on-standard-errors)
-- [Lesson INDICATORS:  Indicator Variables](#lesson-indicators--indicator-variables)
 - [Lesson CI:  Confidence Intervals](#lesson-ci--confidence-intervals)
+- [Lesson INDICATORS:  Indicator Variables](#lesson-indicators--indicator-variables)
 - [Lesson CIAPPROX:  Confidence Intervals from Asymptotics](#lesson-ciapprox--confidence-intervals-from-asymptotics)
 - [Lesson CONVERGE:  More on Asymptotics](#lesson-converge--more-on-asymptotics)
 - [Lesson SOMEMATH:  some derivations](#lesson-somemath--some-derivations)
@@ -302,22 +302,6 @@ error is O(1/n<sup>0.5</sup>).  In other words, the bias is small
 relative to the standard error, so the argument in the last lesson still
 holds.
 
-## Lesson INDICATORS:  Indicator Variables
-
-Often X has only the values only 1 and 0, indicating the presence or
-absence of some trait.  That is the case in the opinion poll, for
-example, where the respondent replies Yes (1) or not-Yes (0).  Such a
-variable is called an *indicator variable*, as it indicates whether the
-trait is present or not.
-
-In this case, &#x100; reduces to the proportion of 1s, as with Q, the
-proportion of Yes responses to the opinion poll.  After some algebraic
-simplification, it turns out that 
-
-S<sup>2</sup> = &#x100; (1-&#x100;) / n
-
-(or use n-1 instead of n for s).
-
 ## Lesson CI:  Confidence Intervals
 
 In our opinion poll example, Q is called a *point estimate* of q.  We
@@ -350,6 +334,23 @@ A note on the phrasing "q is in our interval":
 > going to absurd lengths to make a point--the two statements are
 > linquistically equivalent, after all--but again, these instructors feel
 > that misintepretation is less likely this way.  
+
+## Lesson INDICATORS:  Indicator Variables
+
+Often X has only the values only 1 and 0, indicating the presence or
+absence of some trait.  That is the case in the opinion poll, for
+example, where the respondent replies Yes (1) or not-Yes (0).  Such a
+variable is called an *indicator variable*, as it indicates whether the
+trait is present or not.  They are also called *dummy variables* and in
+the case of machine learning people, *one-hot variables*.
+
+In this case, &#x100; reduces to the proportion of 1s, as with Q, the
+proportion of Yes responses to the opinion poll.  After some algebraic
+simplification, it turns out that 
+
+S<sup>2</sup> = &#x100; (1-&#x100;) / n
+
+(or use n-1 instead of n for s).
 
 ## Lesson CIAPPROX:  Confidence Intervals from Asymptotics
 
