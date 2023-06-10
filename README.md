@@ -344,9 +344,12 @@ variable is called an *indicator variable*, as it indicates whether the
 trait is present or not.  They are also called *dummy variables* and in
 the case of machine learning people, *one-hot variables*.
 
-In this case, &#x100; reduces to the proportion of 1s, as with Q, the
-proportion of Yes responses to the opinion poll.  After some algebraic
-simplification, it turns out that 
+In this case, &#x100; is the average of a bunch of 0s and 1s.  The sum
+of such numbers will be the number of 1s, so &#x100;
+reduces to the proportion of 1s.
+
+So, Q, the proportion of Yes responses to the opinion poll.  After some
+algebraic simplification, it turns out that 
 
 S<sup>2</sup> = &#x100; (1-&#x100;) / n
 
