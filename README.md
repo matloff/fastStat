@@ -64,8 +64,8 @@ looking at familiar statistical concepts and properties.
 - [Lesson STDERRS:  Standard Errors](#lesson-stderrs--standard-errors)
 - [Lesson BIAS:  Bias, and Impact on Standard Errors](#lesson-bias--bias-and-impact-on-standard-errors)
 - [Lesson CI:  Confidence Intervals](#lesson-ci--confidence-intervals)
-- [Lesson INDICATORS:  Indicator Variables](#lesson-indicators--indicator-variables)
 - [Lesson CIAPPROX:  Confidence Intervals from Asymptotics](#lesson-ciapprox--confidence-intervals-from-asymptotics)
+- [Lesson INDICATORS:  Indicator Variables](#lesson-indicators--indicator-variables)
 - [Lesson CONVERGE:  More on Asymptotics](#lesson-converge--more-on-asymptotics)
 - [Lesson SOMEMATH:  some derivations](#lesson-somemath--some-derivations)
 - [Lesson SIG: significance testing](#lesson-sig-significance-testing)
@@ -335,26 +335,6 @@ A note on the phrasing "q is in our interval":
 > linquistically equivalent, after all--but again, these instructors feel
 > that misintepretation is less likely this way.  
 
-## Lesson INDICATORS:  Indicator Variables
-
-Often X has only the values only 1 and 0, indicating the presence or
-absence of some trait.  That is the case in the opinion poll, for
-example, where the respondent replies Yes (1) or not-Yes (0).  Such a
-variable is called an *indicator variable*, as it indicates whether the
-trait is present or not.  They are also called *dummy variables* and in
-the case of machine learning people, *one-hot variables*.
-
-In this case, &#x100; is the average of a bunch of 0s and 1s.  The sum
-of such numbers will be the number of 1s, so &#x100;
-reduces to the proportion of 1s.
-
-So, Q, the proportion of Yes responses to the opinion poll.  After some
-algebraic simplification, it turns out that 
-
-S<sup>2</sup> = &#x100; (1-&#x100;) / n
-
-(or use n-1 instead of n for s).
-
 ## Lesson CIAPPROX:  Confidence Intervals from Asymptotics
 
 The early developers of statistics defined a distribution family known
@@ -441,6 +421,35 @@ X<sub>1</sub>, ..., X<sub>n</sub>.
 By the way, for large n, the Student-t distribution is almost identical
 to N(0,1), so "no harm, no foul" -- Student-t will be approximately
 correct.  But it won't be exactly correct, in spite of the claim.
+
+## Lesson INDICATORS:  CIs from Indicator Variables
+
+Often X has only the values only 1 and 0, indicating the presence or
+absence of some trait.  That is the case in the opinion poll, for
+example, where the respondent replies Yes (1) or not-Yes (0).  Such a
+variable is called an *indicator variable*, as it indicates whether the
+trait is present or not.  It is also called *dummy variable* and in
+the case of machine learning people, a *one-hot variable*.
+
+In this case, &#x100; is the average of a bunch of 0s and 1s.  The sum
+of such numbers will be the number of 1s, so &#x100;
+reduces to the proportion of 1s.  The quantity &mu; is then the
+population proportion P(X = 1).
+
+In the election poll example, &#x100; is then Q, the proportion of Yes
+responses to the opinion poll, with q being the corresponding population
+proportion.
+
+After some algebraic simplification, it turns out that 
+
+S<sup>2</sup> = &#x100; (1-&#x100;) / n
+
+(or use n-1 instead of n for s).  
+
+Our earlier CI for a population mean now becomes in this special case
+
+(&#x100; - 1.96 sqrt[ &#x100; (1-&#x100;) / n],
+ &#x100; + 1.96 sqrt[ &#x100; (1-&#x100;) / n])
 
 ## Lesson CONVERGE:  More on Asymptotics
 
