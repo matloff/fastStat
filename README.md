@@ -58,18 +58,18 @@ looking at familiar statistical concepts and properties.
 
 # Table of contents
 
-- [Lesson SAMPLING:  The Notion of a Sample](#lesson-sampling--the-notion-of-a-sample)
-- [Lesson NORMALETC:  The Role of Normal (Gaussian) and Other Parametric Distribution Families](#lesson-normaletc--the-role-of-normal-gaussian-and-other-parametric-distribution-families)
-- [Lesson CONCEPTPOPS:  Conceptual Populations](#lesson-conceptpops--conceptual-populations)
-- [Lesson STDERRS:  Standard Errors](#lesson-stderrs--standard-errors)
-- [Lesson BIAS:  Bias, and Impact on Standard Errors](#lesson-bias--bias-and-impact-on-standard-errors)
-- [Lesson CI:  Confidence Intervals](#lesson-ci--confidence-intervals)
-- [Lesson CIAPPROX:  Confidence Intervals from Asymptotics](#lesson-ciapprox--confidence-intervals-from-asymptotics)
-- [Lesson INDICATORS:  Indicator Variables](#lesson-indicators--indicator-variables)
-- [Lesson CONVERGE:  More on Asymptotics](#lesson-converge--more-on-asymptotics)
+- [Lesson SAMPLING:  the notion of a sample](#lesson-sampling--the-notion-of-a-sample)
+- [Lesson NORMALETC:  the role of normal (Gaussian) and other parametric distribution Families](#lesson-normaletc--the-role-of-normal-gaussian-and-other-parametric-distribution-families)
+- [Lesson CONCEPTPOPS:  conceptual populations](#lesson-conceptpops--conceptual-populations)
+- [Lesson STDERRS:  standard errors](#lesson-stderrs--standard-errors)
+- [Lesson BIAS:  bias, and impact on standard errors](#lesson-bias--bias-and-impact-on-standard-errors)
+- [Lesson CI:  confidence intervals](#lesson-ci--confidence-intervals)
+- [Lesson CIAPPROX:  confidence intervals from asymptotics](#lesson-ciapprox--confidence-intervals-from-asymptotics)
+- [Lesson INDICATORS:  indicator Variables](#lesson-indicators--indicator-variables)
+- [Lesson GEYSER:  Old Faithful geyser example](#lesson-geyser--old-faithful-geyser-example)
+- [Lesson CONVERGE:  more on Asymptotics](#lesson-converge--more-on-asymptotics)
 - [Lesson SOMEMATH:  some derivations](#lesson-somemath--some-derivations)
 - [Lesson SIG: significance testing](#lesson-sig-significance-testing)
-- [Lesson GEYSER:  old faithful geyser example](#lesson-geyser--old-faithful-geyser-example)
 - [Lesson MLEMM:  general methods of estimation](#lesson-mlemm--general-methods-of-estimation)
 - [Lesson ESTDISTRS:  estimating entire distributions](#lesson-estdistrs--estimating-entire-distributions)
 - [Lesson TRADE:  the bias-variance tradeoff](#lesson-trade--the-bias-variance-tradeoff)
@@ -372,8 +372,14 @@ has mean 0 and variance 1, where &mu; is the population mean of X.
 have an approximately normal distribution, its distribution is thus
 approximately N(0,1), i.e. normal with mean 0 and variance 1.  
 
-Now since the N(0,1) distribution has 95% of its area between -1.96 and
-1.96, we have
+The N(0,1) distribution has 95% of its area between -1.96 and
+1.96: e.g. run
+
+``` r
+qnorm(0.025)
+```
+
+So we have
 
 0.95 &approx; P[-1.96 < (&#x100; - &mu;) / s.e.(&#x100;) < 1.96]
 
@@ -450,6 +456,28 @@ Our earlier CI for a population mean now becomes in this special case
 
 (&#x100; - 1.96 sqrt[ &#x100; (1-&#x100;) / n],
  &#x100; + 1.96 sqrt[ &#x100; (1-&#x100;) / n])
+
+## Lesson GEYSER:  Old Faithful Geyser Example
+
+To start to make the concepts tangible, let's look at **faithful**, a
+built-in dataset in R, recording eruptions of the Old Faithful Geyser in
+the US National Park, Yellowstone.
+
+The object consists of an R data frame with 2 columns, **eruptions** and
+**waiting**, showing the eruption durations and times between eruptions.
+the conceptual "population" here is the set of all Old Faithful
+eruptions, past, present and future.
+
+Let's start simple, with a CI for the population mean duration:
+
+``` r
+erps <- faithful$eruptions
+samplemean <- mean(erps)
+s2 <- var(erps)  # this is s^2 not S^2
+stderr <- sqrt(s2/length(erps))
+c(samplemean - 1.96*stderr, samplemean + 1.96*stderr)
+# (3.35,3.62)
+```
 
 ## Lesson CONVERGE:  More on Asymptotics
 
@@ -638,28 +666,6 @@ See
 for further details.  
 
 
-## Lesson GEYSER:  Old Faithful Geyser Example
-
-To start to make the concepts tangible, let's look at **faithful**, a
-built-in dataset in R, recording eruptions of the Old Faithful Geyser in
-the US National Park, Yellowstone.
-
-The object consists of an R data frame with 2 columns, **eruptions** and
-**waiting**, showing the eruption durations and times between eruptions.
-the conceptual "population" here is the set of all Old Faithful
-eruptions, past, present and future.
-
-Let's start simple, with a CI for the population mean duration:
-
-``` r
-erps <- faithful$eruptions
-samplemean <- mean(erps)
-s2 <- var(erps)  # this is s^2 not S^2
-stderr <- sqrt(s2/length(erps))
-c(samplemean - 1.96*stderr, samplemean + 1.96*stderr)
-# (3.35,3.62)
-```
-
 # Less on MLEMM:  General Methods of Estimation
 
 So far, we've discussed only ad hoc estimators, set up for a specific
@@ -841,7 +847,7 @@ MMs are less popular.  But they are easier to explain, and by the way,
 the inventor of the generalized method of moments won the Nobel Prize in
 Econoomics in 2013 that developing that method.
 
-## Lesson ESTDISTRS:  Estimating Entire Distributions
+## Lesson ESTDISTRS:  estimating entire distributions
 
 Recall the *cumulative distribution function*` (cdf) of a random variable 
 
@@ -856,7 +862,8 @@ with height at most 66.5 inches; the sample estimate of that quantity is
 the corresponding sample proportion.
 
 The entire sample estimate of F<sub>X</sub> is called the *empirical
-cdf* (ECDF).  Let's plot it for the geyser data.
+cdf* (ECDF).  Let's plot it for the geyser data we saw in an earlier
+lesson.
 
 ``` r
 plot(ecdf(erps))
@@ -867,19 +874,99 @@ plot(ecdf(erps))
 Since the ECDF consists of proportions (one for each t), it
 is unbiased.  For each t, E[ECDF(t)] =F<sub>X</sub(t).
 
-What about estimating the probability density function (pdf)?  As noted,
-pdfs do not really exist in practice, so "the" pdf here is the one that
-best approximates the true population distribution, but from here on,
-let's just speak of estimating "the" pdf.
+## Lesson DENS1:  estimating probability density functions--histograms
+
+What about estimating the probability density function (pdf)?  As noted
+in Lesson NORMALETC, pdfs do not really exist in practice.  Technically,
+all random variables in real life are discrete rather than continuous,
+e.g. because of the finite precision of our measuring instruments.
+
+Thus phrasing like "the" pdf above really means the pdf that best
+approximates the true population distribution. But from here on, let's
+just speak of estimating "the" pdf.
 
 Actually, the familiar histogram is a pdf estimator, provided we specify
-that the total area under it is 1.0.  Here it is for the geyser data:
+that the total area under it is 1.0.  Here's why:
+
+First, consider a histogram for the geyser data:
 
 ``` r
 hist(erps,freq=false)
 ```
 
 ![alt text](HistErps.png)
+
+Histograms involve partitioning the range of the data into a certain
+number of bins (which can be specified with the **breaks** argument in
+**hist()**).
+
+Let's look a little closer:
+
+``` r
+> u <- hist(erps)
+> u
+$breaks
+[1] 1.5 2.0 2.5 3.0 3.5 4.0 4.5 5.0 5.5
+
+$counts
+[1] 55 37  5  9 34 75 54  3
+...
+
+```
+
+Here **hist()** gave us the default bin boundaries for this data, at
+1.5, 2.0, 2.5 and so on.  We see that 37 values of the **erps** fell
+into the interval from 2.0 to 2.5.  This 37 figure was then the height
+of the plot for this interval.  Why?
+
+Recall that the pdf of X, denoted by f<sub>X</sub>, is the derivative of
+the cdf F<sub>X</sub>.  Recall too that a derivative is the slope of the
+tangent to a curve, a limit of slopes between two points on the curve.
+So, for an interval **(a,b)**
+
+f<sub>X</sub>(a) &approx; [F<sub>X</sub>(b) - F<sub>X</sub>(a)] / (b-a)
+
+F<sub>X</sub>(b) - F<sub>X</sub>(a) is the probability that X is in
+**(a,b]**, which we can estimate from the data, say for **a** = 2.0 and
+**b** = 2.5:
+
+``` r
+> sum(2.0 < erps & erps <= 2.5)
+[1] 37
+> sum(2.0 < erps & erps <= 2.5) / length(erps)
+[1] 0.1360294
+```
+
+Here (b-a) = 2.5 - 2.0 = 0.5.  So,
+
+f<sub>X</sub>(2.0) &approx; 0.1360294 / 0.5 = 0.2720588
+
+So, it makes sense that our histogram, viewed as a density estimate,
+used that 37 counts value.  The rest, i.e. dividing by the total number
+of data points 272 times the interval width 0.5, just enter in to make
+the total area 1.0, which a density must have.  We can request this
+latter property via the **probability** argument (graph not shown):
+
+``` r
+> hist(erps,probability=TRUE)
+```
+
+But we're not done.  Why have an interval widht (*bin width*) of 0.5?
+It came as the default (which actually set the number of intervals).
+Maybe the intervals should be shorter?  Longer?  we have this tradeoff:
+
+* If we make b-a too small, we won't have enough data to get a good
+  estimate.
+
+* If we make b-a too arge, then the approximation
+
+    f<sub>X</sub>(a) &approx; [F<sub>X</sub>(b) - F<sub>X</sub>(a)] / (b-a)
+
+will not be accurate.
+
+
+
+
 
 This is interesting, as it is bimodal.  There have been many geophysical
 theories on this, e.g. postulating that there are 2 kinds of eruptions.
