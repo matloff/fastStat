@@ -666,10 +666,22 @@ See
 for further details.  
 
 
-# Less on MLEMM:  General Methods of Estimation
+# Lesson MLEMM:  General Methods of Estimation
 
 So far, we've discussed only ad hoc estimators, set up for a specific
-purpose.  It would be nice to have general ways of forming estimators.
+purpose, such as S<sup>2</sup> for &sigma;<sup>2</sup>.
+It would be nice to have general ways of forming estimators.
+
+Note that our context here is that of *parametric distribution models*.
+Say for instance we are using an exponential model, in which the density
+of the random variable under consideration is
+
+&lambda; e<sup>-&lambda; t</sup>, t > 0
+
+How can we estimate &lambda; from our data?
+
+
+
 The two most common such techniques are *Maximum Likelihood Estimators*
 (MLE) and the *Method of Moments Estimators* (MME).  Let's illustrate them with a
 simple example, MME first.
@@ -897,7 +909,7 @@ that the total area under it is 1.0.  Here's why:
 First, consider a histogram for the geyser data:
 
 ``` r
-hist(erps,freq=false)
+hist(erps,probability=TRUE)  # second argument indicates area = 1.0
 ```
 
 ![alt text](HistErps.png)
@@ -909,7 +921,7 @@ number of bins (which can be specified with the **breaks** argument in
 Let's look a little closer:
 
 ``` r
-> u <- hist(erps)
+> u <- hist(erps,probability=TRUE)
 > u
 $breaks
 [1] 1.5 2.0 2.5 3.0 3.5 4.0 4.5 5.0 5.5
@@ -921,9 +933,9 @@ $counts
 ```
 
 Here **hist()** gave us the default bin boundaries for this data, at
-1.5, 2.0, 2.5 and so on.  We see that 37 values of the **erps** fell
-into the interval from 2.0 to 2.5.  This 37 figure was then the height
-of the plot for this interval.  Why?
+1.5, 2.0, 2.5 and so on.  We see that for instance 37 values of the
+**erps** fell into the interval from 2.0 to 2.5.  This 37 figure was
+then used to determine the height of the plot for this interval.  Why?
 
 Recall that the pdf of X, denoted by f<sub>X</sub>, is the derivative of
 the cdf F<sub>X</sub>.  Recall too that a derivative is the slope of the
@@ -951,7 +963,7 @@ abscd(0.5,pnorm(0.5,0,0.5),dnorm(0.5,0,0.5))
 ```
 
 As you can see, the secant slope is considerably less than the tangent
-slope.  But if we had drawn the secant from x = 0.5 to say, x = 0.6,
+slope.  But if we were to draw the secant from x = 0.5 to say, x = 0.6,
 the tangent and secant slopes would be more similar.
 
 So, for an interval **(a,b)**, with b-a small,
@@ -973,18 +985,21 @@ Here (b-a) = 2.5 - 2.0 = 0.5.  So,
 
 f<sub>X</sub>(2.0) &approx; 0.1360294 / 0.5 = 0.2720588
 
+So, it makes sense that our histogram, viewed as a density estimate,
+used that 37 **counts** value.  The rest, i.e. dividing by the total
+number of data points 272 times the interval width 0.5, just enter in to
+make the total area 1.0, which a density must have.  As we saw above, we
+can request this latter property via the **probability** argument:
+
+**It's only approximate!**
+
 Note carefully that the symbol &approx; above stems from two
 considerations:
 
 * We are approximating a tangent by a secant.
 
-* We are using an estimate of F<sub>X</sub> from our sample data, not the population.
-
-So, it makes sense that our histogram, viewed as a density estimate,
-used that 37 **counts** value.  The rest, i.e. dividing by the total number
-of data points 272 times the interval width 0.5, just enter in to make
-the total area 1.0, which a density must have.  We can request this
-latter property via the **probability** argument (graph not shown):
+* We are using an estimate of F<sub>X</sub> from our sample data, not
+  the population.  We return to this point shortly.
 
 ``` r
 > hist(erps,probability=TRUE)
