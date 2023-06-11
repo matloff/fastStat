@@ -874,6 +874,10 @@ plot(ecdf(erps))
 Since the ECDF consists of proportions (one for each t), it
 is unbiased.  For each t, E[ECDF(t)] =F<sub>X</sub(t).
 
+We next turn to estimating density functions.  We will spend quite a bit
+of time on this topic, as it illustrates key points that extend to
+statistics in general.
+
 ## Lesson DENS1:  estimating probability density functions--histograms
 
 What about estimating the probability density function (pdf)?  As noted
@@ -884,6 +888,8 @@ e.g. because of the finite precision of our measuring instruments.
 Thus phrasing like "the" pdf above really means the pdf that best
 approximates the true population distribution. But from here on, let's
 just speak of estimating "the" pdf.
+
+**Histograms are pdf estimators:**
 
 Actually, the familiar histogram is a pdf estimator, provided we specify
 that the total area under it is 1.0.  Here's why:
@@ -921,8 +927,34 @@ of the plot for this interval.  Why?
 
 Recall that the pdf of X, denoted by f<sub>X</sub>, is the derivative of
 the cdf F<sub>X</sub>.  Recall too that a derivative is the slope of the
-tangent to a curve, a limit of slopes between two points on the curve.
-So, for an interval **(a,b)**
+tangent line to a curve.  This in turn is a limit of slopes of line
+segments (*secant lines*) between two points on the curve.
+
+Here is an illustration.  We drew the N(0,0.5) cdf, and then the tangent
+line at x = 0.5, as well as the secant line from x = 0.5 to x = 1.0.
+
+![alt text](TangentSecant.png)
+
+Here is the code:
+
+``` r
+curve(pnorm(x,0,0.5),-2.5,2.5)
+# draw secant line from x = 0.5 to x = 1
+point1 <- c(0.5,pnorm(0.5,0,0.5))
+point2 <- c(1.0,pnorm(1.0,0,0.5))
+point12 <- rbind(point1,point2)
+lines(point12[,1],point12[,2])
+# abline() slope s at (q,r)
+abscd <- function(q,r,s) abline(r-s*q,s)
+abscd(0.5,pnorm(0.5,0,0.5),dnorm(0.5,0,0.5))
+
+```
+
+As you can see, the secant slope is considerably less than the tangent
+slope.  But if we had drawn the secant from x = 0.5 to say, x = 0.6,
+the tangent and secant slopes would be more similar.
+
+So, for an interval **(a,b)**, with b-a small,
 
 f<sub>X</sub>(a) &approx; [F<sub>X</sub>(b) - F<sub>X</sub>(a)] / (b-a)
 
@@ -941,8 +973,15 @@ Here (b-a) = 2.5 - 2.0 = 0.5.  So,
 
 f<sub>X</sub>(2.0) &approx; 0.1360294 / 0.5 = 0.2720588
 
+Note carefully that the symbol &approx; above stems from two
+considerations:
+
+* We are approximating a tangent by a secant.
+
+* We are using an estimate of F<sub>X</sub> from our sample data, not the population.
+
 So, it makes sense that our histogram, viewed as a density estimate,
-used that 37 counts value.  The rest, i.e. dividing by the total number
+used that 37 **counts** value.  The rest, i.e. dividing by the total number
 of data points 272 times the interval width 0.5, just enter in to make
 the total area 1.0, which a density must have.  We can request this
 latter property via the **probability** argument (graph not shown):
@@ -951,25 +990,26 @@ latter property via the **probability** argument (graph not shown):
 > hist(erps,probability=TRUE)
 ```
 
-But we're not done.  Why have an interval widht (*bin width*) of 0.5?
-It came as the default (which actually set the number of intervals).
-Maybe the intervals should be shorter?  Longer?  we have this tradeoff:
+But we're not done.  Why have an interval width (*bin width*) of 0.5?
+It came as the **hist()** default (which actually set the number of
+intervals).  Maybe the intervals should be shorter?  Longer?  We have
+this tradeoff:
 
 * If we make b-a too small, we won't have enough data to get a good
   estimate.
 
-* If we make b-a too arge, then the approximation
+* If we make b-a too large, then the approximation
 
     f<sub>X</sub>(a) &approx; [F<sub>X</sub>(b) - F<sub>X</sub>(a)] / (b-a)
 
-will not be accurate.
+    will not be accurate.
 
+We will return to this point later, in Lesson TRADE.
 
-
-
-
-This is interesting, as it is bimodal.  There have been many geophysical
-theories on this, e.g. postulating that there are 2 kinds of eruptions.
+Keeping this approximate nature in mind, it is interesting to note that
+our histogram here is bimodal, i.e. has two peaks.  There have been many
+geophysical theories on this, e.g. postulating that there are two kinds
+of eruptions.
 
 Histograms are considered rather crude estimators of a density, as they
 are so choppy.  A more advanced approach is that of *kernel* density
