@@ -87,23 +87,64 @@ X<sub>bar</sub>.
 In general, let T be our estimate of some population quantity
 &theta;.  E.g. in the weight example above, T would be X<sub>bar</sub>,
 and &theta; would be the mean weight of students over the entire
-population.  Even though we take only one sample
+population.  Is T probably pretty accurate, i.e. probably pretty close
+to the true (though unknown) value of &theta;?  We reason as follows.
 
-We hope that T doesn't vary much from one sa
+We just have our one sample, and hope that it yields a T
+value near &theta;, but we have to wonder:  Is this sample
+representative?  Might other samples have values of T that are closer to
+the true (but unknown) value of &theta;?
 
-(Lesson STDERRS):  Consider for instance Xbar, the
-average of the X_i.  Since the latter are random, then Xbar is too.
-Thus it has a standard deviation, which we call the "standard error."
-We hope it is small, as that means it doesn't vary much from one sample
-to another, and thus should be a pretty accurate estimate of the
-corresponing population value, say the population mean.
+*Key point:* If we know that T doesn't vary much from one sample to
+another, that concern is addressed!  If the sampling variability of T is
+small, then for most samples T will be near &theta;, so our value of T
+is likely near &theta;.  No guarantees of course.
 
-4.  Confidence intervals (Lessons CI and CIAPPROX):  Instead of just
-reporting the mean weight of our sampled 100 UCD students (a "point
-estimate"), we'd like an "interval estmate," e.g. "We are 95% confident
-that the true mean weight of all UCD students is in the interval (a,b)."
-Generally we take the interval to be, e.g. in the Xbar example, Xbar +-
-1.96 stderr(Xbar).  Standard errors are reported in R output.
+So, what measure do we use to describe the variability of T?  We use the
+same measure that is used to describe the variability of any
+quantity--its standard deviation.  And that's what the standard error of
+T is--its standard deviation over all possible samples.  Let's denote it
+as se(T).
+
+But wait a minute...that standard deviation is a population quantity, so
+we don't know it anymore than we know the true value of &theta;.  Have
+we hit a dead end here?  It turns out that the answer is no.  We can
+estimate that standard deviation too.
+
+There is also a related question:  What most of the values of T are near
+each other, BUT not centered near &theta;?  This is a question of
+(near-) *unbiasedness* of T.  It's beyond the scope of "bare minimum or
+less" tutorial, but see Lesson STDERRS) of the *fastStat* tutorial.
+
+#  Confidence intervals 
+
+Recall the political poll example, and the notion of margin of error.
+Recall that we used Q to denote the proportion of Candidate X supporters
+in our sample?  How does the margin of error relate to standard error?
+Actually, the relation is simple:
+
+margin of error = 1.96 x se(Q)
+
+So to get a range for q, the true population proportion of voters
+supporting X, we compute the interval
+
+Q &pm; 1.96 x se(Q)
+
+This is then an approximate 95% *confidence interval* for q, the true
+population proportion of voters favoring Candidate X.
+
+What does it mean to say we are "95% confident" than q is in that
+interval?  It simply means that 95% of all possible samples will yield
+intervals that contain the true q.
+
+Of course, we don't know the situation for our particular sample.
+Instead, the above probability interpretation is analogous to, say,
+dice.  If we roll 2 dice, the probability that their sum is at least 11
+is 8/9.  So if we roll 2 dice 900 times, about 800 of the roles will
+come out 11 or higher, so we say we "probably" will get a sum of at
+least 11.
+
+Lessons CI and CIAPPROX in the *fastStat* tutorial go into the details.
 
 4.  Prediction (Lesson PREDICT):  To predict some variable Y 
 from X = t, the optimal rule is to guess Y to be the mean Y 
