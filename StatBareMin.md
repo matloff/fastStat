@@ -179,13 +179,25 @@ What can be done?
 * We could look at people in our sample whose height and weight are
   *near* 70 and 28, and find their average weight.  That would be our
 estimate of the mean weight of all people in the population of height 70
-and age 28.
+and age 28.  This is what many machine learning algorithms boil down to,
+especially the k-Nearest Neighbors and Random Forests methods.
 
+* We could assume that, viewed as a function of the two variables height
+  and age, the quantity mean(weight for a given height and age) follows
+a certain mathematical formula, typically the *linear model*. 
 
+In our "bare minimum, even less" context here, we will focus on linear
+models.  See the *fastStat* tutorial for machine learning methods,
+starting with Lesson PREDICT.
 
-Prediction (Lesson PREDICT):  
+**Important note:**  Linear and other prediction models can be used for
+more than prediction!  A very common use is effect measurement.  In a
+study of gender pay gap, we may posit that several variables affect
+wages, such as education, age, type of job and so on.  We might use a
+linear model to gauge the effect of gender, in the presence of the other
+variables.  We'll do more on this later in the tutorial.
 
-5.  Linear models (Lesson LIN):  We assume a lienar model, e.g. 
+# Linear models (Lesson LIN):  We assume a lienar model, e.g. 
 
 mean weight = beta_0 + beta_1 height + beta_2 age
 
