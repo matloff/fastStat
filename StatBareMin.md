@@ -146,11 +146,44 @@ least 11.
 
 Lessons CI and CIAPPROX in the *fastStat* tutorial go into the details.
 
-4.  Prediction (Lesson PREDICT):  To predict some variable Y 
-from X = t, the optimal rule is to guess Y to be the mean Y 
-among all population entities have X = t.  E.g. predict weight from
-height and age, say height 70 and age 28.  Our guess is the mean weight
-of all people of height 70 and age 28.
+# Prediction
+
+These days machine learning is really in vogue.  The basic goal is to
+preduct one variable, i.e. guess its value, from others.  We might want
+to predict whether a loan applicant will pay off the loan, or predict
+whether someone has a certain disease, based on physical measurements,
+family history and so on.
+
+Here is the basic approach:
+
+> To predict some variable Y from X = t, the optimal rule is to guess Y to
+> be the mean Y among all population entities have X = t.  
+
+E.g. to predict someone's weight from their height and age, say height
+70 and age 28:  Our guess is the mean weight of all people of height 70
+and age 28.  Note that this is a *population* quantity.
+
+The issue is then:
+
+> How can we find subgroup means of this sort?
+
+This is usually not so easy as it sounds.  If, say, our sample
+(*training data* in machine learning parlance) consists of only n = 100
+people, we may not have any people of height 70 and age 28, so we cannot
+find the desired mean directly from our data.  Or, we might have
+just, say, 2 or 3 such people, hardly enough to get a reliable estimate
+of the mean.
+
+What can be done?
+
+* We could look at people in our sample whose height and weight are
+  *near* 70 and 28, and find their average weight.  That would be our
+estimate of the mean weight of all people in the population of height 70
+and age 28.
+
+
+
+Prediction (Lesson PREDICT):  
 
 5.  Linear models (Lesson LIN):  We assume a lienar model, e.g. 
 
@@ -170,6 +203,7 @@ coefficients:
 (intercept) -187.6382    17.9447  -10.46  < 2e-16 ***
 height         4.9236     0.2344   21.00  < 2e-16 ***
 age            0.9115     0.1257    7.25 8.25e-13 ***
+```
 
 (Ignore the last two columns for now.)
 
@@ -223,3 +257,5 @@ on, women are paid about $8600 less than men.
 
 
 
+
+# Hypothesis testing and p-values
