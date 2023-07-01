@@ -57,8 +57,11 @@ present and future.  There may be issues here, e.g. change in student
 characteristics over time, so some caution must be exercized in applying
 statistical methods in such contexts.
 
-
 #  Standard errors 
+
+This section is longer but involves the very essence of statistical
+inference. Some extra effort on the reader's part here will pay large
+dividends.
 
 Around election times, one often here on TV newscasts the results of
 opinion polls, statements along the lines of "Candidate X is supported
@@ -114,7 +117,7 @@ estimate that standard deviation too.
 There is also a related question:  What most of the values of T are near
 each other, BUT not centered near &theta;?  This is a question of
 (near-) *unbiasedness* of T.  It's beyond the scope of "bare minimum or
-less" tutorial, but see Lesson STDERRS) of the *fastStat* tutorial.
+less" tutorial, but see Lesson STDERRS of the *fastStat* tutorial.
 
 #  Confidence intervals 
 
@@ -197,7 +200,9 @@ wages, such as education, age, type of job and so on.  We might use a
 linear model to gauge the effect of gender, in the presence of the other
 variables.  We'll do more on this later in the tutorial.
 
-# Linear models (Lesson LIN):  We assume a lienar model, e.g. 
+# Linear models 
+
+We assume a linear model, e.g. 
 
 mean weight = beta_0 + beta_1 height + beta_2 age
 
@@ -207,9 +212,10 @@ but unknown), and thus have standard errors.
 
 Example:
 
+``` r
 > z <- lm(weight ~ height+age,data=mlb)  # mlb dataset, MLB players
 > summary(z)
-...
+
 coefficients:
              estimate std. error t value pr(>|t|)    
 (intercept) -187.6382    17.9447  -10.46  < 2e-16 ***
@@ -217,7 +223,12 @@ height         4.9236     0.2344   21.00  < 2e-16 ***
 age            0.9115     0.1257    7.25 8.25e-13 ***
 ```
 
-(Ignore the last two columns for now.)
+(Ignore the last two columns for now
+
+
+.)
+(Lesson LIN):  
+
 
 6.  Machine learning predictive methods, e.g. k-nearest neighbors
 (Lesson KNN):
@@ -247,6 +258,8 @@ was that women had been applying to the more selective departments.
 9.  Linear models are often used for "ceteris paribus" analysis of, e.g.
 gender pay gaps.
 
+``` r
+
 > head(pef)
        age     educ occ sex wageinc wkswrkd
 1 50.30082 zzzOther 102   2   75000      52
@@ -262,6 +275,7 @@ occ102
 13688.3012 
       occ106       occ140       occ141         sex2      wkswrkd 
    1380.0254   11732.5837   10791.0158   -8595.5831    1323.1999 
+```
 
 Here the gender variable is coded 1 for men, 2 for women. So the
 negative coefficient here suggests that, for equal age, education and so
