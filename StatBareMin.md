@@ -202,13 +202,22 @@ variables.  We'll do more on this later in the tutorial.
 
 # Linear models 
 
-We assume a linear model, e.g. 
+We assume a linear model, e.g. for predicting weight from height and
+age:
 
-mean weight = beta_0 + beta_1 height + beta_2 age
+mean weight = &beta;<sub>0</sub> + &beta;<sub>1</sub> height + &beta;<sub>2</sub> age
 
-The beta_i are population values, which we estimate from the data.  Call
-the estimates b_i.  Note that the b_i are random (the beta_i are fixed
-but unknown), and thus have standard errors.
+The &beta;<sub>i</sub> are population values, which we estimate from the
+data.  Call the estimates b<sub>i</sub>.  Note that the b<sub>i</sub> are
+random, since they are calculated from our sample data, and thus have standard
+errors.  For instance, b<sub>2</sub>, the estimated age coefficient,
+will vary from one sample to another; it's standard error helps us
+assess whether our b<sub>2</sub> is reasonably close to i&beta;<sub>2</sub>.
+
+
+(Lesson LIN):  
+
+
 
 Example:
 
