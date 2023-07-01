@@ -212,14 +212,10 @@ data.  Call the estimates b<sub>i</sub>.  Note that the b<sub>i</sub> are
 random, since they are calculated from our sample data, and thus have standard
 errors.  For instance, b<sub>2</sub>, the estimated age coefficient,
 will vary from one sample to another; it's standard error helps us
-assess whether our b<sub>2</sub> is reasonably close to i&beta;<sub>2</sub>.
+assess whether our b<sub>2</sub> is reasonably close to &beta;<sub>2</sub>.
 
-
-(Lesson LIN):  
-
-
-
-Example:
+Here is an example in R, using a dataset **mlb** on Major League Baseball
+players.
 
 ``` r
 > z <- lm(weight ~ height+age,data=mlb)  # mlb dataset, MLB players
@@ -232,11 +228,21 @@ height         4.9236     0.2344   21.00  < 2e-16 ***
 age            0.9115     0.1257    7.25 8.25e-13 ***
 ```
 
-(Ignore the last two columns for now
+(Ignore the last two columns for now.)
 
+So we see for instance, that b<sub>2</sub> = 0.9115.  In other words,
+mean weight among the players increases almost a pound per year of age,
+perhaps surprising for such a physically fit group.  But wait--might
+this be a sampling artifact?   Let's look at the standard error of this
+figure, 0.1257.  This gives an approximate 95% confidence interval for
+the true population &beta;<sub>2</sub>:
 
-.)
-(Lesson LIN):  
+0.9915 &pm; 1.96 x 0.1257 = (0.6651,1.1579)
+
+So it does seem that there is a weight gain here, at least about 2/3 of
+a pound per year.
+
+See more in Lesson LIN of the *fastStat* tutorial.
 
 
 6.  Machine learning predictive methods, e.g. k-nearest neighbors
