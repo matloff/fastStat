@@ -9,13 +9,34 @@ standard deviation and histograms.
 
 Occasionally there are references to data frames etc. for readers who
 use R or Python for data science, but these references are not essential
-to the narrative.
+to the narrative.  Near the end of the document, examples of the
+concepts that use Actual R statistical operations are shown, but this is
+not intended as a tutorial on R; see my [fasteR
+tutorial](https://github.com/matloff/fasteR) for this purpose.
 
 In addition there are also references to my [fastStat
 tutorial](https://github.com/matloff/fastStat), which is more detailed
 and presumes more background (a calculus-based probability course) on
 the part of the reader.  These may be safely ignored by readers without
 this background.
+
+## Coverage
+
+Main topics:
+
+* central importance of sampling variation
+
+* standard errors; statistical inference
+
+* prediction, especially with linear models
+
+* effect estimation, confounding 
+
+Notably missing:
+
+* normal, chi-square, F distributions 
+
+* inordinate emphasis of hypothesis testing and p-values
 
 ##  Data notation  
 
@@ -40,7 +61,7 @@ are defined similarly.
 
 Storage in a data frame would have n rows and p columns.
 
-#  Sampling from populations, conceptual or real 
+##  Sampling from populations, conceptual or real 
 
 Our 100 people is considered a sample from some population, maybe the
 population of all UC Davis students.  Our 25 elementary schools may have
@@ -57,7 +78,7 @@ present and future.  There may be issues here, e.g. change in student
 characteristics over time, so some caution must be exercized in applying
 statistical methods in such contexts.
 
-#  Standard errors 
+##  Standard errors 
 
 This section is longer but involves the very essence of statistical
 inference. Some extra effort on the reader's part here will pay large
@@ -114,12 +135,12 @@ we don't know it anymore than we know the true value of &theta;.  Have
 we hit a dead end here?  It turns out that the answer is no.  We can
 estimate that standard deviation too.
 
-There is also a related question:  What most of the values of T are near
+There is also a related question:  What if most of the values of T are near
 each other, BUT not centered near &theta;?  This is a question of
 (near-) *unbiasedness* of T.  It's beyond the scope of "bare minimum or
 less" tutorial, but see Lesson STDERRS of the *fastStat* tutorial.
 
-#  Confidence intervals 
+##  Confidence intervals 
 
 Recall the political poll example, and the notion of margin of error.
 Recall that we used Q to denote the proportion of Candidate X supporters
@@ -149,7 +170,7 @@ least 11.
 
 Lessons CI and CIAPPROX in the *fastStat* tutorial go into the details.
 
-# Prediction
+## Prediction
 
 These days machine learning is really in vogue.  The basic goal is to
 preduct one variable, i.e. guess its value, from others.  We might want
@@ -200,7 +221,7 @@ wages, such as education, age, type of job and so on.  We might use a
 linear model to gauge the effect of gender, in the presence of the other
 variables.  We'll do more on this later in the tutorial.
 
-# Linear models 
+## Linear models 
 
 We assume a linear model, e.g. for predicting weight from height and
 age:
@@ -218,7 +239,7 @@ Here is an example in R, using a dataset **mlb** on Major League Baseball
 players.
 
 ``` r
-> z <- lm(weight ~ height+age,data=mlb)  # mlb dataset, MLB players
+> z <- lm(Weight ~ Height+Age,data=mlb)  # mlb dataset, MLB players
 > summary(z)
 
 coefficients:
@@ -228,40 +249,93 @@ height         4.9236     0.2344   21.00  < 2e-16 ***
 age            0.9115     0.1257    7.25 8.25e-13 ***
 ```
 
-(Ignore the last two columns for now.)
+(Ignore all but the first column for now.)
 
-So we see for instance, that b<sub>2</sub> = 0.9115.  In other words,
-mean weight among the players increases almost a pound per year of age,
-perhaps surprising for such a physically fit group.  But wait--might
-this be a sampling artifact?   Let's look at the standard error of this
-figure, 0.1257.  This gives an approximate 95% confidence interval for
-the true population &beta;<sub>2</sub>:
+Now, what about our earlier question of what value we should use to
+predict the weight of a person who is 70 inches tall and is 28 years
+old?  Remember, our model is
+
+mean weight = &beta;<sub>0</sub> + &beta;<sub>1</sub> height + &beta;<sub>2</sub> age
+
+so our prediction for the mean weight of such a person is
+
+&beta;<sub>0</sub> + &beta;<sub>1</sub> 70 + &beta;<sub>2</sub> 28
+
+The &beta;<sub>i</sub> are known, so we replace them by our estimates:
+
+b<sub>0</sub> + b<sub>1</sub> 70 + b<sub>2</sub> 28 =
+-187.64 + 4.92 x 70 + 0.91 x 28
+
+and that will be our predicted value.  Actually, R does that for us:
+
+``` r
+> predict(z,data.frame(Height=70,Age=28))
+       1 
+182.5367 
+```
+
+We predict a weight of about 182 pounds.
+
+See more in Lesson LIN of the *fastStat* tutorial.
+
+##  Indicator variables 
+
+Often a variable of interest is dichotomous.  For instance, in
+predicting human weight from height and age, we might also have gender
+data.  These are typically coded 1 and 0, say 1 for male, 0 for female.
+These variables are known as *indicator variables*.  Our model of mean
+weight would then be
+
+mean weight = &beta;<sub>0</sub> + &beta;<sub>1</sub> height + 
+&beta;<sub>2</sub> age + &beta;<sub>3</sub> I<sub>male</sub>
+
+where I<sub>male</sub> is equal to 1 for a man, 0 for a woman.
+
+More in Lesson INDICATORS in the *fastStat* tutorial.
+
+##  Estimation of effects
+
+According to our above model, players of height 70 and age 28 have mean weight
+
+&beta;<sub>0</sub> + &beta;<sub>1</sub> 70 + &beta;<sub>2</sub> 28
+
+For players of that height but age 29, the figure is 
+
+&beta;<sub>0</sub> + &beta;<sub>1</sub> 70 + &beta;<sub>2</sub> 29
+
+Subtracting the age 28 expression from the age 29 one, we have
+
+mean weight (height 70, age 29) - mean weight (height 70, age 28) =
+&beta;<sub>2</sub>
+
+The other terms canceled out.  In fact, they would have canceled out if
+we had compared 32-year-olds to those of age 33, etc.  And furthermore,
+we see that this also would have been true for players of height 73.
+
+In other words:
+
+> The effect of one extra year of age is &beta;<sub>2</sub>.
+
+Our estimate of the unknown &beta;<sub>2</sub> is b<sub>2</sub>, which
+we found above to be 0.9115.  So, mean weight among the players
+increases almost a pound per year of age, perhaps surprising for such a
+physically fit group.  
+
+But wait--might this be a sampling artifact?   Let's look at the
+standard error of this figure, 0.1257.  This gives an approximate 95%
+confidence interval for the true population &beta;<sub>2</sub>:
 
 0.9915 &pm; 1.96 x 0.1257 = (0.6651,1.1579)
 
 So it does seem that there is a weight gain here, at least about 2/3 of
 a pound per year.
 
-See more in Lesson LIN of the *fastStat* tutorial.
+# *Ceteris paribus* comparisons
 
+We saw above that linear models can be used not only for
+prediction but also for effect estimation.  In fact, they may be used
+for fairer estimation, as will be shown in this section.
 
-6.  Machine learning predictive methods, e.g. k-nearest neighbors
-(Lesson KNN):
-
-One of the simplest ML methods is k-Nearest Neighbors. Say we are
-predicting weight from height and age, and must do so for a new case in
-which X = (70,28). Then we find the k rows in our training data that are
-closest to (70,28), find the average weight among those data points, and
-use that average as our predicted value for the new case.
-
-7.  Indicator variables (Lesson INDICATORS):  Often has only the values only 1
-and 0, indicating the presence or absence of some trait.  E.g. for UCD
-students, we have have a CSmajor column, filled with 1s and 0s, for CS
-and non-CS students.  Major point:  The mean of an indicator variable is
-the proportion of 1s; on the population level, that becomes the
-probability of a 1..
-
-8.  "Ceteris paribus" estimation of effects:  E.g. the famous UCB
 admissions data, admissions to grad school.  Say Y = 1 or 0, according
 to admitted or not.  Turns out that P(Y = 1) for men is larger than that
 for women, suggesting UCB is biased against women.  HOWEVER, now let X =
@@ -274,7 +348,6 @@ was that women had been applying to the more selective departments.
 gender pay gaps.
 
 ``` r
-
 > head(pef)
        age     educ occ sex wageinc wkswrkd
 1 50.30082 zzzOther 102   2   75000      52
@@ -296,7 +369,5 @@ Here the gender variable is coded 1 for men, 2 for women. So the
 negative coefficient here suggests that, for equal age, education and so
 on, women are paid about $8600 less than men.
 
+## Hypothesis testing and p-values
 
-
-
-# Hypothesis testing and p-values
