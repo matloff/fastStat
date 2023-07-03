@@ -10,9 +10,10 @@ standard deviation and histograms.
 Occasionally there are references to data frames etc. for readers who
 use R or Python for data science, but these references are not essential
 to the narrative.  Near the end of the document, examples of the
-concepts that use Actual R statistical operations are shown, but this is
-not intended as a tutorial on R; see my [fasteR
-tutorial](https://github.com/matloff/fasteR) for this purpose.
+concepts that use actual R statistical operations are shown, but this is
+not intended as a tutorial on R, and can be understood with knowing the
+R details.  (See my [fasteR tutorial](https://github.com/matloff/fasteR)
+for a quick introduction to R.)
 
 In addition there are also references to my [fastStat
 tutorial](https://github.com/matloff/fastStat), which is more detailed
@@ -174,7 +175,8 @@ Lessons CI and CIAPPROX in the *fastStat* tutorial go into the details.
 
 These days machine learning is really in vogue.  The basic goal is to
 preduct one variable, i.e. guess its value, from others.  We might want
-to predict whether a loan applicant will pay off the loan, or predict
+to predict whether a loan applicant will pay off the loan, based on job
+status, previous credit history, etc.  Or  we may wish to predict
 whether someone has a certain disease, based on physical measurements,
 family history and so on.
 
@@ -229,11 +231,12 @@ age:
 mean weight = &beta;<sub>0</sub> + &beta;<sub>1</sub> height + &beta;<sub>2</sub> age
 
 The &beta;<sub>i</sub> are population values, which we estimate from the
-data.  Call the estimates b<sub>i</sub>.  Note that the b<sub>i</sub> are
-random, since they are calculated from our sample data, and thus have standard
-errors.  For instance, b<sub>2</sub>, the estimated age coefficient,
-will vary from one sample to another; it's standard error helps us
-assess whether our b<sub>2</sub> is reasonably close to &beta;<sub>2</sub>.
+data.  Call the estimates b<sub>i</sub>.  Note that the b<sub>i</sub>
+are random, since they are calculated from our sample data, and thus
+have standard errors.  For instance, b<sub>2</sub>, the estimated age
+coefficient, will vary from one sample to another; its standard error
+helps us assess whether our b<sub>2</sub> is likely reasonably close to
+&beta;<sub>2</sub>.
 
 Here is an example in R, using a dataset **mlb** on Major League Baseball
 players.
@@ -257,7 +260,7 @@ old?  Remember, our model is
 
 mean weight = &beta;<sub>0</sub> + &beta;<sub>1</sub> height + &beta;<sub>2</sub> age
 
-so our prediction for the mean weight of such a person is
+so our prediction for the weight of such a person is
 
 &beta;<sub>0</sub> + &beta;<sub>1</sub> 70 + &beta;<sub>2</sub> 28
 
@@ -277,21 +280,6 @@ and that will be our predicted value.  Actually, R does that for us:
 We predict a weight of about 182 pounds.
 
 See more in Lesson LIN of the *fastStat* tutorial.
-
-##  Indicator variables 
-
-Often a variable of interest is dichotomous.  For instance, in
-predicting human weight from height and age, we might also have gender
-data.  These are typically coded 1 and 0, say 1 for male, 0 for female.
-These variables are known as *indicator variables*.  Our model of mean
-weight would then be
-
-mean weight = &beta;<sub>0</sub> + &beta;<sub>1</sub> height + 
-&beta;<sub>2</sub> age + &beta;<sub>3</sub> I<sub>male</sub>
-
-where I<sub>male</sub> is equal to 1 for a man, 0 for a woman.
-
-More in Lesson INDICATORS in the *fastStat* tutorial.
 
 ##  Estimation of effects
 
@@ -314,7 +302,7 @@ we see that this also would have been true for players of height 73.
 
 In other words:
 
-> The effect of one extra year of age is &beta;<sub>2</sub>.
+> The average effect on weight of one extra year of age is &beta;<sub>2</sub>.
 
 Our estimate of the unknown &beta;<sub>2</sub> is b<sub>2</sub>, which
 we found above to be 0.9115.  So, mean weight among the players
@@ -322,19 +310,35 @@ increases almost a pound per year of age, perhaps surprising for such a
 physically fit group.  
 
 But wait--might this be a sampling artifact?   Let's look at the
-standard error of this figure, 0.1257.  This gives an approximate 95%
-confidence interval for the true population &beta;<sub>2</sub>:
+standard error of this figure, shown in the above output to be 0.1257.
+This gives an approximate 95% confidence interval for the true
+population &beta;<sub>2</sub>:
 
 0.9915 &pm; 1.96 x 0.1257 = (0.6651,1.1579)
 
 So it does seem that there is a weight gain here, at least about 2/3 of
 a pound per year.
 
-# *Ceteris paribus* comparisons
+##  Indicator variables 
+
+Often a variable of interest is dichotomous.  For instance, in
+predicting human weight from height and age, we might also have gender
+data.  These are typically coded 1 and 0, say 1 for male, 0 for female.
+These variables are known as *indicator variables*.  Our model of mean
+weight would then be
+
+mean weight = &beta;<sub>0</sub> + &beta;<sub>1</sub> height + 
+&beta;<sub>2</sub> age + &beta;<sub>3</sub> I<sub>male</sub>
+
+where I<sub>male</sub> is equal to 1 for a man, 0 for a woman.
+
+More in Lesson INDICATORS in the *fastStat* tutorial.
+
+## *Ceteris paribus* comparisons
 
 We saw above that linear models can be used not only for
 prediction but also for effect estimation.  In fact, they may be used
-for fairer estimation, as will be shown in this section.
+for *fairer* estimation, as will be shown in this section.
 
 admissions data, admissions to grad school.  Say Y = 1 or 0, according
 to admitted or not.  Turns out that P(Y = 1) for men is larger than that
