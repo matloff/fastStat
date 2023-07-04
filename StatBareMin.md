@@ -338,18 +338,43 @@ More in Lesson INDICATORS in the *fastStat* tutorial.
 
 We saw above that linear models can be used not only for
 prediction but also for effect estimation.  In fact, they may be used
-for *fairer* estimation, as will be shown in this section.
+for *fairer, more meaningful* estimation, as will be shown in this section.
 
-admissions data, admissions to grad school.  Say Y = 1 or 0, according
-to admitted or not.  Turns out that P(Y = 1) for men is larger than that
-for women, suggesting UCB is biased against women.  HOWEVER, now let X =
-department applied to (6 of them).  Now, we find that admission
-probability, i.e. P(Y = 1 | X = d) is HIGHER for women than men or about
-the same, depending on which department d one considers.  The problem
-was that women had been applying to the more selective departments.
+Let's first consider the famous UC Berkeley data on admissions to grad
+school.  It was alleged that Berkeley was biased against female
+applicants, which seemed odd, so statistics professor Peter Bickel
+took a fresh look at the data.
 
-9.  Linear models are often used for "ceteris paribus" analysis of, e.g.
-gender pay gaps.
+It turned out to be true the over proportion
+
+(male applicants admitted) / (male applicants)
+
+was greater than the corresponding fraction for females,
+
+(female applicants admitted) / (female applicants)
+
+But it turned out that the overall lower rate for women was largely due
+to their applying to the more selective departments.  Comparing
+admissions rates in individual departments, the seeming anomaly
+disappeared; male and female rates were similar in most departments, and
+in some the female rare was considerably higher.
+
+The lesson to be learned is:
+
+> Relations between two variables, in this case Admission and Gender, can
+> be highly impacted by a third variable, Department here.
+
+The Latin term *ceteris paribus*, "all else being equal," applies here.
+In comparing male and female admissions rates, we must make sure that
+all other variables are equal, e.g. compare the male admissions rate *in
+Department A* to the female rate *in Department A.*
+
+Linear models are often used for ceteris paribus analyses.  Let's look
+at an analysis of a possible gender pay gap.  The **pef** dataset gives
+census data in Silicon Valley, back in the year 2000.  Six different
+tech job titles were present.
+
+Here is what the first six rows of the data look like:
 
 ``` r
 > head(pef)
@@ -360,6 +385,14 @@ gender pay gaps.
 4 50.19951 zzzOther 100   1       0      52
 5 51.18112 zzzOther 100   2     160       1
 6 57.70413 zzzOther 100   1       0       0
+```
+
+A linear model was used, with mean income modeled in terms of
+age, education, job title, gender and number of weeks worked.  The
+occupation column was converted to indicator variables.  Here are the
+results:
+
+``` r
 > coef(lm(wageinc ~ .,data=pef))
  (Intercept)          age       educ16 educzzzOther       occ101
 occ102 
@@ -369,9 +402,47 @@ occ102
    1380.0254   11732.5837   10791.0158   -8595.5831    1323.1999 
 ```
 
-Here the gender variable is coded 1 for men, 2 for women. So the
-negative coefficient here suggests that, for equal age, education and so
-on, women are paid about $8600 less than men.
 
-## Hypothesis testing and p-values
+R created a new indicator variable here, **sex2**, which indicated
+female; its value is 1 for women, 0 for men.
+Here the gender variable is coded 1 for men, 2 for women. 
 
+In the same manner as where the age effect in the baseball player
+example could be assessed by the coefficient of the Age variable, the
+coefficient for **sex2**, -8595.5831, is our estimate of the gender pay
+gap:  Comparing men and women of the *same age*, *same education* and so
+on, we found that women were paid about $8600 less than comparable men.
+
+## Significance testing and p-values
+
+This is one of the tragedies of statistics:  An old method has long been
+shown to be at worst misleading and at best noninformative, yet was so
+entrenched that it continues to be very widely used today.  Here we give
+a brief description of the method, *significance* testing, and explain
+its pitfalls.
+
+The method first sets a *null hypothesis* H<sub>0</sub>.  In the gender
+pay gap example, we might have
+
+H<sub>0</sub>:  &beta;<sub>sex2</sub> = 0
+
+Here H<sub>0</sub> hypothesizes that there is no gender pay gap.
+
+The decision is made on the basis of "innocent until proven guilty":  We
+believe H<sub>0p</sub> is true until and unless we find strong evidence
+to the contrary.  Well, then, what constitutes "strong evidence"?
+
+The answer is that we look at the quotient
+
+Z = b<sub>sex2</sub> / (standard error of b<sub>sex2</sub>
+
+*If H<sub>0</sub> were true*, Z would be between -1.96 and 1.96 with
+probability 0.95.  (Yes, these numbers do also appear in our section on
+confidence intervals, but the usage and interpretation will be different
+here.)  Again, *if H<sub>0</sub> were true*, that quotient would have
+only a 5% chance of being larger than 1.96 or less than -1.96.  So, if
+the quotient does fall into that outside range, we say, "This would be
+unlikely under H<sub>0</sub>, so we will abandon our belief in
+H<sub>0</sub>."
+
+SAT ex; don't just see if CI contains 0; p-value "greed"
