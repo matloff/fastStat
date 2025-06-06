@@ -283,31 +283,53 @@ window.Quarto = {
 <section id="lesson-bias-bias-and-impact-on-standard-errors" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="lesson-bias-bias-and-impact-on-standard-errors">Lesson BIAS: Bias, and Impact on Standard Errors</h2>
 <p>In our last lesson, we assumed that EQ = q. We say that Q is an <em>unbiased</em> estimator of q. In English: The average value of Q over all possible samples is q.</p>
-<div class="page-columns page-full"><p>In the above example, in which Q is the sample proportion of Yes’s and q is the correspondng population proportion, it does turn out that Q is unbiased. In fact, any sample mean is an unbiased estimator for the population mean.  Let’s skip the derivation for now (we’ll have a derivations lesson later), so we can get to the larger issues.</p><div class="no-row-height column-margin column-container"><span class="">Here X is 1 or 0, with 1 meaning the respondent answered Yes, and 0 meaning No.&nbsp;So the average of the X<sub>i</sub>, Q, is the proportion of voters choosing A.</span></div></div>
-<p>Unbiasedness at first seems to be a very desirable property. It does hold for some classical statistical methods, but does not hold for many others, one of which is the sample variance, as follows.</p>
-<p>Say we wish to estimate the population variance σ<sup>2</sup>. (We are not necessarily assuming a normal distribution.) In the population, that is the average squared difference between the data and their mean. The sample analog is</p>
-<p>S<sup>2</sup> = (1/n) Σ<sub>i</sub><sup>n</sup> (X<sub>i</sub> - Ā)<sup>2</sup></p>
-<p>where Ā is the sample mean, (1/n) Σ<sub>i</sub><sup>n</sup> X<sub>i</sub>.</p>
+<div class="page-columns page-full"><p>In the above example, in which Q is the sample proportion of Yes’s and q is the correspondng population proportion, it does turn out that Q is unbiased. In fact, any sample mean is an unbiased estimator for the population mean.  Let’s skip the derivation for now (we’ll have a derivations lesson later), so we can get to the larger issues.</p><div class="no-row-height column-margin column-container"><span class="">Here X is 1 or 0, with 1 meaning the respondent answered Yes, and 0 meaning No.&nbsp;So the average of the X<sub>i</sub>, Q, is the proportion of voters choosing Candidate A.</span></div></div>
+<p>Unbiasedness at first seems to be a very desirable property. It does hold for some classical statistical methods, but does not hold for most others, one of which is the sample variance, as follows.</p>
+<p>Say we wish to estimate the population variance σ<sup>2</sup>. Note that</p>
+<p><span class="math display">\[
+Var(X_{i}) = \sigma^2
+\]</span></p>
+<p>And recall that also</p>
+<p><span class="math display">\[
+EX_{i} = \mu
+\]</span></p>
+<p>the population mean. Note too that we are not necessarily assuming a normal distribution.</p>
+<p>In the population, that is the average squared difference between the data and their mean. The sample analog is</p>
+<p><span class="math display">\[
+S^{2} = \frac{1}{n} \sum_{i=1}^n (X_i - \bar{X})^2
+\]</span></p>
+<p>where <span class="math inline">\(\bar{X}\)</span> is the sample mean,</p>
+<p><span class="math display">\[
+\bar{X} = \frac{1}{n} \sum_{i=1}^n X_i
+\]</span></p>
 <p>Note especially the word <em>analog</em> above. Here is the analogy:</p>
 <ul>
-<li><p>σ<sup>2</sup> is the average squared distance of X, in the population, to the population mean.</p></li>
-<li><p>S<sup>2</sup> is the average squared distance of X, in the sample, to the sample mean.</p></li>
+<li>σ<sup>2</sup> is the average squared distance of X, in the population, to the population mean:</li>
+</ul>
+<p><span class="math display">\[
+\sigma^2 = E[(X - \mu)^2]
+\]</span></p>
+<ul>
+<li>S<sup>2</sup> is the average squared distance of X, in the sample, to the sample mean.</li>
 </ul>
 <p>It can be shown that S<sup>2</sup> is biased downward:</p>
 <p>E(S<sup>2</sup>) = [(n-1) / n] σ<sup>2</sup></p>
 <p>The average value of S<sup>2</sup> over all samples is a little too low. The amount of bias is</p>
 <p>E(S<sup>2</sup>) - σ<sup>2</sup> = -1/n σ<sup>2</sup></p>
 <p>This is usually tiny, but it bothered the early developers of statistics, who then adjusted the definition of sample variance to</p>
-<p>s<sup>2</sup> = (1/(n-1)) Σ<sub>i</sub><sup>n</sup> (X<sub>i</sub> - Ā)<sup>2</sup></p>
+<p><span class="math display">\[
+s^2 = \frac{1}{n-1} \sum_{i=1}^n (X_i - \bar{X})^2
+\]</span></p>
 <div class="page-columns page-full"><p></p><div class="no-row-height column-margin column-container"><span class="">By the way, in the field of probability and statistics, it is customary to use capital letters for random variables. This is an exception.</span></div></div>
-<p>Note our distinction between S<sup>2</sup> and the similar but slightly different quantity, s<sup>2</sup>. Both are random variables–they depend on the X<sub>i</sub>, which are random.</p>
+<p>Note our distinction between S<sup>2</sup> and the similar but slightly different quantity, <span class="math inline">\(s^2\)</span>. Both are random variables – they depend on the X<sub>i</sub>, which are random – but they are different random variables. Typographical case matters.</p>
 <p>Since for any random variable W (for which EW exists) and any constant c we have E(cW) = c EW, s<sup>2</sup> is now unbiased.</p>
-<p>The variance of Ā turns to be <span class="math inline">\(\sigma^2/n\)</span></p>
-<p>s.e.(Ā) = S/n<sup>0.5</sup> s.e.(Ā) = S/n<sup>0.5</sup></p>
+<p>The variance of <span class="math inline">\(\bar{X}\)</span> turns out to be <span class="math inline">\(\sigma^2/n\)</span>. But we don’t know <span class="math inline">\(\sigma^2\)</span>, just like we don’t know <span class="math inline">\(\mu\)</span>. So we estimate <span class="math inline">\(\sigma\)</span> by S or s. So, we set</p>
+<p><span class="math display">\[
+s.e.(\bar{X}) = S / \sqrt{n}
+\]</span></p>
 <p>(use s instead of S if you wish; it won’t matter below).</p>
 <p>But most estimators are not only biased, but also lack simple adjustments like that for S<sup>2</sup> above. So, one must accept bias in general, and consider its implications.</p>
-<p>In that light, let’s return to the discussion of standard error in the last lesson. We stated that an estimator with small standard error would likely be near the population value it is estimating. But note that now that argument depended on the estimator being unbiased.</p>
-<p>But the situation is much more optimistic, actually. Say an estimator has bias of size O(1/n), as above. Typically the size of the standard error is O(1/n<sup>0.5</sup>). In other words, it really doesn’t matter whether we use S or s for larger samples; the bias is small relative to the standard error, so the argument in the last lesson still holds.</p>
+<p>Now, should we use S or s? Say an estimator has variance of size <span class="math inline">\(O(\frac{1}{n})\)</span>, as above. Yet the difference in expected values of S and s is of size <span class="math inline">\(O(\frac{1}{n^2})\)</span>. In other words, it really doesn’t matter whether we use S or s for larger samples; the bias is small relative to the standard error, so the argument in the last lesson still holds.</p>
 </section>
 <section id="lesson-ci-confidence-intervals" class="level2">
 <h2 class="anchored" data-anchor-id="lesson-ci-confidence-intervals">Lesson CI: Confidence Intervals</h2>
@@ -315,37 +337,49 @@ window.Quarto = {
 <blockquote class="blockquote">
 <p>A 95% confidence interval (CI) for X’s support is (58.2%,66.0%).</p>
 </blockquote>
-<p>We will show later that the radius of a 95% CI is 1.96 times the standard error of the given estimator Q. By the way, most CIs in this document will be only approximate, a point to be discussed shortly.</p>
+<p>We will show below that the radius of a 95% CI is 1.96 times the standard error of the given estimator Q. By the way, most CIs in this document will be only approximate, a point to be discussed shortly.</p>
 <p>A key point is the meaning of “95% confident.” Imagine forming this interval on each possible sample from the given population. Then 95% of the intervals would cover the true value, q.</p>
 <p>A note on the phrasing “q is in our interval”:</p>
 <blockquote class="blockquote">
 <p>Some may take this to mean that q is random, which it is not; q is unknown but fixed. The CI is what varies from one sample to another. Some instructors are so worried about such misinterpreation that they ban the phrasing “q is in the CI,” insisting that students say “The CI <em>contains</em> q, to emphasize that the CI is random, not q. To me, that’s going to absurd lengths to make a point – the two statements are linquistically equivalent, after all – but again, these instructors feel that misintepretation is less likely this way.</p>
 </blockquote>
 <p>A related, and much deeper, philosophical question is whether it is correct to say, “The probability that q is in <em>this</em> CI is 0.95.” Most statisticians would say that tnis too is an incorrect. They say it violates the view that the 95% figure can only be applied in the “repeated sampling” context. To them, the probability that q is in <em>this</em> CI is either 0 or 1.</p>
-<p>But really, what do we mean by probability? It depeds on the context. Consider the famous <a href="https://heather.cs.ucdavis.edu/ProbStatDSBook/MontyHall.pdf">Monty Hall game show problem.</a> To the host, the probability is 1 that the car is behnd door 3. But to the contestant, that probability is 2/3.</p>
+<p>But really, what do we mean by probability? It depends on the context. Consider the famous <a href="https://heather.cs.ucdavis.edu/ProbStatDSBook/MontyHall.pdf">Monty Hall game show problem.</a> To the host, the probability is 1 that the car is behnd door 3. But to the contestant, that probability is 2/3. In the CI situation, “Nature” knows whether this CI contains q; to us, the probability is 0.95.</p>
 </section>
 <section id="lesson-ciapprox-confidence-intervals-from-asymptotics" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="lesson-ciapprox-confidence-intervals-from-asymptotics">Lesson CIAPPROX: Confidence Intervals from Asymptotics</h2>
 <p>The early developers of statistics defined a distribution family known as <em>Student’s t</em>. This supposedly can be used to form “exact” CIs, i.e.&nbsp;the probability of the CI covering the target population value is exactly 0.95, if the population distribution of X is normal. Student-t is widely taught, and thus widely used. <strong>BUT it is just an illusion.</strong> As pointed out earlier, no distribution in practice is exactly normal.</p>
-<p>What saves the day, though, is the Central Limit Theorem. Ā is a (scaled) sum, which the CLT tells us is asymptotically normally distributed as the sample size n goes to infinity.</p>
-<div class="page-columns page-full"><p></p><div class="no-row-height column-margin column-container"><span class="">Technically, the CLT is phrased only in terms of cumulative distribution functions, not probability density functions. More on this below, but note that there is also the <em>Local Limit Theorem</em> for density convergence, and in practice, the density functions converge too.</span></div></div>
-<p>In other words, if we were to compute Ā on each of the possible samples of size n from the population, and then plot the results in a histogram, the graph would be approximately bell-shaped, and the probabilities for any range of values would be approximately those of a normal distribution. Moreover, the large n, the more bell-shaped it would be.</p>
+<p>What saves the day, though, is the Central Limit Theorem. <span class="math inline">\(\bar{X}\)</span> is a (scaled) sum, which the CLT tells us is asymptotically normally distributed as the sample size n goes to infinity.</p>
+<div class="page-columns page-full"><p></p><div class="no-row-height column-margin column-container"><span class="">Technically, the CLT is phrased only in terms of cumulative distribution functions, not probability density functions. So this comment on a histogram doesn’t follow from the CLT, but “the probabilities for any range of values” does follow from it.j More on this below, but note that there is also the <em>Local Limit Theorem</em> for density convergence, and in practice, the density functions converge too.</span></div></div>
+<p>In other words, if we were to compute <span class="math inline">\(\bar{X}\)</span> on each of the possible samples of size n from the population, and then plot the results in a histogram, the graph would be approximately bell-shaped, and the probabilities for any range of values would be approximately those of a normal distribution. Moreover, the large n, the more bell-shaped it would be.</p>
 <p>Ah, so we’re in business: For any random variable W, the quantity</p>
 <p>(W - EW) / (Var(W)<sup>0.5</sup>)</p>
 <p>has mean 0 and variance 1. (This stems simply from the properties of mean and variance; it has nothing to do with whether W is normal or not.) So,</p>
-<p>Z = (Ā - μ) / (σ / n<sup>0.5</sup>)</p>
-<p>has mean 0 and variance 1, where μ is the population mean of X. (Recall that Ā is unbiased for μ.)</p>
-<p>And since Z actually does have an approximately normal distribution, its distribution is thus approximately N(0,1), i.e.&nbsp;normal with mean 0 and variance 1. Replacing σ, which is unknown. by its estimate s can be further justified mathematically, so in practice</p>
-<p>Z = (Ā - μ) / (s / n<sup>0.5</sup>)</p>
-<p>is approximately N(0,1), and this is what we exploit to form a CI, as folows.</p>
+<p><span class="math display">\[
+Z = \frac{\bar{X} - \mu}{\frac{\sigma}{\sqrt{n}}}
+\]</span></p>
+<p>has mean 0 and variance 1, where μ is the population mean of X. (Recall that <span class="math inline">\(\bar{X}\)</span> is unbiased for <span class="math inline">\(\mu\)</span>.)</p>
+<p>And since Z actually does have an approximately normal distribution, its distribution is thus approximately N(0,1), i.e.&nbsp;normal with mean 0 and variance 1. Replacing σ, which is unknown. by its estimate s can be further justified mathematically, so let’s redefine Z as</p>
+<p><span class="math display">\[
+Z = \frac{\bar{X} - \mu}{\frac{s}{\sqrt{n}}}
+\]</span></p>
+<p>which is approximately N(0,1), and this is what we exploit to form a CI, as folows.</p>
 <p>The N(0,1) distribution has 95% of its area between -1.96 and 1.96: e.g.&nbsp;run</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.025</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>So we have</p>
-<p>0.95 ≈ P[-1.96 &lt; (Ā - μ) / s.e.(Ā) &lt; 1.96]</p>
+<p><span class="math display">\[
+0.95 \approx P(-1.96 &lt; \frac{\bar{X} - \mu}{s/\sqrt{n}} &lt; 1.96)
+\]</span></p>
 <p>which after algebra becomes</p>
-<p>0.95 ≈ P[ Ā - 1.96 s.e.(Ā) &lt; μ &lt; Ā + 1.96 s.e.(Ā))</p>
+<p><span class="math display">\[
+0.95 \approx P[\bar{X} - 1.96 ~ s.e.(\bar{X}) &lt; \mu &lt;
+\bar{X} + 1.96 ~ s.e.(\bar{X})]
+\]</span></p>
 <p>There’s our CI for μ!</p>
-<p>(Ā - 1.96 s.e.(Ā), Ā + 1.96 s.e.(Ā))</p>
+<p><span class="math display">\[
+(\bar{X} - 1.96 ~ s.e.(\bar{X}),
+\bar{X} + 1.96 ~ s.e.(\bar{X}))
+\]</span></p>
 <p>We are (approximately) 95% confident that the true population mean is in that interval. (Remember. it is the interval that is random, not μ.)</p>
 <p>And things don’t stop there. Actually, many types of estimators have some kinds of sums within them, and thus have an approximately normal distribution, provided the estimator is a smooth function of those sums.</p>
 <p>(<em>Smooth</em> here means a smooth curve, no sharp corners, thus having a derivative. A Taylor series approximation results in a linear function of normal random variable, thus again normal.)</p>

@@ -3,12 +3,11 @@
 ---
 title: "All of REAL Statistics"
 subtitle: "Fast Track to Stat for Those with Probabilty Background"
-author: 
-   - name: Norm Matloff
-   - url: https://heather.cs.ucdavis.edu/matloff.html
-   - email: nsmatloff@ucdavis.edu
+author: Norm Matloff
 toc: true
 ---
+
+[Author bio](https://heather.cs.ucdavis.edu/matloff.html)
 
 ![3D Bell Density](Rho2-1.png){width=300}
 
@@ -217,29 +216,51 @@ is the correspondng population proportion, it does turn out that Q is
 unbiased.  In fact, any sample mean is an unbiased estimator for the
 population mean.  [Here X is 1 or 0, with 1 meaning the respondent
 answered Yes, and 0 meaning No.  So the average of the X<sub>i</sub>, Q,
-is the proportion of voters choosing A.]{.column-margin} Let's skip the
-derivation for now (we'll have a derivations lesson later), so we can
-get to the larger issues.
+is the proportion of voters choosing Candidate A.]{.column-margin} Let's
+skip the derivation for now (we'll have a derivations lesson later), so
+we can get to the larger issues.
 
 Unbiasedness at first seems to be a very desirable property.  It does
-hold for some classical statistical methods, but does not hold for many
+hold for some classical statistical methods, but does not hold for most
 others, one of which is the sample variance, as follows.
 
 Say we wish to estimate the population variance &sigma;<sup>2</sup>.
-(We are not necessarily assuming a normal distribution.)  In the
-population, that is the average squared difference between the data and
-their mean.  The sample analog is
+Note that 
 
-S<sup>2</sup> = (1/n) &Sigma;<sub>i</sub><sup>n</sup>
-(X<sub>i</sub> - &#x100;)<sup>2</sup>
+$$
+Var(X_{i}) = \sigma^2
+$$
 
-where &#x100; is the sample mean, (1/n)  &Sigma;<sub>i</sub><sup>n</sup>
-X<sub>i</sub>.
+And recall that also
+
+$$
+EX_{i} = \mu
+$$
+
+the population mean.  Note too that we are not necessarily assuming a
+normal distribution.
+
+In the population, that is the average squared difference between the
+data and their mean.  The sample analog is
+
+$$
+S^{2} = \frac{1}{n} \sum_{i=1}^n (X_i - \bar{X})^2
+$$
+
+where $\bar{X}$ is the sample mean, 
+
+$$
+\bar{X} = \frac{1}{n} \sum_{i=1}^n X_i
+$$
 
 Note especially the word *analog* above.  Here is the analogy:
 
 * &sigma;<sup>2</sup> is the average squared distance of X, in the
-population, to the population mean.
+population, to the population mean:
+
+$$
+\sigma^2 = E[(X - \mu)^2]
+$$
 
 * S<sup>2</sup> is the average squared distance of X, in the
 sample, to the sample mean. 
@@ -253,27 +274,32 @@ low.  The amount of bias is
 
 E(S<sup>2</sup>) -  &sigma;<sup>2</sup> = -1/n  &sigma;<sup>2</sup> 
 
-This is usually tiny, but it bothered the early developers of statistics, who then adjusted the
-definition of sample variance to
+This is usually tiny, but it bothered the early developers of
+statistics, who then adjusted the definition of sample variance to
 
-s<sup>2</sup> = (1/(n-1)) &Sigma;<sub>i</sub><sup>n</sup>
-(X<sub>i</sub> - &#x100;)<sup>2</sup>
+$$
+s^2 = \frac{1}{n-1} \sum_{i=1}^n (X_i - \bar{X})^2
+$$
 
 [By the way, in the field of probability and statistics, it is customary to use
 capital letters for random variables.  This is an
 exception.]{.column-margin}
 
 Note our distinction between S<sup>2</sup> and the similar but slightly
-different quantity, s<sup>2</sup>. Both are random variables--they
-depend on the X<sub>i</sub>, which are random.
+different quantity, $s^2$.  Both are random variables -- they depend on
+the X<sub>i</sub>, which are random -- but they are different random
+variables. Typographical case matters.
 
 Since for any random variable W (for which EW exists) and any constant c
 we have E(cW) = c EW, s<sup>2</sup> is now unbiased.
 
-The variance of &#x100; turns to be $\sigma^2/n$
+The variance of $\bar{X}$ turns out to be $\sigma^2/n$. But we don't
+know $\sigma^2$, just like we don't know $\mu$. So we estimate
+$\sigma$ by S or s. So, we set
 
-s.e.(&#x100;) = S/n<sup>0.5</sup>
-s.e.(&#x100;) = S/n<sup>0.5</sup>
+$$
+s.e.(\bar{X}) = S / \sqrt{n}
+$$
 
 (use s instead of S if you wish; it won't matter below).
 
@@ -281,16 +307,12 @@ But most estimators are not only biased, but also lack simple
 adjustments like that for S<sup>2</sup> above.  So, one must accept bias
 in general, and consider its implications.
 
-In that light, let's return to the discussion of standard error in the
-last lesson.  We stated that an estimator with small standard error
-would likely be near the population value it is estimating. But note 
-that now that argument depended on the estimator being unbiased.
-
-But the situation is much more optimistic, actually.  Say an estimator
-has bias of size O(1/n), as above.  Typically the size of the standard
-error is O(1/n<sup>0.5</sup>).  In other words, it really doesn't matter
-whether we use S or s for larger samples; the bias is small relative to
-the standard error, so the argument in the last lesson still holds.
+Now, should we use S or s?  Say an estimator has variance of size
+$O(\frac{1}{n})$, as above. Yet the difference in expected values of S
+and s is of size $O(\frac{1}{n^2})$.  In other words, it really doesn't
+matter whether we use S or s for larger samples; the bias is small
+relative to the standard error, so the argument in the last lesson still
+holds.
 
 ## Lesson CI:  Confidence Intervals
 
@@ -302,7 +324,7 @@ margin of error of 3.9%," it is saying,
 
 > A 95% confidence interval (CI) for X's support is (58.2%,66.0%).
 
-We will show later that the radius of a 95% CI is 1.96 times the
+We will show below that the radius of a 95% CI is 1.96 times the
 standard error of the given estimator Q. By the way, most CIs in this
 document will be only approximate, a point to be discussed shortly.
 
@@ -328,11 +350,12 @@ violates the view that the 95% figure can only be applied in the
 "repeated sampling" context. To them, the probability that q is in *this*
 CI is either 0 or 1.
 
-But really, what do we mean by probability? It depeds on the context.
+But really, what do we mean by probability? It depends on the context.
 Consider the famous [Monty Hall game show
 problem.](https://heather.cs.ucdavis.edu/ProbStatDSBook/MontyHall.pdf)
-To the host, the probability is 1 that the car is behnd door 3. But
-to the contestant, that probability is 2/3.
+To the host, the probability is 1 that the car is behnd door 3. But to
+the contestant, that probability is 2/3. In the CI situation, "Nature"
+knows whether this CI contains q; to us, the probability is 0.95.
 
 ## Lesson CIAPPROX:  Confidence Intervals from Asymptotics
 
@@ -343,17 +366,19 @@ probability of the CI covering the target population value is exactly
 widely taught, and thus widely used.  **BUT it is just an illusion.**  As
 pointed out earlier, no distribution in practice is exactly normal.
 
-What saves the day, though, is the Central Limit Theorem.  &#x100; is a
+What saves the day, though, is the Central Limit Theorem. $\bar{X}$ is a
 (scaled) sum, which the CLT tells us is asymptotically normally distributed
 as the sample size n goes to infinity.
 
 [Technically, the CLT is phrased only in terms of cumulative
-distribution functions, not probability density functions. More on this
-below, but note that there is also the *Local Limit Theorem* for density
-convergence, and in practice, the density functions converge
+distribution functions, not probability density functions. So this
+comment on a histogram doesn't follow from the CLT, but "the
+probabilities for any range of values" does follow from it.j More on
+this below, but note that there is also the *Local Limit Theorem* for
+density convergence, and in practice, the density functions converge
 too.]{.column-margin}
 
-In other words, if we were to compute &#x100; on each of the possible
+In other words, if we were to compute $\bar{X}$ on each of the possible
 samples of size n from the population, and then plot the results in a
 histogram, the graph would be approximately bell-shaped, and the
 probabilities for any range of values would be approximately those of a
@@ -368,19 +393,23 @@ has mean 0 and variance 1.  (This stems simply from the properties of
 mean and variance; it has nothing to do with whether W is normal or
 not.)  So,
 
-Z = (&#x100; - &mu;) / (&sigma; / n<sup>0.5</sup>)
+$$
+Z = \frac{\bar{X} - \mu}{\frac{\sigma}{\sqrt{n}}}
+$$
 
 has mean 0 and variance 1, where &mu; is the population mean of X.
-(Recall that &#x100; is unbiased for &mu;.)  
+(Recall that $\bar{X}$ is unbiased for $\mu$.)  
 
 And since Z actually does have an approximately normal distribution,
 its distribution is thus approximately N(0,1), i.e. normal with mean 0
 and variance 1. Replacing &sigma;, which is unknown. by its estimate s
-can be further justified mathematically, so in practice
+can be further justified mathematically, so let's redefine Z as
 
-Z = (&#x100; - &mu;) / (s / n<sup>0.5</sup>)
+$$
+Z = \frac{\bar{X} - \mu}{\frac{s}{\sqrt{n}}}
+$$
 
-is approximately N(0,1), and this is what we exploit to form a CI, as
+which is approximately N(0,1), and this is what we exploit to form a CI, as
 folows.
 
 The N(0,1) distribution has 95% of its area between -1.96 and
@@ -392,17 +421,23 @@ qnorm(0.025)
 
 So we have
 
-0.95 &approx; P[-1.96 < (&#x100; - &mu;) / s.e.(&#x100;) < 1.96]
+$$
+0.95 \approx P(-1.96 < \frac{\bar{X} - \mu}{s/\sqrt{n}} < 1.96)
+$$
 
 which after algebra becomes
 
-0.95 &approx; P[
-&#x100; - 1.96 s.e.(&#x100;) < &mu; <
-&#x100; + 1.96 s.e.(&#x100;))
+$$
+0.95 \approx P[\bar{X} - 1.96 ~ s.e.(\bar{X}) < \mu <
+\bar{X} + 1.96 ~ s.e.(\bar{X})] 
+$$
 
 There's our CI for &mu;!
 
-(&#x100; - 1.96 s.e.(&#x100;), &#x100; + 1.96 s.e.(&#x100;))
+$$
+(\bar{X} - 1.96 ~ s.e.(\bar{X}),
+\bar{X} + 1.96 ~ s.e.(\bar{X}))
+$$
 
 We are (approximately) 95% confident that the true population mean is in
 that interval.  (Remember. it is the interval that is random, not &mu;.)
