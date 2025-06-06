@@ -1,5 +1,5 @@
 project:
-  title: "All of REAL Statistics"
+  title: "fastStat"
   type: website
   output-dir: docs
 
