@@ -63,7 +63,7 @@ Many of these are rather generally known, but not written down in books.
 Some are actually not widely known.  And some are entirely new ways of
 looking at familiar statistical concepts and properties.
 
-## Lesson SAMPLING:  the Notion of a Sample
+# Lesson SAMPLING:  the Notion of a Sample
 
 We've all heard the term *margin of error* in an opinion poll.  It will
 be discussed in detail in a later lesson, but what question is it
@@ -92,7 +92,7 @@ this population are taller than 70 inches, then P(X<sub>i</sub> > 70) =
 So, X<sub>1</sub>,...,X<sub>n</sub> are independent, identically
 distributed random variables (iid).
 
-## Lesson NORMALETC:  the Role of Normal (Gaussian) and Other Parametric Distribution Families
+# Lesson NORMALETC:  the Role of Normal (Gaussian) and Other Parametric Distribution Families
 
 In the last lesson, we talked about the distribution of X in the
 population.  Although the population is finite (more on this below) and
@@ -147,7 +147,7 @@ distribution.  Then in some sense, depending on how we estimate, we are
 estimating the gamma distribution that is closest to our true population
 distribution.
 
-## Lesson CONCEPTPOPS:  Conceptual Populations
+# Lesson CONCEPTPOPS:  Conceptual Populations
 
 In the opinion poll example, it is clear as to which population is
 sampled.  In many applications, the issue is more conceptual.  If for
@@ -170,7 +170,7 @@ oversimplification.  Serious consideration should be given to the
 implications of our sampling method on the definition of the sampled
 population.
 
-## Lesson STDERRS:  Standard Errors
+# Lesson STDERRS:  Standard Errors
 
 Earlier we mentioned the "margin of error" in reporting the results of
 opinion polls.  To make that notion concrete, let's first discuss a
@@ -205,7 +205,7 @@ deviation*.  In the case of an estimator, Q here, we use the term
 *standard error*.  In some cases, it will be only the approximate
 standard deviation, in a sense to be seen later.
 
-## Lesson BIAS:  Bias, and Impact on Standard Errors
+# Lesson BIAS:  Bias, and Impact on Standard Errors
 
 In our last lesson, we assumed that EQ = q.  We say that Q is an 
 *unbiased* estimator of q.  In English:  The average value of Q over all
@@ -314,7 +314,7 @@ matter whether we use S or s for larger samples; the bias is small
 relative to the standard error, so the argument in the last lesson still
 holds.
 
-## Lesson CI:  Confidence Intervals
+# Lesson CI:  Confidence Intervals
 
 In our opinion poll example, Q is called a *point estimate* of q.  We
 would also like to have an *interval estimate*, which gives a range of
@@ -357,7 +357,7 @@ To the host, the probability is 1 that the car is behnd door 3. But to
 the contestant, that probability is 2/3. In the CI situation, "Nature"
 knows whether this CI contains q; to us, the probability is 0.95.
 
-## Lesson CIAPPROX:  Confidence Intervals from Asymptotics
+# Lesson CIAPPROX:  Confidence Intervals from Asymptotics
 
 The early developers of statistics defined a distribution family known
 as *Student's t*.  This supposedly can be used to form "exact" CIs, i.e. the
@@ -473,7 +473,7 @@ By the way, for large n, the Student-t distribution is almost identical
 to N(0,1), so "no harm, no foul" -- Student-t will be approximately
 correct.  But it won't be exactly correct, in spite of the claim.
 
-## Lesson INDICATORS:  CIs from Indicator Variables
+# Lesson INDICATORS:  CIs from Indicator Variables
 
 Often X has only the values only 1 and 0, indicating the presence or
 absence of some trait.  That is the case in the opinion poll, for
@@ -502,7 +502,7 @@ Our earlier CI for a population mean now becomes in this special case
 (&#x100; - 1.96 sqrt[ &#x100; (1-&#x100;) / n],
  &#x100; + 1.96 sqrt[ &#x100; (1-&#x100;) / n])
 
-## Lesson GEYSER:  Old Faithful Geyser Example
+# Lesson GEYSER:  Old Faithful Geyser Example
 
 To start to make the concepts tangible, let's look at **faithful**, a
 built-in dataset in R, recording eruptions of the Old Faithful Geyser in
@@ -524,7 +524,7 @@ c(samplemean - 1.96*stderr, samplemean + 1.96*stderr)
 # (3.35,3.62)
 ```
 
-## Lesson CONVERGE:  More on Asymptotics
+# Lesson CONVERGE:  More on Asymptotics
 
 The concept of standard error needs to be clarified.
 
@@ -555,7 +555,7 @@ compute asymptotically valid CIs based on the N(0,1) cdf.  But the
 standard error used in that interval, s.e.(R), is not necessarily the
 standard deviation of R. 
 
-## Lesson SOMEMATH:  Some Derivations
+# Lesson SOMEMATH:  Some Derivations
 
 As noted earlier, the goal of this tutorial is to develop within the
 reader an understanding of the intuition underlying statistical concepts
@@ -600,7 +600,7 @@ E(S<sup>2</sup>) =
 (&sigma;<sup>2</sup> + &mu;<sup>2</sup>) - [(1/n) &sigma;<sup>2</sup> + &mu;<sup>2</sup>] =
 [(n-1)/n] &sigma;<sup>2</sup>
 
-## Lesson SIG: Significance Testing 
+# Lesson SIG: Significance Testing 
 
 The notion of *signficance testing* (ST) (also known as *hypothesis
 testing*, and *p-values*) is one of the real oddities in statistics.  
@@ -904,7 +904,7 @@ MMs are less popular.  But they are easier to explain, and by the way,
 the inventor of the generalized method of moments won the Nobel Prize in
 Econoomics in 2013 that developing that method.
 
-## Lesson ESTDISTRS:  estimating entire distributions
+# Lesson ESTDISTRS:  estimating entire distributions
 
 Recall the *cumulative distribution function*` (cdf) of a random variable 
 
@@ -935,7 +935,7 @@ We next turn to estimating density functions.  We will spend quite a bit
 of time on this topic, as it illustrates key points that extend to
 statistics in general.
 
-## Lesson DENS1:  estimating probability density functions--histograms
+# Lesson DENS1:  estimating probability density functions--histograms
 
 What about estimating the probability density function (pdf)?  As noted
 in Lesson NORMALETC, pdfs do not really exist in practice.  Technically,
