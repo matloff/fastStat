@@ -1,0 +1,5 @@
+project:
+  title: "All of REAL Statistics"
+  type: website
+  output-dir: docs
+
