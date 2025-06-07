@@ -1088,10 +1088,6 @@ considerations:
 * We are using an estimate of F<sub>X</sub> from our sample data, not
   the population.  We return to this point shortly.
 
-``` r
-> hist(erps,probability=TRUE)
-```
-
 But we're not done.  Why have an interval width (*bin width*) of 0.5?
 It came as the **hist()** default (which actually set the number of
 intervals).  Maybe the intervals should be shorter?  Longer?  We have
@@ -1137,18 +1133,18 @@ plot(density(erps,bw=0.75))
 
 ```
 
-![alt text](DensErps025.png)
+![bw 0.25](DensErps025.png)
 
-![alt text](DensErps075.png)
+![bw 0.75](DensErps075.png)
 
 The first graph seems to clearly show 2 bells, but the second one is
 rather ambiguous.  With even larger values for the bandwidth (try it
 yourself), we see a single bell, no hint of 2.
 
-How should we choose the bandwidth, or for that matter, the bin width?
-if we make the bandwidth too large, some important "bumps" may not be
-visible.  On the other hand, if we make it too small, this will just
-expose sampling variability, thus displaying "false" bumps.
+How should we choose the bandwidth, or for that matter, the bin width in
+a histogram?  if we make the bandwidth too large, some important "bumps"
+may not be visible.  On the other hand, if we make it too small, this
+will just expose sampling variability, thus displaying "false" bumps.
 
 We'll address this (but unfortunately not answer it) next.
 
@@ -1196,20 +1192,34 @@ prediction/machine learning contexts, to be covered later.
 Say we have continuous random variables X and Y.  We of course can talk
 about their density functions f<sub>X</sub> and f<sub>Y</sub>, but it's
 also important to talk about how they vary (or not) *together*.  First,
-the basics:
+the CDF is defined as
 
-* f<sub>X,Y</sub>(u,v) = &part;/&part;u &part;/&part;v F<sub>X,Y</sub>(u,v) =
-P(x &le;u and y &le;v)
+$$
+F_{X,Y}(u,v) = P(X \leq u, ~ Y \leq v)
+$$
 
-* P((x,y) in A) = &int; &int;<sub>A</sub> f<sub>X,Y</sub>(u,v) du dv
+Then
 
-* f<sub>Y | X = v</sub>(u) = f<sub>X,Y</sub>(u,v) / f<sub>X</sub>(u)
+$$
+f_{X,Y}(u,v) = \frac{\partial}{\partial u ~ \partial v}
+F_{X,Y}(u,v)
+$$
+
+$$
+P[(X,Y) \textrm{ in } A] = 
+\int_{}^{} 
+\int_{A}^{} 
+f_{X,Y}(u,v) ~ du ~ dv
+$$ 
 
 # Lesson CORR:  Correlation
 
 One common measure of the relation between variables U and V is their
-(Pearson) *correlation*, E(U - EU)`(V - EV)] / sqrt[Var(U) Var(V)].  They
-need not be normal.  This is a quantity in [-1,1], often denoted by
+(Pearson) *correlation*, 
+
+E(U - EU)(V - EV)] / sqrt[Var(U) Var(V)]  
+
+They need not be normal.  This is a quantity in [-1,1], often denoted by
 &rho;.  
 
 One useful interpretation of correlation is that &rho;<sup>2</sup>(U,V)
@@ -1225,7 +1235,7 @@ their *correlation matrix* is p X p, with the i,j element being
 The *covariance* between variables U and V is the same as the
 correlation, but not standardized by the standard deviations:
 
-Cov(U,V) = E(U - EU)`(V - EV)] = E(UV) - EU EV
+Cov(U,V) = E(U - EU)(V - EV)] = E(UV) - EU EV
 
 The *covariance matrix* is defined accordingly.
 
