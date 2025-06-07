@@ -18,13 +18,11 @@ regarding copyright of the document.)
 
 Students in computer science, engineering, mathematics and the like
 typically take a course in calculus-based probability -- unconditional
-and conditional probability, cdfs and density functions, expected value
+and conditional probability, CDFs and density functions, expected value
 and so on.  (The material is in Chapters 1-9 of 
 [my online book](https://github.com/matloff/probstatbook).)
 But later they have a need to use statistics, and find it's
 a broader and more nuanced field than they had realized.
-[Concepts from the reader's probability course are often
-designated here as "Prob 101."]{.column-margin}
 
 **This document will enable such people to quickly acquire the needed
 concepts, with a good intuitive understanding.**  It is modeled after
@@ -64,6 +62,15 @@ not highlighted.  This tutorial aims to explain the practical ISSUES.
 Many of these are rather generally known, but not written down in books.
 Some are actually not widely known.  And some are entirely new ways of
 looking at familiar statistical concepts and properties.
+
+# Notation
+
+Following convention, we denote the CDF of a random variable X by
+$F_X$. If it has a density, we denote that by $f_X$, and use 
+$p_X$ to denote the probability mass function if X is discrete.
+
+Concepts from the reader's probability course are often
+designated here as "Prob 101."
 
 # Lesson SAMPLING:  the Notion of a Sample
 
@@ -120,7 +127,7 @@ thus amenable to closed-form "exact" solutions.
 
 * A normal distribution is determined by two parameters, the mean and
   variance of the distribution.  Without that assumption, we have many
-  parameters, essentially infinitely many.  Let F<sub>x</sub> be the cdf
+  parameters, essentially infinitely many.  Let F<sub>x</sub> be the CDF
   of X (Prob 101), i.e. F<sub>X</sub>(t) = P(X &le; t).  Well, there 
   are infinitely many possible values for t, thus infinitely many values of 
   F<sub>X</sub>(t).  But if we assume X is normal, those infinitely 
@@ -141,7 +148,7 @@ continuous, whereas X is discrete, for two reasons:
 
 * Our measuring instruments have only finite precision.  If, say, X is
   bounded between 0 and 10, and is measured to 2 decimal places, X can
-take on 1000 values, and thus is discrete.
+  take on 1000 values, and thus is discrete.
 
 But what are we estimating, in light of the fact that our model is only
 approximate?  Say for instance we model X as having a gamma
@@ -559,14 +566,14 @@ What does the CLT say, exactly?  The formal statement is
 > 
 > Z<sub>n</sub> = (S<sub>n</sub> - &mu;) / [&sigma; sqrt(n)] 
 > 
-> *converges in distribution* to N(0,1), **meaning that** the cdf of
-> Z<sub>n</sub> converges to the N(0,1) cdf.
+> *converges in distribution* to N(0,1), **meaning that** the CDF of
+> Z<sub>n</sub> converges to the N(0,1) CDF.
 
 In other words, the asymptotics apply to probabilities -- but not to
-expected values etc.  Two random variables can have almost the same cdf
+expected values etc.  Two random variables can have almost the same CDF
 but have very different means, variances and so on.  E.g. take any
 random variable and shift a small amount of its probability mass from X
-= c to some huge number X = d; almost the same cdf, very different mean.
+= c to some huge number X = d; almost the same CDF, very different mean.
 
 As noted, if a sum is an ingredient in some complicated function that
 produces our estimator, we can apply a Taylor series argument to say
@@ -576,7 +583,7 @@ distribution may be different from that of the estimator itself, due to
 the inaccuracy of the Taylor approximation.]{.column-margin}
 
 So, the asymptotic statement about regarding R and r above enables us to
-compute asymptotically valid CIs based on the N(0,1) cdf (though the
+compute asymptotically valid CIs based on the N(0,1) CDF (though the
 standard error used in that interval, s.e.(R), is not necessarily the
 standard deviation of R). 
 
@@ -763,11 +770,9 @@ the density of the random variable under consideration is
 
 How can we estimate &lambda; from our data?
 
-
-
 The two most common such techniques are *Maximum Likelihood Estimators*
-(MLE) and the *Method of Moments Estimators* (MME).  Let's illustrate them with a
-simple example, MME first.
+(MLE) and the *Method of Moments Estimators* (MME).  Let's illustrate
+them with a simple example, MME first.
 
 **The Method of Moments**
 
@@ -939,9 +944,9 @@ Econoomics in 2013 that developing that method.
 
 # Lesson ESTDISTRS:  estimating entire distributions
 
-Recall the *cumulative distribution function*` (cdf) of a random variable 
+Recall the *cumulative distribution function*` (CDF) of a random variable 
 
-f<sub>X</sub>(t) = P(X &le; t)
+F<sub>X</sub>(t) = P(X &le; t)
 
 This is indeed a function; for different values of t, we get different
 values of the cdf.
@@ -959,10 +964,14 @@ lesson.
 plot(ecdf(erps))
 ```
 
-![alt text](FaithfulCDF.png)
+![Old Faithful CDF](FaithfulCDF.png)
 
 Since the ECDF consists of proportions (one for each t), it
-is unbiased.  For each t, E[ECDF(t)] =F<sub>X</sub(t).
+is unbiased:  For each t, 
+
+$$
+E[EDF(t)] = F_X(t)
+$$
 
 We next turn to estimating density functions.  We will spend quite a bit
 of time on this topic, as it illustrates key points that extend to
