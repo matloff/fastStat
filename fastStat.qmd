@@ -23,6 +23,8 @@ and so on.  (The material is in Chapters 1-9 of
 [my online book](https://github.com/matloff/probstatbook).)
 But later they have a need to use statistics, and find it's
 a broader and more nuanced field than they had realized.
+[Concepts from the reader's probability course are often
+designated here as "Prob 101."]{.column-margin}
 
 **This document will enable such people to quickly acquire the needed
 concepts, with a good intuitive understanding.**  It is modeled after
@@ -90,7 +92,7 @@ this population are taller than 70 inches, then P(X<sub>i</sub> > 70) =
 0.228.
 
 So, X<sub>1</sub>,...,X<sub>n</sub> are independent, identically
-distributed random variables (iid).
+distributed random variables (Prob 101).
 
 # Lesson NORMALETC:  the Role of Normal (Gaussian) and Other Parametric Distribution Families
 
@@ -102,12 +104,12 @@ with its distribution being in the normal family.
 Why do this?
 
 * Histograms of X in many applications do look rather bell-shaped.  This
-  may in turn be due to the Central Limit Theorem (CLT).  The CLT says
-that sums are approximately normal, and in the human height case, one
-can think of the body as consisting of chunks whose heights sum to the
-height of the person.  (The CLT assumes i.i.d. summands, and the chunks
-here would be neither independent nor indentically distributed, but
-there are non-i.i.d. versions of the CLT.)
+  may in turn be due to the Central Limit Theorem (Prob 101).  The CLT says
+  that sums are approximately normal, and in the human height case, one
+  can think of the body as consisting of chunks whose heights sum to the
+  height of the person.  (The CLT assumes i.i.d. summands, and the chunks
+  here would be neither independent nor indentically distributed, but
+  there are non-i.i.d. versions of the CLT.)
 
 * The early developers of statistics had no computers, and it turns out
   that the normal distribution family is quite mathematically tractable,
@@ -119,15 +121,15 @@ thus amenable to closed-form "exact" solutions.
 * A normal distribution is determined by two parameters, the mean and
   variance of the distribution.  Without that assumption, we have many
   parameters, essentially infinitely many.  Let F<sub>x</sub> be the cdf
-  of X, i.e. F<sub>X</sub>(t) = P(X &le; t).  Well, there are infinitely
-  many possible values for t, thus infinitely many values of F<sub>X</sub>(t).
-  But if we assume X is normal, those infinitely many values are all
-  expressible in terms of just two numbers.  We are then essentially
-  estimating two numbers instead of infinitely many. This is often a
-  very useful approximation.
+  of X (Prob 101), i.e. F<sub>X</sub>(t) = P(X &le; t).  Well, there 
+  are infinitely many possible values for t, thus infinitely many values of 
+  F<sub>X</sub>(t).  But if we assume X is normal, those infinitely 
+  many values are all expressible in terms of just two numbers.  We 
+  are then essentially estimating two numbers instead of infinitely 
+  many. This is often a very useful approximation.
 
-Another popular model is the exponential distribution family.  You
-probably learned in your probability course that it is "memoryless,"
+Another popular model is the exponential distribution family (Prob 101).
+You probably learned in your probability course that it is "memoryless,"
 which makes it a suitable model in some applications.
 
 Note that, as models, these are necessarily inexact.  No distribution in
@@ -161,7 +163,10 @@ If we have 10 years of annual data, i.e. n = 10, what population
 is that a "sample" from?
 
 Accordingly, in many applications, the population we model as being
-sampled from is largely conceptual rather than a tangible entity.
+sampled from is largely conceptual rather than a tangible entity.  [A
+term popular in the machine learning community is *data generating
+process*, which is largely analogous to our treatment here in terms of
+sampling scheme and populations.]{.column-margin}
 
 Say we have 1200 patients in a clinical trial of a drug for treating
 hypertension.  Then our sample might be considered as a random sample of
@@ -176,23 +181,25 @@ Earlier we mentioned the "margin of error" in reporting the results of
 opinion polls.  To make that notion concrete, let's first discuss a
 related idea, *standard errors*.
 
+[**Extremely important note:**  Make sure to always carefully
+distinguish between a population quantity, q in this case, and its
+sample estimate, Q here.]{.column-margin}
+
 We use our data X<sub>1</sub>,...,X<sub>n</sub> to estimate some
 quantity of interest, say the proportion q of people in the population
 who would answer Yes to our poll if we had a chance to ask them all.
 Our estimate, Q, would be the proportion of people in our sample who say
 Yes.  
 
-[**Extremely important note:**  Make sure to always carefully
-distinguish between a population quantity, q in this case, and its
-sample estimate, Q here.]{.column-margin}
-
 We want to have some measure of how much Q varies from one sample to
-another.  Of course, Var(Q) is such a measure.
+another.  Of course, Var(Q) is such a measure (Prob 101).
 
 Say for now that the average of Q, averaged over all possible
 samples, is q.  For some samples, Q > q, for others Q <- q, but on
 average we get q.  This relates to the issue of *bias*, which we will
 turn to later, but for now, say we have this situation, i.e. EQ = q.
+[It is customary to omit the parentheses in E() if there is no danger of
+ambiguity.]{.column-margin}
 
 **The key point:**  If Var(Q) is small, then Q doesn't vary much from one
 sample to another, and if EQ = q, then for "most" samples, Q should be
@@ -245,7 +252,7 @@ data and their mean.  The sample analog is
 
 $$
 S^{2} = \frac{1}{n} \sum_{i=1}^n (X_i - \bar{X})^2
-$$
+$$ {#eq-S2def}
 
 where $\bar{X}$ is the sample mean, 
 
@@ -389,9 +396,9 @@ Ah, so we're in business:  For any random variable W, the quantity
 
 (W - EW) / (Var(W)<sup>0.5</sup>)
 
-has mean 0 and variance 1.  (This stems simply from the properties of
-mean and variance; it has nothing to do with whether W is normal or
-not.)  So,
+has mean 0 and variance 1 (Prob 101).  This stems simply from the
+properties of mean and variance; it has nothing to do with whether W is
+normal or not.  So,
 
 $$
 Z = \frac{\bar{X} - \mu}{\frac{\sigma}{\sqrt{n}}}
@@ -446,9 +453,9 @@ And things don't stop there.  Actually, many types of estimators have
 some kinds of sums within them, and thus have an approximately normal
 distribution, provided the estimator is a smooth function of those sums.
 
-(*Smooth* here means a smooth curve, no sharp corners, thus having a
+*Smooth* here means a smooth curve, no sharp corners, thus having a
 derivative.  A Taylor series approximation results in a linear function
-of normal random variable, thus again normal.)
+of normal random variable, thus again normal (Prob 101).
 
 Thus approximate CIs can be found for lots of different
 estimators, notably Maximum Likelihood Estimators and least-squares
@@ -482,25 +489,42 @@ variable is called an *indicator variable*, as it indicates whether the
 trait is present or not.  It is also called *dummy variable* and in
 the case of machine learning people, a *one-hot variable*.
 
-In this case, &#x100; is the average of a bunch of 0s and 1s.  The sum
-of such numbers will be the number of 1s, so &#x100;
-reduces to the proportion of 1s.  The quantity &mu; is then the
+In this case, $\bar{X}$ is the average of a bunch of 0s and 1s.  The sum
+of such numbers will be the number of 1s, so $\bar{X}$
+reduces to the proportion of 1s.  The quantity q is then the
 population proportion P(X = 1).
 
-In the election poll example, &#x100; is then Q, the proportion of Yes
+In the election poll example, $\bar{X}$ is then Q, the proportion of Yes
 responses to the opinion poll, with q being the corresponding population
-proportion.
+proportion.  Then from the property of binomial distributions (Prob 101),
 
-After some algebraic simplification, it turns out that 
+$$
+Var(X) = q(1-q)
+$$
 
-S<sup>2</sup> = &#x100; (1-&#x100;) / n
+so that
 
-(or use n-1 instead of n for s).  
+$$
+Var(\bar{X}) = \frac{q(1-q)}{n}
+$$
+
+The sample analog of the latter is
+
+$$
+S^2 = \frac{\bar{X}(1-\bar{X})}{n}
+$$
+
+and indeed, one does arrive at this after some algebraic simplification
+of @eq-S2def.  (Again, alternatively, use n-1 instead of n for s.)  
 
 Our earlier CI for a population mean now becomes in this special case
 
-(&#x100; - 1.96 sqrt[ &#x100; (1-&#x100;) / n],
- &#x100; + 1.96 sqrt[ &#x100; (1-&#x100;) / n])
+$$
+(
+\bar{X} - 1.96 ~ S,
+\bar{X} + 1.96 ~ S
+)
+$$
 
 # Lesson GEYSER:  Old Faithful Geyser Example
 
@@ -538,22 +562,23 @@ What does the CLT say, exactly?  The formal statement is
 > *converges in distribution* to N(0,1), **meaning that** the cdf of
 > Z<sub>n</sub> converges to the N(0,1) cdf.
 
-In other words, the asymptotics apply to probabilities--but not to
+In other words, the asymptotics apply to probabilities -- but not to
 expected values etc.  Two random variables can have almost the same cdf
 but have very different means, variances and so on.  E.g. take any
 random variable and shift a small amount of its probability mass from X
 = c to some huge number X = d; almost the same cdf, very different mean.
 
-As noted, if a sum is an ingredient in some complicated function
-that produces our estimator, we can apply a Taylor series argument to
-say that the estimator is asymptotically normal.  But the standard
-deviation of that normal distribution may be different from that of the
-estimator itself, due to the inaccuracy of the Taylor approximation.
+As noted, if a sum is an ingredient in some complicated function that
+produces our estimator, we can apply a Taylor series argument to say
+that the estimator is asymptotically normal. (This is called the *delta
+method*. [Note, though that the standard deviation of that normal
+distribution may be different from that of the estimator itself, due to
+the inaccuracy of the Taylor approximation.]{.column-margin}
 
 So, the asymptotic statement about regarding R and r above enables us to
-compute asymptotically valid CIs based on the N(0,1) cdf.  But the
+compute asymptotically valid CIs based on the N(0,1) cdf (though the
 standard error used in that interval, s.e.(R), is not necessarily the
-standard deviation of R. 
+standard deviation of R). 
 
 # Lesson SOMEMATH:  Some Derivations
 
@@ -562,43 +587,55 @@ reader an understanding of the intuition underlying statistical concepts
 or methods.  It is not a tutorial on math stat.  Nevertheless, it's
 important to show a few derivations.
 
-**&#x100; is an unbiased estimator of &mu;:**
+$\bar{X}$ is an unbiased estimator of EX = q:
 
-By the linearity of E(), 
+By the linearity of E() (Prob 101), 
 
-E&#x100; = (1/n) &Sigma;<sub>i</sub><sup>n</sup> Ex<sub>i</sub>
-= (1/n) n &mu; = &mu; 
+$$
+E\bar{X} 
+= \frac{1}{n} \sum_{i=1}^n E X_i 
+= \frac{1}{n} \sum_{i=1}^n q
+= q
+$$
 
-**Var(&#x100;) = (1/n) &sigma;<sup>2</sup>, where
-&sigma;<sup>2</sup> is the population variance of X**
+$Var(\bar{X}) = \frac{1}{n} \sigma^2$:
+
+where &sigma;<sup>2</sup> is the population variance of X:
 
 By the fact that the variance of a sum of independent random variables
-is the sum of their variances,
+is the sum of their variances and that multiplicative constants become
+squared (Prob 101),
 
-Var(&#x100;) = (1/n<sup>2</sup>) &Sigma;<sub>i</sub><sup>n</sup>
-Var(x<sub>i</sub>) = (1/n<sup>2</sup>) n &sigma;<sup>2</sup> = (1/n)
-&sigma;<sup>2</sup>
+$$
+Var(\bar{X}) =
+\frac{1}{n^2} \sum_{i=1}^n Var(X_i) =
+\frac{1}{n^2} \sum_{i=1}^n \sigma^2 =
+\frac{1}{n} \sigma^2
+$$
 
 **S<sup>2</sup> is a biased estimator of &sigma;<sup>2</sup></sup>**
 
-For any random variable W (with finite variance), 
+For any random variable W with finite variance, we have (Prob 101) 
 
 Var(W) = E(W<sup>2</sup>) - (EW)<sup>2</sup>  
 
-We will use this fact multiple times.
+We will use this fact multiple times here.
 
-And the sample analog (just algebraic manipulation) is
+And the sample analog (just algebraic manipulation on
+@eq-S2def) is
 
-S<sup>2</sup> = (1/n) &Sigma;<sub>i</sub><sup>n</sup>
-X<sub>i</sub><sup>2</sup> - &#x100;<sup>2</sup>
+$$
+S^2 = \frac{1}{n} \sum_{i=1}^n X_i^2 - \bar{X}^2
+$$
+
 
 Applying E() to both sides of this last equation, we have
 
-E(S<sup>2</sup>) =
-(1/n) n E(X<sup>2</sup>) -
-(Var(&#x100;) + &mu;<sup>2</sup>) =
-(&sigma;<sup>2</sup> + &mu;<sup>2</sup>) - [(1/n) &sigma;<sup>2</sup> + &mu;<sup>2</sup>] =
-[(n-1)/n] &sigma;<sup>2</sup>
+$$
+E(S^2) =
+\frac{1}{n} n (\sigma^2 + q^2) - (\frac{\sigma^2}{n} + q^2) =
+\frac{n-1}{n} \sigma^2
+$$
 
 # Lesson SIG: Significance Testing 
 
@@ -663,7 +700,8 @@ Well, what's wrong with that?
   balanced.  Fine, but the ST is not addressing that question.  Even if
 r is just a little different from 0, then as the number of tosses n goes
 to infinity, the denominator in W goes to 0, and thus R goes to
-&pm;&infin;--and the p-value goes to 0.
+&pm;&infin; -- and the p-value goes to 0. In other words, given a large
+enough n, we are sure to get a "signficant" result.
 
 * In such a scenario, we declare that the coin is "signficantly" 
 unbalanced ("Look, a tiny p-value!"), an egregiously misleading statement.
@@ -682,10 +720,10 @@ effects of the two drugs.  Then the null hypothesis is
 
 H<sub>0</sub>: &mu;<sub>a</sub> = &mu;<sub>b</sub>
 
-Again, we know *a priori* that H<sub>0</sub> must be false--the two
-means can't be equal, to infinitely many decimal places--so the test is
+Again, we know *a priori* that H<sub>0</sub> must be false -- the two
+means can't be equal, to infinitely many decimal places -- so the test is
 meaningless in the first place, and we will have the problems described
-above.  But, forget all that--the test gives us an answer, and the user
+above.  But, forget all that -- the test gives us an answer, and the user
 is happy.
 
 A more careful analysis would be based on forming a CI for the
@@ -707,7 +745,7 @@ Note by the way that what we are NOT doing is
 problems cited above.
 
 See 
-[this document](https://github.com/matloff/regtools/blob/master/inst/nopvals.md)
+[this document](https://matloff.github.io/No-P-Values)
 for further details.  
 
 
@@ -718,8 +756,8 @@ purpose, such as S<sup>2</sup> for &sigma;<sup>2</sup>.
 It would be nice to have general ways of forming estimators.
 
 Note that our context here is that of *parametric distribution models*.
-Say for instance we are using an exponential model, in which the density
-of the random variable under consideration is
+Say for instance we are using an exponential model (Prob 101), in which
+the density of the random variable under consideration is
 
 &lambda; e<sup>-&lambda; t</sup>, t > 0
 
@@ -737,19 +775,20 @@ simple example, MME first.
 > derived) named T.  Then, in the formal expression for EX, replace
 > &theta; by T; set the result to the sample mean &#x100; and solve for T.
 
-Say we are modeling our data X<sub>i</sub> as coming from a population
-with an exponential distribution, i.e.
-
-f<sub>X</sub>(t) = &lambda;e<sup>-&lambda;t</sup>, t > 0
-
+Let's see how this works in the case of the exponential model.
 It is well known (and easy to derive) that EX = 1 / &lambda;.  Denote
 our estimator of &lambda; by L.  Then the above recipe gives us
 
-1 / L = &#x100;
+$$
+\frac{1}{L} = \bar{X}
+$$
 
 and thus 
 
-L = 1 / &#x100;
+
+$$
+L = \frac{1}{\bar{X}}
+$$
 
 It may be that our parametric model has 2 parameters rather than 1, so
 now  &theta; = (&theta;<sub>1</sub>,&theta;<sub>2</sub>) and t =
@@ -761,7 +800,7 @@ side, we write the sample variance.  That gives us 2 equations in 2
 unknowns, and we solve for the t<sub>i</sub>.
 
 For instance, say we wish to estimate the parameters &lambda; and c for
-a gamma distribution.  One can show that 
+a gamma distribution (Prob 101).  One can show that 
 
 EX = c/&lambda; 
 
@@ -773,22 +812,30 @@ Let C and L denote our estimators of c
 and &lambda;, to be derived.  Replacing population quantities by sample
 analogs, we set
 
-&#x100; = C/L 
+$$
+\bar{X} = \frac{C}{L}
+$$
 
 and
 
-S<sup>2</sup> = C/L<sup>2</sup>
+$$
+S^2 = \frac{C}{L^2}
+$$
 
 Dividing the two equations, that gives us
 
-L = &#x100; / S<sup>2</sup>
+$$
+L = \frac{\bar{X}}{S^2}
+$$
 
 and
 
-C = L &#x100;
+$$
+C = L \bar{X}
+$$
 
 There are variations.  E.g. instead of the variance and sample variance, we
-can use the *second moment*, E(X<sup>k</sup>) and its sample analog
+can use the *k-th moment*, E(X<sup>k</sup>) and its sample analog
 
 (1/n) &Sigma;<sub>i</sub><sup>n</sup>X<sub>i</sub><sup>k</sup>
 
@@ -807,7 +854,9 @@ Discrete case:
 
 If our X<sub>i</sub> are independent, then the likelihood expression is
 
-&Pi;<sub>i</sub><sup>n</sup> p(X<sub>i</sub>)
+$$
+\Pi_{i=1}^n p(X_i)
+$$
 
 We usually maximize the logarithm, to make derivatives easier.  
 
@@ -818,38 +867,22 @@ but it does work roughly as a likelihood; if say f(12.3) is large, then
 one will see many X that are near 12.3.  So, in the above prescription,
 replace p by f.
 
-For instance, consider the family of exponential distributions,
-f<sub>X</sub>(t) = &lambda; exp(-&lambda;t), t > 0.  The likelihood is
+For instance, consider again the family of exponential distributions.
+The likelihood is
 
-&Pi;<sub>1</sub><sup>n</sup> [&lambda; exp(-&lambda;X<sub>i</sub>)]
+$$
+\Pi_{i=1}^n [\lambda \exp(-\lambda X_i)]
+$$
 
 with log likelihood
 
-n log(&lambda;) - &lambda; &Sum;<sub>i</sub><sup>n</sup> X<sub>i</sub>
+$$
+n \log(\lambda) - \lambda\sum_{i=1}^n X_i
+$$
 
-Setting the derivative to 0, we have
-
-n/&lambda; = &Sum;<sub>i</sub><sup>n</sup> X<sub>i</sub>
-
-so that the MLE is 1 / &#x100;.
-
-*Non-differentiable case*
-
-Consider the *negative binomial* distribution family,
-
-P(X = j) = C(n-1,i-1) r<sup>i</sup> (1-r)<sup>n-i</sup>
-
-where C(u,v) means the number of combinations of v objects, chosen from
-u of them.
-
-This arises, say, from tossing a coin until we accumulate k heads, with
-r being the probability of heads.
-
-If our parameter to be estimated is r, with known k, the above is a
-differentiable function of r.  But if we don't know k, say we have the
-data but did not collect it ourselves, then we don't have
-differentiability in that parameter.  *Ad hoc* methods must then be used
-to find the MLE.
+Replacing $\lambda$ by L, then setting the derivative to 0 and solving,
+we have that the MLE is $L = 1 / \bar{X}$, as with MME. (They usually are
+different.)
 
 *Asymptotic normality:*  
 
@@ -935,7 +968,7 @@ We next turn to estimating density functions.  We will spend quite a bit
 of time on this topic, as it illustrates key points that extend to
 statistics in general.
 
-# Lesson DENS1:  estimating probability density functions--histograms
+# Lesson DENS1:  estimating probability density functions -- histograms
 
 What about estimating the probability density function (pdf)?  As noted
 in Lesson NORMALETC, pdfs do not really exist in practice.  Technically,
